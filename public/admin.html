@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>Panel · MJ Streaming</title>
+<style>
+:root{--bg:#050914;--bg2:#0a1124;--card:#0d1530;--line:rgba(255,255,255,.1);--txt:#f5f7ff;--muted:#98a3c7;--y:#ffe93a;--g:#8dff2e;--pink:#ff3d8b;--grad:linear-gradient(95deg,#ffe93a,#8dff2e)}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif;background:var(--bg);color:var(--txt);line-height:1.45;min-height:100vh}
+button,input,select,textarea{font:inherit;color:inherit}
+button{cursor:pointer;border:0;background:none}
+a{color:inherit;text-decoration:none}
+input,select,textarea{background:var(--card);border:1px solid var(--line);border-radius:11px;padding:.6rem .75rem;width:100%;outline:none}
+input:focus,select:focus,textarea:focus{border-color:var(--y)}
+input[type=checkbox]{width:auto;accent-color:#8dff2e}
+input[type=color]{padding:2px;height:40px;width:56px;cursor:pointer}
+textarea{resize:vertical;min-height:70px}
+label{display:grid;gap:5px;font-size:.82rem;color:var(--muted);font-weight:600}
+label.ck{display:flex;align-items:center;gap:8px;font-size:.9rem;color:var(--txt)}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:6px;padding:.6rem 1.05rem;border-radius:11px;font-weight:700;font-size:.92rem;background:rgba(255,255,255,.07);border:1px solid var(--line);transition:.2s;white-space:nowrap}
+.btn:hover{border-color:var(--y);color:var(--y)}
+.btn.p{background:var(--grad);color:#07101f;border:0}
+.btn.p:hover{color:#07101f;filter:brightness(1.08)}
+.btn.d:hover{border-color:var(--pink);color:var(--pink)}
+.btn.sm{padding:.4rem .7rem;font-size:.82rem}
+.btn:disabled{opacity:.45;pointer-events:none}
+#login{min-height:100vh;display:grid;place-items:center;padding:20px}
+.lbox{width:min(380px,100%);background:var(--bg2);border:1px solid var(--line);border-radius:22px;padding:28px;display:grid;gap:14px;text-align:center}
+.lbox h1{font-size:1.4rem}
+.err{color:#ff6b7d;font-size:.88rem;min-height:1.2em}
+.top{position:sticky;top:0;z-index:20;background:rgba(5,9,20,.92);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+.top-in{max-width:1100px;margin:auto;padding:10px 16px;display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.top h1{font-size:1.05rem;margin-right:auto}
+.chip{font-size:.78rem;padding:.3rem .7rem;border-radius:99px;border:1px solid var(--line);color:var(--muted)}
+.chip.ok{color:#8dff2e;border-color:rgba(141,255,46,.4)}
+.chip.warn{color:#ffc14d;border-color:rgba(255,193,77,.5)}
+.chip.bad{color:#ff6b7d;border-color:rgba(255,107,125,.5)}
+.tabs{max-width:1100px;margin:auto;padding:0 16px;display:flex;gap:6px;overflow-x:auto;scrollbar-width:none}
+.tabs button{padding:.7rem 1rem;color:var(--muted);font-weight:600;font-size:.9rem;border-bottom:2px solid transparent;white-space:nowrap}
+.tabs button.on{color:var(--y);border-color:var(--y)}
+main{max-width:1100px;margin:auto;padding:18px 16px 120px}
+.card{background:var(--bg2);border:1px solid var(--line);border-radius:18px;padding:18px;margin-bottom:16px}
+.card h2{font-size:1.05rem;margin-bottom:12px}
+.grid2{display:grid;gap:12px}
+@media(min-width:700px){.grid2{grid-template-columns:1fr 1fr}.grid3{grid-template-columns:repeat(3,1fr)!important}}
+.grid3{display:grid;gap:12px}
+.help{font-size:.82rem;color:var(--muted)}
+.bar{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:14px}
+.bar input,.bar select{width:auto;flex:1;min-width:150px}
+.prow{display:grid;grid-template-columns:56px 1fr;gap:12px;align-items:center;background:var(--card);border:1px solid var(--line);border-radius:15px;padding:10px;margin-bottom:10px}
+.prow.off{opacity:.55}
+.thumb{width:56px;height:56px;border-radius:13px;overflow:hidden;display:grid;place-items:center;font-weight:900;color:#fff}
+.thumb img{width:100%;height:100%;object-fit:cover}
+.pinfo b{display:block}
+.pinfo small{color:var(--muted)}
+.pact{grid-column:1/-1;display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.pact .st{display:flex;align-items:center;gap:6px;font-size:.8rem;color:var(--muted)}
+.pact .st input{width:74px;padding:.35rem .5rem}
+@media(min-width:760px){.prow{grid-template-columns:56px 1fr auto}.pact{grid-column:auto}}
+.row{display:grid;gap:8px;grid-template-columns:1fr 1fr auto;align-items:end;margin-bottom:8px}
+.row.r4{grid-template-columns:1fr 1fr 1fr auto}
+.row.r2{grid-template-columns:1fr auto}
+.row.faq{grid-template-columns:1fr;border:1px solid var(--line);border-radius:12px;padding:10px}
+.pub{position:fixed;left:0;right:0;bottom:0;z-index:25;display:flex;justify-content:center;gap:10px;padding:12px;background:linear-gradient(transparent,rgba(5,9,20,.96) 35%);pointer-events:none}
+.pub>*{pointer-events:auto}
+dialog{border:0;background:transparent;color:inherit;max-width:100vw;margin:auto;overflow:visible}
+dialog::backdrop{background:rgba(0,0,0,.72);backdrop-filter:blur(3px)}
+.dlg{width:min(760px,94vw);max-height:92dvh;overflow:auto;background:var(--bg2);border:1px solid var(--line);border-radius:22px;padding:20px;display:grid;gap:14px}
+.dlg h2{font-size:1.2rem}
+.imgbox{display:grid;grid-template-columns:150px 1fr;gap:12px;align-items:start}
+.imgprev{aspect-ratio:16/10;border-radius:13px;overflow:hidden;display:grid;place-items:center;font-weight:900;text-align:center;color:#fff;padding:6px;border:1px solid var(--line)}
+.imgprev img{width:100%;height:100%;object-fit:cover}
+.imgprev img.contain{object-fit:contain}
+.toast{position:fixed;left:50%;bottom:86px;transform:translate(-50%,20px);background:#0d1530;border:1px solid var(--y);padding:.65rem 1.1rem;border-radius:12px;opacity:0;pointer-events:none;transition:.3s;z-index:60;max-width:92%;text-align:center}
+.toast.on{opacity:1;transform:translate(-50%,0)}
+.toast.bad{border-color:var(--pink)}
+.hist{display:flex;justify-content:space-between;align-items:center;padding:.5rem 0;border-bottom:1px solid var(--line);font-size:.9rem}
+code{background:rgba(255,255,255,.08);padding:.1rem .4rem;border-radius:6px}
+[hidden]{display:none!important}
+</style>
+</head>
+<body>
+
+<div id="login">
+  <form class="lbox" onsubmit="doLogin(event)">
+    <h1>🍿 Panel MJ Streaming</h1>
+    <p class="help">Ingresa tu contraseña de administrador</p>
+    <input type="password" id="pw" placeholder="Contraseña" autocomplete="current-password" autofocus>
+    <button class="btn p" type="submit">Entrar</button>
+    <div class="err" id="lerr"></div>
+  </form>
+</div>
+
+<div id="app" hidden>
+  <header class="top">
+    <div class="top-in">
+      <h1>🍿 Panel · <span id="tn">MJ Streaming</span></h1>
+      <span class="chip" id="stDirty">✔ Todo publicado</span>
+      <span class="chip" id="stGh" hidden></span>
+      <a class="btn sm" href="/" target="_blank" rel="noopener">👁 Ver tienda</a>
+      <button class="btn sm d" onclick="logout()">Salir</button>
+    </div>
+    <div class="tabs" id="tabs"></div>
+  </header>
+  <main id="view"></main>
+  <div class="pub"><button class="btn p" id="pubBtn" onclick="publish()" disabled>🚀 Publicar cambios</button></div>
+</div>
+
+<dialog id="ed"><div class="dlg" id="edBody"></div></dialog>
+<div class="toast" id="toast"></div>
+
+<script>
+const $=s=>document.querySelector(s);
+const esc=s=>String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const fmt=n=>new Intl.NumberFormat("es-CO",{style:"currency",currency:"COP",maximumFractionDigits:0}).format(n||0);
+let DATA=null, dirty=false, tab="productos", q="", fcat="";
+
+async function api(path,{json,body,method}={}){
+  const opt={method:method||(json||body?"POST":"GET"),credentials:"same-origin",headers:{"X-Admin":"1"}};
+  if(json!==undefined){opt.headers["Content-Type"]="application/json";opt.body=JSON.stringify(json);} else if(body) opt.body=body;
+  const r=await fetch(path,opt); let j={}; try{j=await r.json()}catch(e){}
+  if(r.status===401&&!path.includes("login")){showLogin();throw new Error("Sesión vencida: vuelve a entrar");}
+  if(!r.ok) throw new Error(j.error||("Error "+r.status));
+  return j;
+}
+let tt; function toast(m,bad){const t=$("#toast");t.textContent=m;t.className="toast on"+(bad?" bad":"");clearTimeout(tt);tt=setTimeout(()=>t.classList.remove("on"),bad?4500:2200);}
+function showLogin(){$("#app").hidden=true;$("#login").hidden=false;}
+
+async function doLogin(e){
+  e.preventDefault(); $("#lerr").textContent="";
+  try{ await api("/api/admin/login",{json:{password:$("#pw").value}}); $("#pw").value=""; await start(); }
+  catch(err){ $("#lerr").textContent=err.message; }
+}
+async function logout(){ try{await api("/api/admin/logout",{json:{}});}catch(e){} location.reload(); }
+
+/* ---------- datos ---------- */
+function prepare(d){
+  d.config=d.config||{}; d.config.redes=d.config.redes||{}; d.config.pagos=d.config.pagos||[]; d.config.descuentos=d.config.descuentos||[];
+  d.config._cup=Object.entries(d.config.cupones||{}).map(([c,p])=>({c,p}));
+  d.products=d.products||[]; d.testimonios=d.testimonios||[]; d.faq=d.faq||[]; d.terminos=d.terminos||"";
+  return d;
+}
+function payload(){
+  const d=JSON.parse(JSON.stringify(DATA)); const cup={};
+  (d.config._cup||[]).forEach(x=>{ if(x.c&&x.c.trim()) cup[x.c.trim().toUpperCase()]=+x.p||0; });
+  d.config.cupones=cup; delete d.config._cup;
+  d.products.forEach(p=>delete p._auto);
+  return d;
+}
+function mark(v=true){ dirty=v; $("#pubBtn").disabled=!v; const c=$("#stDirty"); c.textContent=v?"● Cambios sin publicar":"✔ Todo publicado"; c.className="chip "+(v?"warn":"ok"); }
+async function start(){
+  DATA=prepare(await api("/api/admin/catalogo"));
+  $("#login").hidden=true; $("#app").hidden=false; $("#tn").textContent=DATA.config.tienda||"";
+  mark(false); render(); estado();
+}
+async function publish(){
+  const b=$("#pubBtn"); b.disabled=true; b.textContent="Publicando…";
+  try{ DATA=prepare(await api("/api/admin/catalogo",{method:"PUT",json:payload()})); mark(false); $("#tn").textContent=DATA.config.tienda||""; render(); toast("✔ Publicado. La tienda se actualiza sola en unos segundos"); setTimeout(estado,2500); }
+  catch(e){ toast(e.message,true); b.disabled=false; }
+  b.textContent="🚀 Publicar cambios";
+}
+async function estado(){
+  try{ const e=await api("/api/admin/estado"); const c=$("#stGh"); if(!e.github){c.hidden=true;return;}
+    c.hidden=false; c.textContent=(e.sync.ok===false?"⚠ ":"☁ ")+e.sync.msg; c.className="chip "+(e.sync.ok===false?"bad":"ok"); }catch(e){}
+}
+setInterval(()=>{ if(!$("#app").hidden) estado(); },15000);
+window.addEventListener("beforeunload",e=>{ if(dirty){e.preventDefault();e.returnValue="";} });
+
+/* ---------- pestañas ---------- */
+const TABS=[["productos","📦 Productos"],["tienda","⚙️ Tienda"],["ofertas","💸 Ofertas y pagos"],["faq","❓ Preguntas"],["terminos","📜 Términos"],["testi","⭐ Testimonios"],["respaldo","💾 Respaldo"]];
+function render(){
+  $("#tabs").innerHTML=TABS.map(([k,l])=>`<button class="${k===tab?"on":""}" data-t="${k}">${l}</button>`).join("");
+  $("#view").innerHTML=({productos:vProductos,tienda:vTienda,ofertas:vOfertas,faq:vFaq,terminos:vTerminos,testi:vTesti,respaldo:vRespaldo})[tab]();
+  if(tab==="respaldo") loadHist();
+}
+$("#tabs").addEventListener("click",e=>{const b=e.target.closest("[data-t]"); if(b){tab=b.dataset.t;render();}});
+
+/* campos simples enlazados por ruta: data-k="config.tienda" */
+function setPath(path,val){
+  const keys=path.split("."); let o=DATA; for(let i=0;i<keys.length-1;i++) o=o[keys[i]]; o[keys[keys.length-1]]=val;
+}
+$("#view").addEventListener("input",e=>{
+  const el=e.target.closest("[data-k]"); if(!el) return;
+  let v=el.type==="checkbox"?el.checked:el.value;
+  if(el.dataset.t==="lines") v=String(v).split("\n").map(x=>x.trim()).filter(Boolean);
+  if(el.dataset.t==="num") v=v===""?"":+v;
+  setPath(el.dataset.k,v); mark();
+});
+const val=(path)=>path.split(".").reduce((o,k)=>o?.[k],DATA);
+const inp=(label,path,extra="")=>`<label>${label}<input data-k="${path}" value="${esc(val(path))}" ${extra}></label>`;
+const txt=(label,path,rows=3)=>`<label>${label}<textarea rows="${rows}" data-k="${path}">${esc(val(path))}</textarea></label>`;
+
+/* ---------- Productos ---------- */
+function vProductos(){
+  const cats=[...new Set(DATA.products.map(p=>p.cat))];
+  const list=DATA.products.map((p,i)=>({p,i})).filter(({p})=>(!fcat||p.cat===fcat)&&(p.name+" "+p.cat).toLowerCase().includes(q.toLowerCase()));
+  return `<div class="bar">
+    <input id="pq" placeholder="🔎 Buscar producto" value="${esc(q)}" oninput="q=this.value;renderList()">
+    <select onchange="fcat=this.value;renderList()"><option value="">Todas las categorías</option>${cats.map(c=>`<option ${c===fcat?"selected":""}>${esc(c)}</option>`).join("")}</select>
+    <button class="btn p" onclick="editP(-1)">➕ Nuevo producto</button></div>
+    <p class="help" style="margin-bottom:12px">Tip: el orden de esta lista es el de la tienda (los marcados 🔥 salen primero). Cambia stock o visibilidad aquí mismo y pulsa <b>Publicar cambios</b>.</p>
+    <div id="plist">${rowsP(list)}</div>`;
+}
+function rowsP(list){
+  if(!list.length) return `<p class="help">No hay productos que coincidan.</p>`;
+  return list.map(({p,i})=>{
+    const img=p.img||p._auto, min=Math.min(...p.plans.map(x=>+x.p||0));
+    return `<div class="prow ${p.oculto?"off":""}">
+      <div class="thumb" style="background:linear-gradient(135deg,${p.c1},${p.c2})">${img?`<img src="${esc(img)}" alt="">`:esc((p.name||"?").slice(0,2))}</div>
+      <div class="pinfo"><b>${esc(p.name)} ${p.hot?"🔥":""}</b><small>${esc(p.cat)} · ${esc(p.tipo)} · ${p.plans.length} plan(es) · desde ${fmt(min)}</small></div>
+      <div class="pact">
+        <label class="st">Stock <input type="number" min="0" placeholder="∞" value="${p.stock??""}" onchange="DATA.products[${i}].stock=this.value===''?null:+this.value;mark()"></label>
+        <label class="ck st"><input type="checkbox" ${p.oculto?"":"checked"} onchange="DATA.products[${i}].oculto=!this.checked;mark();renderList()"> Visible</label>
+        <button class="btn sm" onclick="editP(${i})">✏️ Editar</button>
+        <button class="btn sm" onclick="moveP(${i},-1)" title="Subir">↑</button>
+        <button class="btn sm" onclick="moveP(${i},1)" title="Bajar">↓</button>
+        <button class="btn sm" onclick="dupP(${i})" title="Duplicar">⧉</button>
+        <button class="btn sm d" onclick="delP(${i})" title="Eliminar">🗑</button>
+      </div></div>`;
+  }).join("");
+}
+function renderList(){
+  const list=DATA.products.map((p,i)=>({p,i})).filter(({p})=>(!fcat||p.cat===fcat)&&(p.name+" "+p.cat).toLowerCase().includes(q.toLowerCase()));
+  $("#plist").innerHTML=rowsP(list);
+}
+function moveP(i,d){const j=i+d; if(j<0||j>=DATA.products.length) return; [DATA.products[i],DATA.products[j]]=[DATA.products[j],DATA.products[i]]; mark(); renderList();}
+function dupP(i){const c=JSON.parse(JSON.stringify(DATA.products[i])); c.id=c.id+"-copia"; c.name+=" (copia)"; delete c._auto; c.img=c.img||""; DATA.products.splice(i+1,0,c); mark(); renderList();}
+function delP(i){ if(confirm(`¿Eliminar "${DATA.products[i].name}"? (se aplica al publicar)`)){ DATA.products.splice(i,1); mark(); renderList(); } }
+
+/* ---------- editor de producto ---------- */
+let EP=null, EI=-1;
+const slug=s=>String(s||"").toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g,"").replace(/[^a-z0-9]+/g,"-").replace(/^-|-$/g,"");
+function editP(i){
+  EI=i;
+  EP=i>=0?JSON.parse(JSON.stringify(DATA.products[i])):{id:"",name:"",cat:"Video",tipo:"Perfil",c1:"#2f7bff",c2:"#0b1020",badge:"",hot:false,oculto:false,stock:null,img:"",fit:"",desc:"",incluye:[],nota:"",plans:[{l:"1 mes",p:0,o:0}]};
+  const cats=[...new Set(DATA.products.map(p=>p.cat))];
+  $("#edBody").innerHTML=`<h2>${i>=0?"Editar":"Nuevo"} producto</h2>
+  <div class="grid2">
+    <label>Nombre<input id="e_name" value="${esc(EP.name)}"></label>
+    <label>Categoría<input id="e_cat" list="dcat" value="${esc(EP.cat)}"><datalist id="dcat">${cats.map(c=>`<option>${esc(c)}</option>`).join("")}</datalist></label>
+    <label>Tipo<input id="e_tipo" list="dtipo" value="${esc(EP.tipo)}"><datalist id="dtipo"><option>Perfil</option><option>Cuenta completa</option><option>Cuenta</option><option>Licencia</option><option>Combo</option></datalist></label>
+    <label>Etiqueta (opcional)<input id="e_badge" value="${esc(EP.badge)}" placeholder="MÁS VENDIDO, OFERTA…"></label>
+    <label>Stock (vacío = ilimitado)<input id="e_stock" type="number" min="0" value="${EP.stock??""}"></label>
+    <div style="display:flex;gap:18px;align-items:center;flex-wrap:wrap;padding-top:18px">
+      <label class="ck"><input type="checkbox" id="e_hot" ${EP.hot?"checked":""}> Destacado 🔥</label>
+      <label class="ck"><input type="checkbox" id="e_vis" ${EP.oculto?"":"checked"}> Visible en la tienda</label></div>
+  </div>
+  <label>Descripción corta<textarea id="e_desc" rows="2">${esc(EP.desc)}</textarea></label>
+  <label>Qué incluye (una línea por ítem)<textarea id="e_inc" rows="3">${esc((EP.incluye||[]).join("\n"))}</textarea></label>
+  <label>Nota / condiciones (se muestra en el detalle)<textarea id="e_nota" rows="2">${esc(EP.nota)}</textarea></label>
+  <div><b style="font-size:.9rem">Planes y precios (COP)</b><div id="e_plans" style="margin-top:8px"></div>
+    <button class="btn sm" onclick="addPlan()">➕ Agregar plan</button></div>
+  <div><b style="font-size:.9rem">Imagen de la plataforma</b>
+    <div class="imgbox" style="margin-top:8px">
+      <div class="imgprev" id="e_prev"></div>
+      <div style="display:grid;gap:8px">
+        <div style="display:flex;gap:8px;flex-wrap:wrap">
+          <label class="btn sm" style="cursor:pointer">📤 Subir imagen<input type="file" accept="image/*" hidden onchange="upImg(this)"></label>
+          <button class="btn sm d" onclick="rmImg()">Quitar</button></div>
+        <label>o pega una URL de imagen<input id="e_img" value="${esc(EP.img)}" placeholder="https://…" oninput="EP.img=this.value;prev()"></label>
+        <label>Ajuste<select id="e_fit" onchange="EP.fit=this.value;prev()"><option value="">Llenar la tarjeta (recorta)</option><option value="contain" ${EP.fit==="contain"?"selected":""}>Mostrar completa (sin recortar)</option></select></label>
+        <span class="help">También puedes copiar el archivo a <code>static/img/${esc(EP.id||"id-del-producto")}.png</code> y se usa solo.</span>
+      </div></div></div>
+  <div class="grid2"><label>Color 1<input type="color" id="e_c1" value="${EP.c1}" oninput="prev()"></label><label>Color 2<input type="color" id="e_c2" value="${EP.c2}" oninput="prev()"></label></div>
+  <div style="display:flex;gap:8px;justify-content:flex-end;flex-wrap:wrap">
+    <button class="btn" onclick="$('#ed').close()">Cancelar</button>
+    <button class="btn" onclick="saveP(false)">Aplicar</button>
+    <button class="btn p" onclick="saveP(true)">Guardar y publicar</button></div>`;
+  plansUI(); prev(); $("#ed").showModal();
+}
+function plansUI(){
+  $("#e_plans").innerHTML=EP.plans.map((x,k)=>`<div class="row r4">
+    <label>Duración<input value="${esc(x.l)}" oninput="EP.plans[${k}].l=this.value"></label>
+    <label>Precio<input type="number" min="0" value="${x.p??""}" oninput="EP.plans[${k}].p=+this.value"></label>
+    <label>Precio anterior (tachado)<input type="number" min="0" value="${x.o||""}" oninput="EP.plans[${k}].o=+this.value"></label>
+    <button class="btn sm d" onclick="EP.plans.splice(${k},1);plansUI()">✕</button></div>`).join("");
+}
+function addPlan(){EP.plans.push({l:"",p:0,o:0});plansUI();}
+function prev(){
+  const c1=$("#e_c1").value,c2=$("#e_c2").value,el=$("#e_prev"); const img=EP.img||(EI>=0?DATA.products[EI]._auto:"");
+  el.style.background=`linear-gradient(135deg,${c1},${c2})`;
+  el.innerHTML=img?`<img class="${EP.fit==="contain"?"contain":""}" src="${esc(img)}" alt="">`:esc($("#e_name").value||"Sin imagen");
+}
+async function upImg(inp){
+  const f=inp.files[0]; if(!f) return;
+  const id=EP.id||slug($("#e_name").value)||("producto-"+Date.now()); EP.id=id;
+  try{
+    const bmp=await createImageBitmap(f), m=1000, k=Math.min(1,m/Math.max(bmp.width,bmp.height));
+    const cv=document.createElement("canvas"); cv.width=Math.round(bmp.width*k); cv.height=Math.round(bmp.height*k);
+    cv.getContext("2d").drawImage(bmp,0,0,cv.width,cv.height);
+    const blob=await new Promise(r=>cv.toBlob(r,"image/webp",.88));
+    const fd=new FormData(); fd.append("id",id); fd.append("file",blob,"img.webp");
+    const r=await api("/api/admin/imagen",{body:fd}); EP.img=r.url; $("#e_img").value=r.url; prev(); toast("✔ Imagen subida");
+  }catch(e){ toast(e.message||"No se pudo subir la imagen",true); }
+  inp.value="";
+}
+async function rmImg(){
+  const id=EP.id||slug($("#e_name").value);
+  if(id){ try{ await api("/api/admin/imagen/"+encodeURIComponent(id),{method:"DELETE"}); }catch(e){} }
+  EP.img=""; $("#e_img").value=""; if(EI>=0) DATA.products[EI]._auto=""; prev();
+}
+function saveP(pub){
+  const name=$("#e_name").value.trim(); if(!name){toast("Escribe el nombre",true);return;}
+  const plans=EP.plans.filter(x=>String(x.l).trim()).map(x=>({l:x.l.trim(),p:+x.p||0,...(+x.o?{o:+x.o}:{})}));
+  if(!plans.length){toast("Agrega al menos un plan con su duración",true);return;}
+  const p={...EP,id:EP.id||slug(name),name,cat:$("#e_cat").value.trim()||"Video",tipo:$("#e_tipo").value.trim()||"Perfil",badge:$("#e_badge").value.trim(),
+    stock:$("#e_stock").value===""?null:+$("#e_stock").value,hot:$("#e_hot").checked,oculto:!$("#e_vis").checked,desc:$("#e_desc").value.trim(),
+    incluye:$("#e_inc").value.split("\n").map(x=>x.trim()).filter(Boolean),nota:$("#e_nota").value.trim(),c1:$("#e_c1").value,c2:$("#e_c2").value,plans};
+  if(EI>=0) DATA.products[EI]=p; else DATA.products.unshift(p);
+  $("#ed").close(); mark(); render(); if(pub) publish();
+}
+
+/* ---------- Tienda ---------- */
+function vTienda(){
+  return `<div class="card"><h2>Datos de la tienda</h2><div class="grid2">
+    ${inp("Nombre de la tienda","config.tienda")}
+    ${inp("WhatsApp que recibe los pedidos (con indicativo, sin +)","config.whatsapp",'inputmode="numeric" placeholder="573215296552"')}
+    ${inp("Ciudad / región","config.ciudad")}
+    ${inp("Horario de atención","config.horario")}</div>
+    <div style="margin-top:12px">${inp("Mensaje de la barra superior","config.anuncio")}</div>
+    <label class="ck" style="margin-top:12px"><input type="checkbox" data-k="config.distribuidores" ${DATA.config.distribuidores?"checked":""}> Mostrar sección “Quiero ser distribuidor”</label></div>
+  <div class="card"><h2>Redes sociales</h2><p class="help" style="margin-bottom:10px">URL completa (https://…). Si la dejas vacía no se muestra.</p><div class="grid3">
+    ${inp("Instagram","config.redes.instagram",'placeholder="https://instagram.com/…"')}${inp("TikTok","config.redes.tiktok")}${inp("Facebook","config.redes.facebook")}</div></div>`;
+}
+
+/* ---------- Ofertas y pagos ---------- */
+function vOfertas(){
+  const c=DATA.config;
+  return `<div class="card"><h2>Descuento automático por cantidad</h2><p class="help" style="margin-bottom:10px">Se aplica según el total de servicios en el carrito. Deja la lista vacía para desactivarlo.</p>
+    ${c.descuentos.map((d,k)=>`<div class="row r2" style="grid-template-columns:1fr 1fr auto">${inp("Desde (servicios)",`config.descuentos.${k}.min`,'type="number" min="1"')}${inp("Descuento %",`config.descuentos.${k}.pct`,'type="number" min="0" max="90"')}
+      <button class="btn sm d" onclick="DATA.config.descuentos.splice(${k},1);mark();render()">✕</button></div>`).join("")}
+    <button class="btn sm" onclick="DATA.config.descuentos.push({min:2,pct:5});mark();render()">➕ Agregar nivel</button></div>
+  <div class="card"><h2>Códigos promocionales</h2>
+    ${c._cup.map((x,k)=>`<div class="row r2" style="grid-template-columns:1fr 1fr auto">${inp("Código",`config._cup.${k}.c`)}${inp("Descuento %",`config._cup.${k}.p`,'type="number" min="0" max="90"')}
+      <button class="btn sm d" onclick="DATA.config._cup.splice(${k},1);mark();render()">✕</button></div>`).join("")}
+    <button class="btn sm" onclick="DATA.config._cup.push({c:'',p:5});mark();render()">➕ Agregar código</button></div>
+  <div class="card"><h2>Medios de pago</h2><label>Uno por línea (se muestran en la tienda y en el carrito)<textarea rows="5" data-k="config.pagos" data-t="lines">${esc(c.pagos.join("\n"))}</textarea></label></div>
+  <div class="card"><h2>Stock</h2>${inp("Mostrar “Últimas unidades” cuando queden…","config.stockBajo",'type="number" min="0" data-t="num"')}</div>`;
+}
+
+/* ---------- FAQ ---------- */
+function vFaq(){
+  return `<div class="card"><h2>Preguntas frecuentes</h2>
+  ${DATA.faq.map((f,k)=>`<div class="row faq">${inp("Pregunta",`faq.${k}.q`)}${txt("Respuesta",`faq.${k}.a`,3)}
+    <div style="display:flex;gap:8px"><button class="btn sm" onclick="mv('faq',${k},-1)">↑</button><button class="btn sm" onclick="mv('faq',${k},1)">↓</button><button class="btn sm d" onclick="DATA.faq.splice(${k},1);mark();render()">Eliminar</button></div></div>`).join("")}
+  <button class="btn sm" onclick="DATA.faq.push({q:'',a:''});mark();render()">➕ Agregar pregunta</button></div>`;
+}
+function mv(key,k,d){const a=DATA[key],j=k+d; if(j<0||j>=a.length) return; [a[k],a[j]]=[a[j],a[k]]; mark(); render();}
+
+/* ---------- Términos ---------- */
+function vTerminos(){
+  return `<div class="card"><h2>Garantía y términos</h2><p class="help" style="margin-bottom:10px">Formato: una línea que empiece con <code># </code> es un título, con <code>- </code> es una viñeta; el resto es un párrafo.</p>
+  ${txt("Texto","terminos",18)}</div>`;
+}
+
+/* ---------- Testimonios ---------- */
+function vTesti(){
+  return `<div class="card"><h2>Testimonios de clientes</h2><p class="help" style="margin-bottom:10px">Agrega solo opiniones reales de tus clientes. Si no hay ninguna, la sección no aparece en la tienda.</p>
+  ${DATA.testimonios.map((t,k)=>`<div class="row faq"><div class="grid3">${inp("Nombre",`testimonios.${k}.nombre`)}${inp("Ciudad",`testimonios.${k}.ciudad`)}${inp("Plataforma",`testimonios.${k}.plataforma`)}</div>
+    ${txt("Comentario",`testimonios.${k}.texto`,2)}<div><button class="btn sm d" onclick="DATA.testimonios.splice(${k},1);mark();render()">Eliminar</button></div></div>`).join("")}
+  <button class="btn sm" onclick="DATA.testimonios.push({nombre:'',ciudad:'',plataforma:'',texto:''});mark();render()">➕ Agregar testimonio</button></div>`;
+}
+
+/* ---------- Respaldo ---------- */
+function vRespaldo(){
+  return `<div class="card"><h2>Exportar / importar</h2><p class="help" style="margin-bottom:10px">Descarga una copia de todo (productos, ajustes, preguntas…) o carga una copia anterior.</p>
+    <div style="display:flex;gap:8px;flex-wrap:wrap"><button class="btn" onclick="exportJ()">⬇ Descargar catalogo.json</button>
+    <label class="btn" style="cursor:pointer">⬆ Importar JSON<input type="file" accept="application/json,.json" hidden onchange="importJ(this)"></label></div></div>
+  <div class="card"><h2>Historial de versiones</h2><p class="help" style="margin-bottom:8px">Cada vez que publicas se guarda una versión. Restaurar publica esa versión de inmediato.</p><div id="hist">Cargando…</div></div>
+  <div class="card"><h2>Contraseña del panel</h2><p class="help">Se cambia en el servidor con la variable de entorno <code>ADMIN_PASSWORD</code>.</p></div>`;
+}
+function exportJ(){const a=document.createElement("a");a.href=URL.createObjectURL(new Blob([JSON.stringify(payload(),null,1)],{type:"application/json"}));a.download="catalogo.json";a.click();}
+function importJ(inp){
+  const f=inp.files[0]; if(!f) return; const r=new FileReader();
+  r.onload=()=>{ try{ DATA=prepare(JSON.parse(r.result)); mark(); render(); toast("Importado. Revisa y pulsa Publicar"); }catch(e){ toast("Archivo inválido",true); } };
+  r.readAsText(f); inp.value="";
+}
+async function loadHist(){
+  try{ const h=await api("/api/admin/historial"); const el=$("#hist"); if(!el) return;
+    el.innerHTML=h.items.length?h.items.map(n=>{const m=n.match(/cat-(\d{4})(\d\d)(\d\d)-(\d\d)(\d\d)(\d\d)/);return `<div class="hist"><span>${m?`${m[3]}/${m[2]}/${m[1]} ${m[4]}:${m[5]}:${m[6]}`:esc(n)}</span><button class="btn sm" onclick="restore('${n}')">Restaurar</button></div>`;}).join(""):"Aún no hay versiones.";
+  }catch(e){}
+}
+async function restore(n){
+  if(!confirm("¿Restaurar esta versión y publicarla ahora?")) return;
+  try{ DATA=prepare(await api("/api/admin/restaurar",{json:{name:n}})); mark(false); render(); toast("✔ Versión restaurada"); }catch(e){ toast(e.message,true); }
+}
+
+/* ---------- inicio ---------- */
+(async()=>{ try{ await start(); }catch(e){ showLogin(); if(!/vencida|autorizado/i.test(e.message)) $('#lerr').textContent=e.message; } })();
+</script>
+</body>
+</html>

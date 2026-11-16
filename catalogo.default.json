@@ -1,0 +1,644 @@
+{
+ "config": {
+  "tienda": "MJ Streaming",
+  "whatsapp": "573215296552",
+  "anuncio": "🍿 Mientras más plataformas agregas, más ahorras · Pedido directo por WhatsApp · Atención en Antioquia",
+  "moneda": "COP",
+  "locale": "es-CO",
+  "ciudad": "Antioquia, Colombia",
+  "horario": "Atendemos todos los días · 8:00 a. m. – 10:00 p. m.",
+  "redes": {
+   "instagram": "",
+   "tiktok": "",
+   "facebook": ""
+  },
+  "pagos": [
+   "Nequi",
+   "Daviplata",
+   "Bancolombia",
+   "Transferencia"
+  ],
+  "descuentos": [
+   {
+    "min": 2,
+    "pct": 5
+   },
+   {
+    "min": 3,
+    "pct": 10
+   },
+   {
+    "min": 5,
+    "pct": 15
+   }
+  ],
+  "cupones": {
+   "BIENVENIDO": 5
+  },
+  "distribuidores": true,
+  "stockBajo": 3
+ },
+ "products": [
+  {
+   "id": "netflix",
+   "name": "Netflix",
+   "cat": "Video",
+   "tipo": "Perfil",
+   "c1": "#e50914",
+   "c2": "#5a0007",
+   "badge": "MÁS VENDIDO",
+   "hot": 1,
+   "stock": 12,
+   "img": "",
+   "desc": "Perfil Ultra HD con PIN propio. Series, películas y documentales en todos tus dispositivos.",
+   "incluye": [
+    "Perfil personal con PIN",
+    "Calidad HD / Ultra HD según el plan",
+    "Smart TV, celular, tablet y PC",
+    "Soporte por WhatsApp"
+   ],
+   "nota": "Usa únicamente el perfil asignado. No cambies correo ni contraseña de la cuenta.",
+   "plans": [
+    {
+     "l": "1 mes",
+     "p": 14900,
+     "o": 19900
+    },
+    {
+     "l": "3 meses",
+     "p": 39900,
+     "o": 49900
+    },
+    {
+     "l": "6 meses",
+     "p": 74900,
+     "o": 94900
+    }
+   ]
+  },
+  {
+   "id": "max",
+   "name": "Max (HBO Max)",
+   "cat": "Video",
+   "tipo": "Perfil",
+   "c1": "#7c3aed",
+   "c2": "#25094f",
+   "stock": 9,
+   "img": "",
+   "desc": "Series, películas y estrenos de Warner en tu perfil personal.",
+   "incluye": [
+    "Perfil personal",
+    "Estrenos y series originales",
+    "Varios dispositivos"
+   ],
+   "nota": "Perfil asignado, sin cambiar datos de la cuenta.",
+   "plans": [
+    {
+     "l": "1 mes",
+     "p": 9900,
+     "o": 14900
+    },
+    {
+     "l": "3 meses",
+     "p": 26900,
+     "o": 34900
+    },
+    {
+     "l": "6 meses",
+     "p": 49900,
+     "o": 64900
+    }
+   ]
+  },
+  {
+   "id": "disney",
+   "name": "Disney+",
+   "cat": "Video",
+   "tipo": "Perfil",
+   "c1": "#1e3a8a",
+   "c2": "#0ea5e9",
+   "stock": 7,
+   "img": "",
+   "desc": "Disney, Pixar, Marvel, Star Wars y National Geographic para toda la familia.",
+   "incluye": [
+    "Perfil personal",
+    "Disney, Pixar, Marvel y Star Wars",
+    "Descargas según plan"
+   ],
+   "nota": "Perfil asignado, sin cambiar datos de la cuenta.",
+   "plans": [
+    {
+     "l": "1 mes",
+     "p": 9900,
+     "o": 13900
+    },
+    {
+     "l": "3 meses",
+     "p": 26900,
+     "o": 34900
+    },
+    {
+     "l": "6 meses",
+     "p": 49900,
+     "o": 64900
+    }
+   ]
+  },
+  {
+   "id": "prime",
+   "name": "Prime Video",
+   "cat": "Video",
+   "tipo": "Perfil",
+   "c1": "#00a8e1",
+   "c2": "#04283a",
+   "stock": null,
+   "img": "",
+   "desc": "Originales Amazon, películas y series con perfil propio.",
+   "incluye": [
+    "Perfil personal",
+    "Originales Amazon",
+    "Varios dispositivos"
+   ],
+   "nota": "Perfil asignado, sin cambiar datos de la cuenta.",
+   "plans": [
+    {
+     "l": "1 mes",
+     "p": 7900,
+     "o": 11900
+    },
+    {
+     "l": "3 meses",
+     "p": 20900,
+     "o": 28900
+    },
+    {
+     "l": "6 meses",
+     "p": 38900,
+     "o": 52900
+    }
+   ]
+  },
+  {
+   "id": "paramount",
+   "name": "Paramount+",
+   "cat": "Video",
+   "tipo": "Perfil",
+   "c1": "#0064ff",
+   "c2": "#001540",
+   "stock": 5,
+   "img": "",
+   "desc": "Estrenos, clásicos y contenido de Paramount y Nickelodeon.",
+   "incluye": [
+    "Perfil personal",
+    "Estrenos y clásicos",
+    "Contenido infantil"
+   ],
+   "nota": "Perfil asignado, sin cambiar datos de la cuenta.",
+   "plans": [
+    {
+     "l": "1 mes",
+     "p": 6900,
+     "o": 9900
+    },
+    {
+     "l": "3 meses",
+     "p": 18900,
+     "o": 25900
+    }
+   ]
+  },
+  {
+   "id": "universal",
+   "name": "Universal+",
+   "cat": "Video",
+   "tipo": "Perfil",
+   "c1": "#1f2937",
+   "c2": "#6366f1",
+   "stock": 3,
+   "img": "",
+   "desc": "Series y películas de Universal, NBC y más.",
+   "incluye": [
+    "Perfil personal",
+    "Catálogo Universal y NBC"
+   ],
+   "nota": "Perfil asignado, sin cambiar datos de la cuenta.",
+   "plans": [
+    {
+     "l": "1 mes",
+     "p": 8900,
+     "o": 12900
+    },
+    {
+     "l": "3 meses",
+     "p": 23900,
+     "o": 32900
+    }
+   ]
+  },
+  {
+   "id": "vix",
+   "name": "ViX Premium",
+   "cat": "Video",
+   "tipo": "Perfil",
+   "c1": "#ff6a00",
+   "c2": "#6b2500",
+   "stock": null,
+   "img": "",
+   "desc": "Contenido en español, telenovelas, series y deportes en vivo.",
+   "incluye": [
+    "Perfil personal",
+    "Contenido en español",
+    "Eventos en vivo"
+   ],
+   "nota": "Perfil asignado, sin cambiar datos de la cuenta.",
+   "plans": [
+    {
+     "l": "1 mes",
+     "p": 6900,
+     "o": 9900
+    },
+    {
+     "l": "3 meses",
+     "p": 18900,
+     "o": 25900
+    }
+   ]
+  },
+  {
+   "id": "crunchy",
+   "name": "Crunchyroll",
+   "cat": "Anime",
+   "tipo": "Perfil",
+   "c1": "#f47521",
+   "c2": "#5e2200",
+   "badge": "ANIME",
+   "stock": 20,
+   "img": "",
+   "desc": "Anime sin anuncios y estrenos directo desde Japón.",
+   "incluye": [
+    "Perfil personal",
+    "Sin anuncios",
+    "Estrenos en simulcast"
+   ],
+   "nota": "Perfil asignado, sin cambiar datos de la cuenta.",
+   "plans": [
+    {
+     "l": "1 mes",
+     "p": 7900,
+     "o": 10900
+    },
+    {
+     "l": "3 meses",
+     "p": 21900,
+     "o": 29900
+    },
+    {
+     "l": "6 meses",
+     "p": 39900,
+     "o": 54900
+    }
+   ]
+  },
+  {
+   "id": "plex",
+   "name": "Plex",
+   "cat": "Video",
+   "tipo": "Cuenta",
+   "c1": "#e5a00d",
+   "c2": "#1f1500",
+   "stock": null,
+   "img": "",
+   "desc": "Tu biblioteca multimedia con canales y películas bajo demanda.",
+   "incluye": [
+    "Acceso a biblioteca",
+    "Canales y películas on demand",
+    "Varios dispositivos"
+   ],
+   "nota": "Consulta por WhatsApp la compatibilidad con tu dispositivo antes de comprar.",
+   "plans": [
+    {
+     "l": "1 mes",
+     "p": 8900,
+     "o": 12900
+    },
+    {
+     "l": "3 meses",
+     "p": 23900,
+     "o": 32900
+    },
+    {
+     "l": "12 meses",
+     "p": 79900,
+     "o": 99900
+    }
+   ]
+  },
+  {
+   "id": "spotify",
+   "name": "Spotify Premium",
+   "cat": "Música",
+   "tipo": "Cuenta",
+   "c1": "#1db954",
+   "c2": "#042a12",
+   "badge": "SIN ANUNCIOS",
+   "stock": 15,
+   "img": "",
+   "desc": "Música y podcasts ilimitados, sin anuncios y con descargas offline.",
+   "incluye": [
+    "Sin anuncios",
+    "Descargas offline",
+    "Calidad premium"
+   ],
+   "nota": "Se activa sobre tu correo o cuenta según el plan; te indicamos el proceso por WhatsApp.",
+   "plans": [
+    {
+     "l": "1 mes",
+     "p": 12900,
+     "o": 16900
+    },
+    {
+     "l": "3 meses",
+     "p": 34900,
+     "o": 44900
+    },
+    {
+     "l": "12 meses",
+     "p": 119900,
+     "o": 149900
+    }
+   ]
+  },
+  {
+   "id": "winsports",
+   "name": "Win Sports+",
+   "cat": "Deportes",
+   "tipo": "Perfil",
+   "c1": "#facc15",
+   "c2": "#6b3a00",
+   "badge": "EN VIVO",
+   "stock": 6,
+   "img": "",
+   "desc": "Fútbol colombiano y deportes en vivo en tu perfil.",
+   "incluye": [
+    "Perfil personal",
+    "Partidos en vivo",
+    "Repeticiones"
+   ],
+   "nota": "Perfil asignado, sin cambiar datos de la cuenta.",
+   "plans": [
+    {
+     "l": "1 mes",
+     "p": 19900,
+     "o": 25900
+    },
+    {
+     "l": "3 meses",
+     "p": 54900,
+     "o": 69900
+    }
+   ]
+  },
+  {
+   "id": "gemini",
+   "name": "Gemini Plus",
+   "cat": "IA y Apps",
+   "tipo": "Cuenta",
+   "c1": "#4285f4",
+   "c2": "#a142f4",
+   "badge": "IA",
+   "hot": 1,
+   "stock": 8,
+   "img": "",
+   "desc": "Funciones avanzadas de IA para estudiar, crear y trabajar mejor.",
+   "incluye": [
+    "Modelos avanzados de IA",
+    "Ideal para estudio y trabajo"
+   ],
+   "nota": "El proceso de activación se coordina por WhatsApp.",
+   "plans": [
+    {
+     "l": "1 mes",
+     "p": 24900,
+     "o": 34900
+    },
+    {
+     "l": "3 meses",
+     "p": 67900,
+     "o": 89900
+    }
+   ]
+  },
+  {
+   "id": "capcut",
+   "name": "CapCut Pro",
+   "cat": "IA y Apps",
+   "tipo": "Cuenta",
+   "c1": "#06b6d4",
+   "c2": "#0b1020",
+   "stock": 10,
+   "img": "",
+   "desc": "Edición de video profesional, efectos premium y sin marca de agua.",
+   "incluye": [
+    "Efectos y plantillas premium",
+    "Exportación sin marca de agua"
+   ],
+   "nota": "Consulta compatibilidad con tu dispositivo por WhatsApp.",
+   "plans": [
+    {
+     "l": "1 mes",
+     "p": 14900,
+     "o": 21900
+    },
+    {
+     "l": "3 meses",
+     "p": 39900,
+     "o": 54900
+    }
+   ]
+  },
+  {
+   "id": "canva",
+   "name": "Canva Pro",
+   "cat": "IA y Apps",
+   "tipo": "Cuenta",
+   "c1": "#00c4cc",
+   "c2": "#7d2ae8",
+   "stock": null,
+   "img": "",
+   "desc": "Plantillas premium, fondos mágicos y kit de marca para tus diseños.",
+   "incluye": [
+    "Plantillas y elementos premium",
+    "Kit de marca",
+    "Fondos mágicos"
+   ],
+   "nota": "Se activa por invitación a tu correo.",
+   "plans": [
+    {
+     "l": "1 mes",
+     "p": 9900,
+     "o": 15900
+    },
+    {
+     "l": "3 meses",
+     "p": 24900,
+     "o": 37900
+    },
+    {
+     "l": "12 meses",
+     "p": 79900,
+     "o": 109900
+    }
+   ]
+  },
+  {
+   "id": "combo1",
+   "name": "Combo Netflix + Max",
+   "cat": "Combos",
+   "tipo": "Combo",
+   "c1": "#e50914",
+   "c2": "#7c3aed",
+   "badge": "COMBO",
+   "hot": 1,
+   "stock": 6,
+   "img": "",
+   "desc": "Dos de las plataformas más pedidas en un solo precio.",
+   "incluye": [
+    "Perfil de Netflix",
+    "Perfil de Max"
+   ],
+   "nota": "Los descuentos por cantidad se aplican sobre el total del carrito.",
+   "plans": [
+    {
+     "l": "1 mes",
+     "p": 22900,
+     "o": 24800
+    },
+    {
+     "l": "3 meses",
+     "p": 62900,
+     "o": 74700
+    }
+   ]
+  },
+  {
+   "id": "combo2",
+   "name": "Combo Disney+ + Max",
+   "cat": "Combos",
+   "tipo": "Combo",
+   "c1": "#0ea5e9",
+   "c2": "#7c3aed",
+   "badge": "COMBO",
+   "stock": 6,
+   "img": "",
+   "desc": "Cine familiar y series de culto, todo junto.",
+   "incluye": [
+    "Perfil de Disney+",
+    "Perfil de Max"
+   ],
+   "nota": "Los descuentos por cantidad se aplican sobre el total del carrito.",
+   "plans": [
+    {
+     "l": "1 mes",
+     "p": 17900,
+     "o": 19800
+    },
+    {
+     "l": "3 meses",
+     "p": 49900,
+     "o": 60700
+    }
+   ]
+  },
+  {
+   "id": "combo3",
+   "name": "Combo Netflix + Disney+ + Prime",
+   "cat": "Combos",
+   "tipo": "Combo",
+   "c1": "#e50914",
+   "c2": "#00a8e1",
+   "badge": "AHORRA MÁS",
+   "hot": 1,
+   "stock": 4,
+   "img": "",
+   "desc": "Tres plataformas para maratonear sin parar.",
+   "incluye": [
+    "Perfil de Netflix",
+    "Perfil de Disney+",
+    "Perfil de Prime Video"
+   ],
+   "nota": "Los descuentos por cantidad se aplican sobre el total del carrito.",
+   "plans": [
+    {
+     "l": "1 mes",
+     "p": 29900,
+     "o": 32700
+    },
+    {
+     "l": "3 meses",
+     "p": 82900,
+     "o": 100200
+    }
+   ]
+  },
+  {
+   "id": "combo4",
+   "name": "Combo Plex + Netflix",
+   "cat": "Combos",
+   "tipo": "Combo",
+   "c1": "#e5a00d",
+   "c2": "#e50914",
+   "badge": "COMBO",
+   "stock": 0,
+   "img": "",
+   "desc": "Tu biblioteca personal más el catálogo de Netflix.",
+   "incluye": [
+    "Acceso a Plex",
+    "Perfil de Netflix"
+   ],
+   "nota": "Los descuentos por cantidad se aplican sobre el total del carrito.",
+   "plans": [
+    {
+     "l": "1 mes",
+     "p": 21900,
+     "o": 23800
+    }
+   ]
+  }
+ ],
+ "testimonios": [],
+ "faq": [
+  {
+   "q": "¿Qué es un perfil y qué es una cuenta completa?",
+   "a": "Un perfil es tu espacio personal dentro de una cuenta compartida, con tu nombre y PIN; pagas solo tu parte. Una cuenta completa es para ti solo y puedes administrar todos sus perfiles."
+  },
+  {
+   "q": "¿En cuánto tiempo recibo mi acceso?",
+   "a": "Apenas confirmamos tu pago te enviamos los datos por WhatsApp. En horario de atención suele ser cuestión de minutos."
+  },
+  {
+   "q": "¿Cómo pago?",
+   "a": "Al enviar tu pedido por WhatsApp te indicamos los medios de pago disponibles y el total final."
+  },
+  {
+   "q": "¿Necesito crear una cuenta en la tienda?",
+   "a": "No. Compras sin registro: solo envías tu pedido por WhatsApp."
+  },
+  {
+   "q": "¿En qué dispositivos puedo verlo?",
+   "a": "Smart TV, celular, tablet y computador, según lo permita cada plataforma. Si tienes dudas de compatibilidad, escríbenos antes de comprar."
+  },
+  {
+   "q": "¿Qué pasa si mi perfil deja de funcionar?",
+   "a": "Escríbenos con tu número de pedido y lo resolvemos o lo reponemos mientras dure tu plan, siempre que no se hayan modificado los datos de acceso."
+  },
+  {
+   "q": "¿Puedo renovar mi plan?",
+   "a": "Sí. Avísanos unos días antes de que venza y mantenemos tu mismo perfil."
+  },
+  {
+   "q": "¿Cómo funcionan los descuentos?",
+   "a": "El descuento se aplica automáticamente en el carrito según la cantidad de servicios. También puedes usar un código promocional si tienes uno."
+  }
+ ],
+ "terminos": "# Garantía\n- Cubrimos fallas de acceso no causadas por el cliente durante el periodo contratado.\n- Para solicitarla, escríbenos por WhatsApp con tu nombre y número de pedido.\n- Si no podemos restablecer el servicio, lo reponemos por uno equivalente.\n# Uso correcto del servicio\n- Usa únicamente el perfil y el PIN asignados.\n- No cambies el correo, la contraseña ni los datos de la cuenta.\n- No compartas tu acceso con terceros.\n# Pagos y entrega\n- La entrega se realiza una vez confirmado el pago.\n- Una vez entregado el acceso no se realizan reembolsos, salvo que no sea posible reponer el servicio.\n# Renovaciones\n- Avísanos antes del vencimiento para conservar tu perfil."
+}

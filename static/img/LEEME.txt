@@ -1,0 +1,12 @@
+IMÁGENES DE LAS PLATAFORMAS
+===========================
+Copia aquí tus imágenes con el nombre del producto y la tienda las usa sola
+(formatos: webp, png, jpg, jpeg, avif, svg, gif). Ejemplo: static/img/netflix.png
+
+  netflix   max   disney   prime   paramount   universal   vix   crunchy
+  plex   spotify   winsports   gemini   capcut   canva
+  combo1   combo2   combo3   combo4
+
+Los productos nuevos que crees en el panel usan su "id" (aparece como nombre del
+archivo al subir la imagen). También puedes subir las imágenes desde /admin → Productos → Editar.
+Recomendado: 800 × 500 px (proporción 16:10), peso menor a 200 KB.
