@@ -169,11 +169,14 @@ setInterval(()=>{ if(!$("#app").hidden) estado(); },15000);
 window.addEventListener("beforeunload",e=>{ if(dirty){e.preventDefault();e.returnValue="";} });
 
 /* ---------- pestañas ---------- */
-const TABS=[["productos","📦 Productos"],["tienda","⚙️ Tienda"],["ofertas","💸 Ofertas y pagos"],["faq","❓ Preguntas"],["terminos","📜 Términos"],["testi","⭐ Testimonios"],["respaldo","💾 Respaldo"]];
+const TABS=[["productos","📦 Productos"],["inventario","🔐 Inventario"],["pedidos","🧾 Pedidos"],["pagos","💳 Pagos Bold"],["tienda","⚙️ Tienda"],["ofertas","💸 Ofertas y pagos"],["faq","❓ Preguntas"],["terminos","📜 Términos"],["testi","⭐ Testimonios"],["respaldo","💾 Respaldo"]];
 function render(){
   $("#tabs").innerHTML=TABS.map(([k,l])=>`<button class="${k===tab?"on":""}" data-t="${k}">${l}</button>`).join("");
-  $("#view").innerHTML=({productos:vProductos,tienda:vTienda,ofertas:vOfertas,faq:vFaq,terminos:vTerminos,testi:vTesti,respaldo:vRespaldo})[tab]();
+  $("#view").innerHTML=({productos:vProductos,inventario:vInventario,pedidos:vPedidos,pagos:vPagos,tienda:vTienda,ofertas:vOfertas,faq:vFaq,terminos:vTerminos,testi:vTesti,respaldo:vRespaldo})[tab]();
   if(tab==="respaldo") loadHist();
+  if(tab==="inventario") loadInv();
+  if(tab==="pedidos") loadOrd();
+  if(tab==="pagos") loadPagos();
 }
 $("#tabs").addEventListener("click",e=>{const b=e.target.closest("[data-t]"); if(b){tab=b.dataset.t;render();}});
 
@@ -386,6 +389,85 @@ async function restore(n){
   if(!confirm("¿Restaurar esta versión y publicarla ahora?")) return;
   try{ DATA=prepare(await api("/api/admin/restaurar",{json:{name:n}})); mark(false); render(); toast("✔ Versión restaurada"); }catch(e){ toast(e.message,true); }
 }
+
+
+/* ===================== INVENTARIO · PEDIDOS · PAGOS ===================== */
+let INV=[], ORD=[], invPid="", invSt="";
+const STL={disponible:["Disponible","ok"],reservada:["Reservada","warn"],vendida:["Vendida",""],bloqueada:["Bloqueada","bad"]};
+const OSL={pendiente:["Esperando pago","warn"],pagado:["Pagado · procesando","warn"],entregado:["Entregado","ok"],manual:["Entrega manual pendiente","warn"],sin_stock:["Pagado SIN STOCK","bad"],error_correo:["Error al enviar correo","bad"],monto_distinto:["Monto distinto","bad"],error_bold:["Error con Bold","bad"],cancelado:["Cancelado",""],expirado:["Expirado",""]};
+const dt=t=>t?new Date(t*1000).toLocaleString("es-CO",{day:"2-digit",month:"2-digit",hour:"2-digit",minute:"2-digit"}):"—";
+const pname=id=>(DATA.products.find(p=>p.id===id)||{name:id}).name;
+
+function vInventario(){
+  const opts=DATA.products.map(p=>`<option value="${esc(p.id)}">${esc(p.name)}</option>`).join("");
+  return `<div class="card"><h2>➕ Agregar cuentas</h2>
+    <p class="help" style="margin-bottom:10px">Una cuenta por línea: <code>correo|contraseña|nota opcional</code> (o <code>correo:contraseña</code>). La nota es para cosas como <i>"Perfil 2 · PIN 1234"</i> y se envía al cliente. Si una cuenta tiene varios perfiles, pega la misma cuenta una vez por cada perfil con su nota.</p>
+    <div class="grid2"><label>Producto<select id="iPid">${opts}</select></label>
+    <label>Plan (opcional)<input id="iPlan" placeholder="Ej. 1 mes — vacío = sirve para cualquier plan"></label></div>
+    <label style="margin-top:10px">Cuentas<textarea id="iLines" rows="5" placeholder="cuenta1@gmail.com|Clave123|Perfil 1 · PIN 1111&#10;cuenta2@gmail.com:Clave456"></textarea></label>
+    <div style="margin-top:10px"><button class="btn p" onclick="addInv()">Guardar en inventario</button></div></div>
+  <div class="card"><h2>📦 Existencias</h2><div id="invSum"></div>
+    <div class="bar" style="margin-top:10px"><select id="fPid" onchange="invPid=this.value;renderInv()"><option value="">Todos los productos</option>${opts}</select>
+    <select id="fSt" onchange="invSt=this.value;renderInv()"><option value="">Todos los estados</option>${Object.entries(STL).map(([k,v])=>`<option value="${k}">${v[0]}</option>`).join("")}</select></div>
+    <div id="invList">Cargando…</div></div>`;
+}
+async function loadInv(){ try{ const r=await api("/api/admin/inventario"); INV=r.items; renderInv(); const e=$("#fPid"); if(e){e.value=invPid;$("#fSt").value=invSt;} }catch(e){ toast(e.message,true); } }
+function renderInv(){
+  const sum={}; INV.forEach(a=>{const s=sum[a.pid]=sum[a.pid]||{disponible:0,reservada:0,vendida:0,bloqueada:0}; s[a.status]++;});
+  const el=$("#invSum"); if(!el) return;
+  el.innerHTML=Object.keys(sum).length?`<div style="display:flex;gap:8px;flex-wrap:wrap">${Object.entries(sum).map(([id,s])=>`<span class="chip ${s.disponible?(s.disponible<=2?"warn":"ok"):"bad"}">${esc(pname(id))}: <b>${s.disponible}</b> libres · ${s.vendida} vendidas${s.reservada?` · ${s.reservada} reservadas`:""}</span>`).join("")}</div><p class="help" style="margin-top:8px">Los productos con inventario muestran en la tienda el stock real y se despachan solos. Los que no tienen inventario se entregan manualmente.</p>`:`<p class="help">Aún no hay cuentas. Agrega las primeras arriba.</p>`;
+  const rows=INV.filter(a=>(!invPid||a.pid===invPid)&&(!invSt||a.status===invSt));
+  $("#invList").innerHTML=rows.length?rows.map(a=>`<div class="prow" style="grid-template-columns:1fr"><div class="pinfo"><b>${esc(pname(a.pid))} ${a.plan?`<small>· ${esc(a.plan)}</small>`:""} <span class="chip ${STL[a.status][1]}" style="margin-left:6px">${STL[a.status][0]}</span></b>
+    <small style="font-family:monospace;word-break:break-all">${esc(a.email)} · ${esc(a.password)}${a.extra?" · "+esc(a.extra):""}</small>${a.order?`<small style="display:block">Pedido ${esc(a.order)}</small>`:""}</div>
+    <div class="pact"><button class="btn sm" onclick="editInv('${a.id}')">✏️ Editar</button>
+    ${a.status==="vendida"||a.status==="bloqueada"?`<button class="btn sm" onclick="setInv('${a.id}','disponible')">↩ Marcar disponible</button>`:`<button class="btn sm" onclick="setInv('${a.id}','bloqueada')">⛔ Bloquear</button>`}
+    <button class="btn sm d" onclick="delInv('${a.id}')">🗑</button></div></div>`).join(""):`<p class="help">Sin resultados.</p>`;
+}
+async function addInv(){
+  try{ const r=await api("/api/admin/inventario",{json:{pid:$("#iPid").value,plan:$("#iPlan").value,lines:$("#iLines").value}}); $("#iLines").value=""; toast(`✔ ${r.added} cuenta(s) agregadas`); loadInv(); }catch(e){ toast(e.message,true); }
+}
+async function setInv(id,status){ try{ await api("/api/admin/inventario/"+id,{method:"PUT",json:{status}}); loadInv(); }catch(e){ toast(e.message,true); } }
+async function delInv(id){ if(!confirm("¿Eliminar esta cuenta del inventario?")) return; try{ await api("/api/admin/inventario/"+id,{method:"DELETE"}); loadInv(); }catch(e){ toast(e.message,true); } }
+function editInv(id){
+  const a=INV.find(x=>x.id===id); if(!a) return;
+  $("#edBody").innerHTML=`<div style="padding:22px;display:grid;gap:12px;min-width:min(420px,86vw)"><h2>Editar cuenta</h2>
+    <label>Correo / usuario<input id="eE" value="${esc(a.email)}"></label><label>Contraseña<input id="eP" value="${esc(a.password)}"></label>
+    <label>Nota (se envía al cliente)<input id="eX" value="${esc(a.extra)}"></label><label>Plan<input id="eL" value="${esc(a.plan)}"></label>
+    <div style="display:flex;gap:8px;justify-content:flex-end"><button class="btn" onclick="$('#ed').close()">Cancelar</button><button class="btn p" onclick="saveInv('${id}')">Guardar</button></div></div>`;
+  $("#ed").showModal();
+}
+async function saveInv(id){ try{ await api("/api/admin/inventario/"+id,{method:"PUT",json:{email:$("#eE").value,password:$("#eP").value,extra:$("#eX").value,plan:$("#eL").value}}); $("#ed").close(); loadInv(); toast("✔ Guardado"); }catch(e){ toast(e.message,true); } }
+
+function vPedidos(){ return `<div class="card"><h2>🧾 Pedidos</h2><p class="help" style="margin-bottom:10px">Se actualiza al abrir la pestaña. Si un pedido quedó "Pagado SIN STOCK" o con "Error al enviar correo", corrige (agrega inventario / revisa el correo) y pulsa <b>Reenviar</b>; el sistema también reintenta solo cada 2 minutos.</p><div class="bar"><button class="btn sm" onclick="loadOrd()">🔄 Actualizar</button></div><div id="ordList">Cargando…</div></div>`; }
+async function loadOrd(){
+  try{ ORD=(await api("/api/admin/pedidos")).items; }catch(e){ return toast(e.message,true); }
+  const el=$("#ordList"); if(!el) return;
+  el.innerHTML=ORD.length?ORD.map(o=>{const st=OSL[o.status]||[o.status,""]; return `<div class="prow" style="grid-template-columns:1fr"><div class="pinfo"><b>${esc(o.ref)} <span class="chip ${st[1]}" style="margin-left:6px">${st[0]}</span></b>
+    <small>${dt(o.created)} · ${esc(o.email)}${o.nombre?" · "+esc(o.nombre):""} · <b>${fmt(o.total)}</b>${o.cupon?" · cupón "+esc(o.cupon):""}</small>
+    <small style="display:block">${o.items.map(i=>`${i.qty}× ${esc(i.name)} (${esc(i.plan)})${i.manual?" 🖐manual":""}`).join(" · ")}</small>
+    ${o.error?`<small style="display:block;color:#ff6b7d">${esc(o.error)}</small>`:""}${o.via?`<small style="display:block">Pago vía ${esc(o.via)} ${o.payment_id?"· "+esc(o.payment_id):""}</small>`:""}${o.notas?`<small style="display:block">📝 ${esc(o.notas)}</small>`:""}</div>
+    <div class="pact">${o.paid?`<button class="btn sm" onclick="ordAct('${o.ref}','reenviar')">📧 Reenviar</button><button class="btn sm" onclick="if(confirm('¿Reenviar TODAS las cuentas del pedido, incluso las ya enviadas?'))ordAct('${o.ref}','reenviar',{todo:true})">📧 Reenviar todo</button>${o.status==="manual"?`<button class="btn sm" onclick="ordAct('${o.ref}','completar')">✔ Marcar completado</button>`:""}`
+    :(["pendiente","error_bold","monto_distinto"].includes(o.status)?`<button class="btn sm" onclick="if(confirm('¿Confirmar el pago de este pedido a mano y entregar las cuentas?'))ordAct('${o.ref}','entregar')">✔ Confirmar pago manual</button><button class="btn sm d" onclick="ordAct('${o.ref}','cancelar')">✖ Cancelar</button>`:"")}</div></div>`;}).join(""):`<p class="help">Aún no hay pedidos.</p>`;
+}
+async function ordAct(ref,act,json={}){ try{ const r=await api(`/api/admin/pedidos/${ref}/${act}`,{json}); toast(r.ok===false?("⚠ "+(r.error||r.status||r.result||"No se pudo")):"✔ Listo",r.ok===false); }catch(e){ toast(e.message,true); } loadOrd(); }
+
+function vPagos(){ return `<div class="card"><h2>💳 Estado de la integración con Bold</h2><div id="pgInfo">Cargando…</div></div>
+  <div class="card"><h2>📧 Probar envío de correo</h2><div class="grid2"><label>Enviar prueba a<input id="mTo" placeholder="tucorreo@gmail.com" type="email"></label></div><div style="margin-top:10px"><button class="btn" onclick="testMail()">Enviar correo de prueba</button></div></div>
+  <div class="card"><h2>🧭 Pasos para activarlo</h2><ol class="help" style="padding-left:18px;display:grid;gap:6px">
+   <li>En el <b>Panel de comercios de Bold → Integraciones</b> copia tu <b>llave de identidad</b> y tu <b>llave secreta</b> y ponlas en Render como <code>BOLD_API_KEY</code> y <code>BOLD_SECRET_KEY</code>.</li>
+   <li>En Bold → Integraciones → <b>Webhooks → Configurar webhook</b> pega la URL del webhook (arriba) y activa el evento <b>Venta aprobada</b>.</li>
+   <li>Define <code>PUBLIC_URL</code> (tu dominio con https), <code>INVENTORY_KEY</code> (frase larga y secreta) y el correo: <code>RESEND_API_KEY</code> + <code>MAIL_FROM</code>.</li>
+   <li>Agrega cuentas en <b>Inventario</b>, haz una compra pequeña de prueba y revisa <b>Pedidos</b>.</li></ol></div>
+  <div class="card"><h2>📡 Últimos eventos</h2><div id="pgEv" class="help">—</div></div>`; }
+async function loadPagos(){
+  try{ const e=await api("/api/admin/estado"); const el=$("#pgInfo"); if(!el) return; const c=(ok,t)=>`<span class="chip ${ok?"ok":"bad"}" style="margin:0 6px 6px 0">${ok?"✔":"✖"} ${t}</span>`;
+    el.innerHTML=c(e.bold.api,"BOLD_API_KEY (crear links)")+c(e.bold.secret||e.bold.test,"BOLD_SECRET_KEY (firma del webhook)")+c(e.correo,"Envío de correo")+c(e.key_explicit,"INVENTORY_KEY propia")+c(!!e.public_url,"PUBLIC_URL")+(e.bold.test?`<span class="chip warn">Modo pruebas</span>`:"")
+      +`<p class="help" style="margin-top:8px">URL del webhook para Bold:</p><code style="display:block;word-break:break-all;background:var(--card);padding:10px;border-radius:10px;margin-top:4px;user-select:all">${esc(e.bold.webhook)}</code>`
+      +(!e.key_explicit?`<p class="help" style="margin-top:8px;color:#ffc14d">⚠ Sin INVENTORY_KEY las credenciales se cifran con una clave derivada de tu SECRET_KEY/ADMIN_PASSWORD y NO se respaldan en GitHub. Define INVENTORY_KEY.</p>`:"")
+      +`<p class="help" style="margin-top:8px">Las cuentas se reservan ${e.reserva_min} min mientras el cliente paga.</p>`;
+    $("#pgEv").innerHTML=e.eventos.length?e.eventos.map(v=>`<div>${dt(v.t)} · <b>${esc(v.kind)}</b> · ${esc(v.msg)}</div>`).join(""):"Sin eventos todavía."; }catch(e){}
+}
+async function testMail(){ try{ await api("/api/admin/correo-prueba",{json:{to:$("#mTo").value}}); toast("✔ Correo enviado, revisa tu bandeja"); }catch(e){ toast(e.message,true); } }
 
 /* ---------- inicio ---------- */
 (async()=>{ try{ await start(); }catch(e){ showLogin(); if(!/vencida|autorizado/i.test(e.message)) $('#lerr').textContent=e.message; } })();

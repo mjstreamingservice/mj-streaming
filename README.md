@@ -52,3 +52,36 @@ Además, en el panel → Respaldo puedes descargar `catalogo.json` y ver/restaur
 - Usa `--workers 1` (el catálogo se guarda en un archivo).
 - La sesión del panel dura 14 días; tras 8 intentos fallidos de contraseña se bloquea 10 minutos.
 - Si abres `public/index.html` directamente (sin servidor) funciona con los datos de prueba incluidos, pero sin panel.
+
+
+---
+
+# 💳 Pagos automáticos con Bold + entrega por correo
+
+**Flujo:** el cliente agrega al carrito → *Pagar ahora* → escribe su correo → `/api/checkout` reserva las cuentas y crea el link de Bold → el cliente paga en Bold → Bold avisa a `/api/bold/webhook` (evento `SALE_APPROVED`, firmado) → el sistema toma las cuentas, las marca vendidas y las envía al correo. Si el aviso se demora, la página de retorno (`/?pedido=...`) consulta el link en Bold y entrega igual.
+
+## Variables de entorno en Render
+| Variable | Para qué |
+|---|---|
+| `BOLD_API_KEY` | Llave de identidad de Bold (crea los links). |
+| `BOLD_SECRET_KEY` | Llave secreta de Bold (verifica la firma del webhook). Sin ella el webhook rechaza todo. |
+| `BOLD_TEST=1` | Solo en pruebas: la firma usa llave vacía. **Quítala en producción.** |
+| `PUBLIC_URL` | `https://tudominio.com` (se usa en el `callback_url`). |
+| `INVENTORY_KEY` | Frase larga y secreta que cifra las cuentas. **Guárdala aparte: sin ella no se pueden descifrar.** |
+| `RESEND_API_KEY` + `MAIL_FROM` | Correo vía Resend (recomendado; dominio verificado, ej. `MJ Streaming <ventas@tudominio.com>`). |
+| `SMTP_HOST/PORT/USER/PASS` + `MAIL_FROM` | Alternativa SMTP (Render gratis suele bloquear SMTP saliente; usa Resend). |
+| `ADMIN_EMAIL` | (opcional) recibe avisos: sin stock, correo fallido, monto distinto. |
+| `RESERVA_MIN` | (opcional, 30) minutos que se reservan las cuentas mientras se paga. |
+| `BOLD_METHODS` | (opcional) `PSE,NEQUI,CREDIT_CARD,BOTON_BANCOLOMBIA` para limitar medios. |
+| `BOLD_EXPIRE_MIN` | (opcional) vencimiento del link en minutos. La doc de Bold dice nanosegundos pero su ejemplo parece milisegundos: si lo usas, prueba y ajusta `BOLD_EXPIRE_UNIT` (`ns` o `ms`). |
+
+## En el panel de Bold
+Panel de comercios → Integraciones → **Webhooks → Configurar webhook** → pega `https://tudominio.com/api/bold/webhook` (la URL exacta aparece en `/admin` → *Pagos Bold*) y activa *Venta aprobada*.
+
+## Inventario
+`/admin` → **Inventario**: pega cuentas (`correo|clave|nota`), una por línea, por producto (y plan opcional). Los productos con inventario muestran el stock real en la tienda y se despachan solos; los demás se marcan "entrega manual" (el cliente recibe un correo de confirmación y tú un aviso). En **Pedidos** puedes reenviar, confirmar un pago a mano o cancelar.
+
+## Importante
+- Las pruebas de Bold (sandbox) **no envían webhook**: para probar el flujo completo usa *Confirmar pago manual* en Pedidos o haz una compra real pequeña.
+- Render gratis duerme el servicio: el primer aviso puede tardar; Bold reintenta (15 min, 1 h, 4 h, 8 h, 24 h) y el sistema es idempotente.
+- Disco temporal: sin un disco persistente, inventario y pedidos solo sobreviven si defines `INVENTORY_KEY` y el respaldo en GitHub (`GITHUB_TOKEN`/`GITHUB_REPO`); se guardan cifrados. Lo más seguro es un *Persistent Disk* de Render con `DATA_DIR` apuntando a él.

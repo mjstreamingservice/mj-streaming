@@ -2,7 +2,7 @@
  "config": {
   "tienda": "MJ Streaming",
   "whatsapp": "573215296552",
-  "anuncio": "🍿 Mientras más plataformas agregas, más ahorras · Pedido directo por WhatsApp · Atención en Antioquia",
+  "anuncio": "🍿 Mientras más plataformas agregas, más ahorras · Pago seguro y entrega automática por correo · Atención en Antioquia",
   "moneda": "COP",
   "locale": "es-CO",
   "ciudad": "Antioquia, Colombia",
@@ -613,15 +613,15 @@
   },
   {
    "q": "¿En cuánto tiempo recibo mi acceso?",
-   "a": "Apenas confirmamos tu pago te enviamos los datos por WhatsApp. En horario de atención suele ser cuestión de minutos."
+   "a": "Apenas se confirma tu pago, tus accesos llegan automáticamente al correo que registraste. Si algún artículo es de entrega manual, te lo enviamos por WhatsApp en horario de atención suele ser cuestión de minutos."
   },
   {
    "q": "¿Cómo pago?",
-   "a": "Al enviar tu pedido por WhatsApp te indicamos los medios de pago disponibles y el total final."
+   "a": "Pagas en línea con Bold: PSE, Nequi, tarjetas débito/crédito o Bancolombia. También puedes pedir por WhatsApp si lo prefieres."
   },
   {
    "q": "¿Necesito crear una cuenta en la tienda?",
-   "a": "No. Compras sin registro: solo envías tu pedido por WhatsApp."
+   "a": "No. Compras sin registro: solo escribes tu correo y pagas."
   },
   {
    "q": "¿En qué dispositivos puedo verlo?",
