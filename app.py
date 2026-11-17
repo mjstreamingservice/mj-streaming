@@ -163,6 +163,25 @@ def lst(v):
     return v if isinstance(v, list) else []
 
 
+SOCIAL = {"instagram": "https://www.instagram.com/", "tiktok": "https://www.tiktok.com/@", "facebook": "https://www.facebook.com/"}
+
+
+def norm_social(k, v):
+    """Acepta URL completa, 'instagram.com/usuario', '@usuario' o 'usuario' y devuelve una URL https válida (o vacío)."""
+    v = s(v, 300).strip()
+    if not v:
+        return ""
+    if not re.match(r"^https?://", v, re.I):
+        if re.match(r"^(www\.)?[a-z0-9-]+\.[a-z]{2,}(/|$)", v, re.I):
+            v = "https://" + v
+        else:
+            handle = v.lstrip("@/ ").split("?")[0].strip("/")
+            if not re.match(r"^[A-Za-z0-9._-]{1,60}$", handle):
+                return ""
+            v = SOCIAL[k] + handle
+    return v if re.match(r"^https?://[^\s\"'<>]+$", v) else ""
+
+
 def clean_url(v):
     v = s(v, 500)
     return v if re.match(r"^(https?://|/img/)", v) else ""
@@ -233,7 +252,12 @@ def clean(d):
         "locale": s(c.get("locale"), 10) or "es-CO",
         "ciudad": s(c.get("ciudad"), 80),
         "horario": s(c.get("horario"), 120),
-        "redes": {k: clean_url(redes.get(k)) if str(redes.get(k, "")).startswith("http") else "" for k in ("instagram", "tiktok", "facebook")},
+        "redes": {k: norm_social(k, redes.get(k)) for k in ("instagram", "tiktok", "facebook")},
+        "tema": re.sub(r"[^a-z0-9-]", "", s(c.get("tema"), 30).lower()) or "neon",
+        "efectos": c.get("efectos") is not False,
+        "tema_anuncio": s(c.get("tema_anuncio"), 200),
+        "tema_desde": s(c.get("tema_desde"), 10) if re.match(r"^\d{4}-\d{2}-\d{2}$", s(c.get("tema_desde"), 10)) else "",
+        "tema_hasta": s(c.get("tema_hasta"), 10) if re.match(r"^\d{4}-\d{2}-\d{2}$", s(c.get("tema_hasta"), 10)) else "",
         "pagos": [s(x, 40) for x in lst(c.get("pagos"))[:12] if s(x, 40)],
         "descuentos": sorted(desc, key=lambda x: x["min"]),
         "cupones": cupones,
@@ -654,16 +678,16 @@ def load_ord():
     return _read(ORD_FILE, {"orders": []})
 
 
-def enc_acc(email, password, extra):
-    return FERNET.encrypt(json.dumps({"e": email, "p": password, "x": extra}, ensure_ascii=False).encode()).decode()
+def enc_acc(email, password, perfil="", pin="", extra=""):
+    return FERNET.encrypt(json.dumps({"e": email, "p": password, "f": perfil, "n": pin, "x": extra}, ensure_ascii=False).encode()).decode()
 
 
 def dec_acc(a):
     try:
         d = json.loads(FERNET.decrypt(a["enc"].encode()))
-        return {"email": d.get("e", ""), "password": d.get("p", ""), "extra": d.get("x", "")}
+        return {"email": d.get("e", ""), "password": d.get("p", ""), "perfil": d.get("f", ""), "pin": d.get("n", ""), "extra": d.get("x", "")}
     except Exception:  # noqa: BLE001
-        return {"email": "⚠ no se pudo descifrar (¿cambió INVENTORY_KEY?)", "password": "", "extra": ""}
+        return {"email": "⚠ no se pudo descifrar (¿cambió INVENTORY_KEY?)", "password": "", "perfil": "", "pin": "", "extra": ""}
 
 
 def acc_free(a, now, ref=None):
@@ -743,8 +767,8 @@ def reserve(inv, lines, ref):
     plan = []
     for ln in lines:
         if ln["pid"] not in managed:
-            if ln.get("stock") == 0:
-                return f"{ln['name']} está agotado."
+            if ln.get("stock") is not None and ln["stock"] < ln["qty"]:
+                return f"{ln['name']} está agotado." if ln["stock"] == 0 else f"Solo quedan {ln['stock']} de {ln['name']}."
             continue
         cand = [a for a in inv["items"] if a["pid"] == ln["pid"] and a["id"] not in used and acc_free(a, now, ref) and acc_fits(a, ln["plan"])]
         cand.sort(key=lambda a: (not a.get("plan"), a.get("created", 0)))     # primero las específicas del plan, luego las genéricas
@@ -831,18 +855,33 @@ def send_mail(to, subject, html, text):
 def build_mail(o, delivered, manual, cfg, prods):
     store, wa = cfg.get("tienda", "MJ Streaming"), cfg.get("whatsapp", "")
     notas = {p["id"]: p.get("nota", "") for p in prods}
+
+    def row(label, value, color="#fff"):
+        return (f"<tr><td style='padding:5px 12px 5px 0;color:#98a3c7;font-size:13px;white-space:nowrap;vertical-align:top'>{label}</td>"
+                f"<td style='padding:5px 0;font-family:Consolas,monospace;font-size:15px;color:{color};word-break:break-all'>{h(value)}</td></tr>")
+
     cards, txt = [], [f"¡Gracias por tu compra en {store}! Pedido {o['ref']}", ""]
     for ln, acc in delivered:
+        rows = row("Cuenta", acc["email"]) + row("Contraseña", acc["password"], "#8dff2e")
+        if acc["perfil"]:
+            rows += row("Perfil", acc["perfil"], "#ffe93a")
+        if acc["pin"]:
+            rows += row("PIN", acc["pin"], "#ffe93a")
         extra = f"<div style='color:#b8c2e6;font-size:13px;margin-top:6px'>{h(acc['extra'])}</div>" if acc["extra"] else ""
         nota = f"<div style='color:#8fa0d6;font-size:12px;margin-top:8px'>{h(notas.get(ln['pid'], ''))}</div>" if notas.get(ln["pid"]) else ""
         cards.append(
             f"<div style='background:#0d1530;border:1px solid #24305f;border-radius:14px;padding:16px;margin:12px 0'>"
             f"<div style='font-weight:800;color:#ffe93a;font-size:16px'>{h(ln['name'])} <span style='color:#98a3c7;font-weight:500;font-size:13px'>· {h(ln['plan'])}</span></div>"
-            f"<div style='margin-top:10px;font-size:14px;color:#98a3c7'>Correo / usuario</div><div style='font-family:Consolas,monospace;font-size:15px;color:#fff;word-break:break-all'>{h(acc['email'])}</div>"
-            f"<div style='margin-top:8px;font-size:14px;color:#98a3c7'>Contraseña</div><div style='font-family:Consolas,monospace;font-size:15px;color:#8dff2e;word-break:break-all'>{h(acc['password'])}</div>"
-            f"{extra}{nota}</div>"
+            f"<table style='margin-top:8px;border-collapse:collapse'>{rows}</table>{extra}{nota}</div>"
         )
-        txt += [f"{ln['name']} · {ln['plan']}", f"  Usuario: {acc['email']}", f"  Contraseña: {acc['password']}"] + ([f"  {acc['extra']}"] if acc["extra"] else []) + [""]
+        txt += [f"{ln['name']} · {ln['plan']}", f"  Cuenta: {acc['email']}", f"  Contraseña: {acc['password']}"]
+        if acc["perfil"]:
+            txt.append(f"  Perfil: {acc['perfil']}")
+        if acc["pin"]:
+            txt.append(f"  PIN: {acc['pin']}")
+        if acc["extra"]:
+            txt.append(f"  {acc['extra']}")
+        txt.append("")
     manual_html = ""
     if manual:
         names = ", ".join(f"{m['qty']} x {m['name']} ({m['plan']})" for m in manual)
@@ -856,7 +895,7 @@ def build_mail(o, delivered, manual, cfg, prods):
         f"<h2 style='margin:14px 0 4px;font-size:20px'>¡Pago confirmado! 🎉</h2>"
         f"<p style='color:#98a3c7;margin:0 0 6px'>Aquí están tus accesos (pedido <b>{h(o['ref'])}</b>):</p>"
         f"{''.join(cards)}{manual_html}"
-        "<p style='color:#98a3c7;font-size:13px;line-height:1.6'>• No cambies la contraseña ni el correo de la cuenta.<br>• Usa solo el perfil asignado.<br>• Si algo no funciona, escríbenos y lo solucionamos.</p>"
+        "<p style='color:#98a3c7;font-size:13px;line-height:1.6'>• No cambies la contraseña ni el correo de la cuenta.<br>• Usa solo el perfil y el PIN asignados.<br>• Si algo no funciona, escríbenos y lo solucionamos.</p>"
         f"<p style='text-align:center;margin:20px 0 0'><a href='{h(wa_link)}' style='background:#25d366;color:#04210f;text-decoration:none;font-weight:800;padding:12px 22px;border-radius:999px;display:inline-block'>💬 Soporte por WhatsApp</a></p>"
         "</div></div>"
     )
@@ -873,7 +912,7 @@ def alert_admin(subject, body):
             log_event("error", f"No se pudo avisar al admin: {e}")
 
 
-def deliver(ref):
+def _deliver(ref):
     """Envía por correo las cuentas ya asignadas y todavía no enviadas. Reintentable (idempotente por cuenta)."""
     with _lock:
         ords, inv = load_ord(), load_inv()
@@ -914,10 +953,25 @@ def deliver(ref):
             o2["status"] = "entregado"
             o2["delivered"] = int(time.time())
         _write(ORD_FILE, ords)
-    if missing:
+    if missing and not o.get("alerta_stock"):
+        with _lock:
+            ords = load_ord()
+            next(x for x in ords["orders"] if x["ref"] == ref)["alerta_stock"] = True
+            _write(ORD_FILE, ords)
         alert_admin(f"Pedido {ref} pagado SIN STOCK suficiente", f"Cliente: {o['email']}\nFaltan {missing} cuenta(s). Agrega inventario en /admin; el sistema las enviará solo, o usa Reenviar.")
     elif manual:
         alert_admin(f"Pedido {ref} requiere entrega manual", f"Cliente: {o['email']}\nArtículos sin inventario: " + ", ".join(f"{m['qty']}x {m['name']} ({m['plan']})" for m in manual))
+
+
+_REF_LOCKS, _RL = {}, threading.Lock()
+
+
+def deliver(ref):
+    """Un solo envío a la vez por pedido: dos avisos simultáneos (webhook + consulta + reintento) nunca duplican el correo."""
+    with _RL:
+        lk = _REF_LOCKS.setdefault(ref, threading.Lock())
+    with lk:
+        _deliver(ref)
 
 
 def deliver_async(ref):
@@ -977,9 +1031,10 @@ def create_bold_link(o, base):
         "amount": {"currency": "COP", "total_amount": o["total"], "tip_amount": 0},
         "reference": o["ref"],
         "description": desc,
-        "callback_url": f"{base}/?pedido={o['ref']}",
         "payer_email": o["email"],
     }
+    if base.startswith("https://"):        # Bold solo acepta callback_url con https
+        body["callback_url"] = f"{base}/?pedido={o['ref']}"
     if BOLD_METHODS:
         body["payment_methods"] = BOLD_METHODS
     if BOLD_EXPIRE_MIN:
@@ -998,7 +1053,10 @@ def verify_sig(raw, sig):
         return False
     key = BOLD_SECRET_KEY.encode() if not BOLD_TEST or BOLD_SECRET_KEY else b""
     mine = hmac.new(key, base64.b64encode(raw), hashlib.sha256).hexdigest()
-    return hmac.compare_digest(mine, (sig or "").strip().lower())
+    try:
+        return hmac.compare_digest(mine.encode(), (sig or "").strip().lower().encode())
+    except Exception:  # noqa: BLE001
+        return False
 
 
 def reconcile(o):
@@ -1098,8 +1156,15 @@ def api_pedido(ref):
     reconcile(o)
     o = next(x for x in load_ord()["orders"] if x["ref"] == ref)
     st = o["status"]
-    simple = "pendiente" if st in ("pendiente",) else "fallido" if st in ("error_bold", "cancelado", "expirado", "rechazado") else "entregado" if st in ("entregado", "manual") else "pagado"
-    return jsonify(estado=simple, email=mask(o["email"]), total=o["total"])
+    if o.get("paid"):
+        simple = "entregado" if st in ("entregado", "manual") else "pagado"
+    elif st == "pendiente":
+        simple = "rechazado" if o.get("rechazo") else "pendiente"
+    elif st == "monto_distinto":
+        simple = "revision"
+    else:
+        simple = "fallido"
+    return jsonify(estado=simple, email=mask(o["email"]), total=o["total"], url=o.get("url", "") if simple in ("pendiente", "rechazado") else "")
 
 
 @app.post("/api/bold/webhook")
@@ -1123,6 +1188,12 @@ def bold_webhook():
     if typ == "SALE_APPROVED" and ref:
         res = process_paid(ref, pid, (data.get("amount") or {}).get("total"), "webhook")
     elif typ == "SALE_REJECTED" and ref:
+        with _lock:
+            ords = load_ord()
+            o = next((x for x in ords["orders"] if x["ref"] == ref), None)
+            if o and not o.get("paid"):
+                o["rechazo"] = int(time.time())
+                _write(ORD_FILE, ords)
         res = "rechazo-registrado"
     elif typ == "VOID_APPROVED" and ref:
         with _lock:
@@ -1137,25 +1208,41 @@ def bold_webhook():
     return jsonify(ok=True, result=res), 200
 
 
+def repair_pass():
+    """Repara lo que un reinicio o una caída pudo dejar a medias. Devuelve la lista de arreglos."""
+    fixes, now, todo = [], time.time(), []
+    with _lock:
+        ords, inv = load_ord(), load_inv()
+        for o in ords["orders"]:
+            if o["status"] == "pendiente" and not o.get("link") and now - o["created"] > 300:
+                o.update(status="error_bold", error="Se interrumpió antes de crear el link de pago")
+                release(inv, o["ref"])
+                fixes.append(f"Pedido {o['ref']}: sin link de pago, se liberaron sus cuentas")
+            if o.get("paid") and o["status"] in ("error_correo", "sin_stock", "pagado") and o.get("intentos", 0) < 8 and (o["status"] != "pagado" or now - o["paid"] > 60):
+                assign(inv, o)
+                todo.append(o["ref"])
+        for a in inv["items"]:
+            if a["status"] == "reservada" and a.get("hasta", 0) < now:
+                a.update(status="disponible")
+                a.pop("order", None)
+                a.pop("hasta", None)
+        _write(INV_FILE, inv)
+        _write(ORD_FILE, ords)
+    for ref in todo:
+        deliver(ref)
+        fixes.append(f"Pedido {ref}: se reintentó la entrega")
+    return fixes
+
+
 def sweeper():
-    """Cada 2 min: reintenta correos fallidos (máx. 8 veces) y completa pedidos sin stock si ya hay inventario."""
+    """Al arrancar y cada 2 min: reintenta entregas pendientes y limpia reservas vencidas."""
+    time.sleep(20)
     while True:
-        time.sleep(120)
         try:
-            with _lock:
-                ords, inv = load_ord(), load_inv()
-                todo = [o["ref"] for o in ords["orders"] if o.get("paid") and o["status"] in ("error_correo", "sin_stock") and o.get("intentos", 0) < 8]
-                for ref in todo:
-                    o = next(x for x in ords["orders"] if x["ref"] == ref)
-                    assign(inv, o)
-                    if o["status"] == "error_correo":
-                        o["intentos"] = o.get("intentos", 0) + 1
-                _write(INV_FILE, inv)
-                _write(ORD_FILE, ords)
-            for ref in todo:
-                deliver(ref)
+            repair_pass()
         except Exception as e:  # noqa: BLE001
             log_event("error", f"sweeper: {e}")
+        time.sleep(120)
 
 
 if not os.environ.get("MJ_NO_THREADS"):
@@ -1179,18 +1266,18 @@ def admin_inv_get():
 
 
 def parse_lines(text):
+    """Pegado masivo: columnas separadas por TAB (copiadas de Excel) o por | → cuenta, contraseña, perfil, pin."""
     out = []
     for line in str(text or "").splitlines():
         line = line.strip()
         if not line or line.startswith("#"):
             continue
-        if "|" in line:
-            parts = [x.strip() for x in line.split("|")]
-        else:
-            parts = [x.strip() for x in line.split(":", 1)]
+        parts = line.split("\t") if "\t" in line else line.split("|") if "|" in line else line.split(":", 1)
+        parts = [x.strip() for x in parts]
         if len(parts) < 2 or not parts[0] or not parts[1]:
-            raise ValueError(f"Línea inválida (usa correo|clave|nota o correo:clave): {line[:60]}")
-        out.append({"email": parts[0][:200], "password": parts[1][:200], "extra": (parts[2] if len(parts) > 2 else "")[:300]})
+            raise ValueError(f"Línea inválida (cuenta y contraseña son obligatorias): {line[:60]}")
+        parts += [""] * (4 - len(parts))
+        out.append({"email": parts[0], "password": parts[1], "perfil": parts[2], "pin": parts[3]})
     return out
 
 
@@ -1200,21 +1287,37 @@ def admin_inv_add():
     b = request.get_json(silent=True) or {}
     pid = s(b.get("pid"), 60)
     if not any(p["id"] == pid for p in load_data().get("products", [])):
-        return jsonify(error="Producto no encontrado"), 400
+        return jsonify(error="Elige un producto de la lista"), 400
     try:
-        rows = parse_lines(b.get("lines"))
+        rows = parse_lines(b.get("lines")) if b.get("lines") else [r for r in lst(b.get("rows")) if isinstance(r, dict)]
     except ValueError as e:
         return jsonify(error=str(e)), 400
-    if not rows or len(rows) > 500:
-        return jsonify(error="Pega entre 1 y 500 cuentas (una por línea)"), 400
+    clean_rows = []
+    for i, r in enumerate(rows, 1):
+        email, pw = s(r.get("email"), 200), s(r.get("password"), 200)
+        if not email and not pw and not s(r.get("perfil")) and not s(r.get("pin")):
+            continue            # fila vacía
+        if not email or not pw:
+            return jsonify(error=f"Fila {i}: la cuenta y la contraseña son obligatorias"), 400
+        clean_rows.append({"email": email, "password": pw, "perfil": s(r.get("perfil"), 60), "pin": s(r.get("pin"), 30)})
+    if not clean_rows or len(clean_rows) > 500:
+        return jsonify(error="Agrega entre 1 y 500 cuentas"), 400
     plan = s(b.get("plan"), 40)
     with _lock:
         inv = load_inv()
-        for r in rows:
-            inv["items"].append({"id": secrets.token_hex(6), "pid": pid, "plan": plan, "enc": enc_acc(r["email"], r["password"], r["extra"]),
+        have = {(a["pid"], dec_acc(a)["email"].lower(), dec_acc(a)["perfil"].lower()) for a in inv["items"] if a["pid"] == pid}
+        added = skipped = 0
+        for r in clean_rows:
+            k = (pid, r["email"].lower(), r["perfil"].lower())
+            if k in have:
+                skipped += 1
+                continue
+            have.add(k)
+            inv["items"].append({"id": secrets.token_hex(6), "pid": pid, "plan": plan, "enc": enc_acc(r["email"], r["password"], r["perfil"], r["pin"]),
                                  "status": "disponible", "created": int(time.time())})
+            added += 1
         _write(INV_FILE, inv)
-    return jsonify(ok=True, added=len(rows))
+    return jsonify(ok=True, added=added, skipped=skipped)
 
 
 @app.put("/api/admin/inventario/<aid>")
@@ -1227,7 +1330,8 @@ def admin_inv_put(aid):
         if not a:
             return jsonify(error="No encontrada"), 404
         cur = dec_acc(a)
-        a["enc"] = enc_acc(s(b.get("email", cur["email"]), 200), s(b.get("password", cur["password"]), 200), s(b.get("extra", cur["extra"]), 300))
+        a["enc"] = enc_acc(s(b.get("email", cur["email"]), 200), s(b.get("password", cur["password"]), 200),
+                           s(b.get("perfil", cur["perfil"]), 60), s(b.get("pin", cur["pin"]), 30), s(b.get("extra", cur["extra"]), 300))
         if "plan" in b:
             a["plan"] = s(b["plan"], 40)
         if b.get("status") in ("disponible", "vendida", "bloqueada"):
@@ -1321,6 +1425,34 @@ def admin_ord_done(ref):
         o["delivered"] = int(time.time())
         _write(ORD_FILE, ords)
     return jsonify(ok=True)
+
+
+@app.post("/api/admin/auditoria")
+@admin_required
+def admin_audit():
+    """Revisa la consistencia de pedidos e inventario, repara lo reparable y reporta lo que necesita tu atención."""
+    fixes = repair_pass()
+    issues = []
+    ords, inv = load_ord(), load_inv()
+    byacc = {a["id"]: a for a in inv["items"]}
+    seen = {}
+    for o in ords["orders"]:
+        for ln in o["items"]:
+            for c in ln.get("cuentas", []):
+                if c not in byacc:
+                    issues.append(f"Pedido {o['ref']}: una cuenta entregada ya no existe en el inventario")
+                elif c in seen and seen[c] != o["ref"]:
+                    issues.append(f"La misma cuenta está asignada a los pedidos {seen[c]} y {o['ref']}")
+                seen[c] = o["ref"]
+        if o.get("paid") and o["status"] in ("sin_stock", "error_correo"):
+            issues.append(f"Pedido {o['ref']} ({o['email']}): pagado y sin entregar — {o['status'].replace('_', ' ')}")
+        if o["status"] == "monto_distinto":
+            issues.append(f"Pedido {o['ref']}: el monto pagado no coincide, revísalo en Bold")
+    for a in inv["items"]:
+        if a["status"] == "vendida" and a.get("order") and not any(o["ref"] == a["order"] for o in ords["orders"]) and not a["order"].startswith("MJ-MANUAL"):
+            issues.append("Hay una cuenta marcada como vendida sin pedido asociado")
+            break
+    return jsonify(ok=not issues, fixes=fixes, issues=issues, revisados=len(ords["orders"]))
 
 
 @app.post("/api/admin/correo-prueba")

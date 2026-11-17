@@ -79,6 +79,65 @@ dialog::backdrop{background:rgba(0,0,0,.72);backdrop-filter:blur(3px)}
 .hist{display:flex;justify-content:space-between;align-items:center;padding:.5rem 0;border-bottom:1px solid var(--line);font-size:.9rem}
 code{background:rgba(255,255,255,.08);padding:.1rem .4rem;border-radius:6px}
 [hidden]{display:none!important}
+/* inventario */
+.stats{display:grid;grid-template-columns:repeat(auto-fill,minmax(170px,1fr));gap:10px;margin-bottom:16px}
+.stat{position:relative;border-radius:16px;padding:12px 14px;color:#fff;cursor:pointer;overflow:hidden;border:2px solid transparent;transition:.2s;text-align:left;min-height:96px}
+.stat::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,.05),rgba(0,0,0,.55));pointer-events:none}
+.stat>*{position:relative;z-index:1}
+.stat:hover{transform:translateY(-2px)}
+.stat.on{border-color:var(--y);box-shadow:0 0 0 3px rgba(255,233,58,.25)}
+.stat b{display:block;font-size:.9rem;text-shadow:0 1px 4px #000}
+.stat .n{font-size:1.9rem;font-weight:900;line-height:1.1}
+.stat .n small{font-size:.72rem;font-weight:600;opacity:.9;margin-left:4px}
+.stat .sub{font-size:.72rem;opacity:.9}
+.stat .tag{position:absolute;top:8px;right:8px;z-index:2;font-size:.64rem;font-weight:800;padding:.15rem .45rem;border-radius:99px;background:#ff6b7d;color:#fff}
+.stat .tag.w{background:#ffc14d;color:#2a1a00}
+.mbar{display:flex;height:6px;border-radius:9px;overflow:hidden;background:rgba(255,255,255,.2);margin-top:6px}
+.mbar i{display:block;height:100%}
+.arows{display:grid;gap:8px;margin:12px 0}
+.ahead,.arow{display:grid;grid-template-columns:1.6fr 1.2fr 1fr .8fr 38px;gap:8px;align-items:end}
+.ahead span{font-size:.74rem;font-weight:800;color:var(--muted);letter-spacing:.04em;text-transform:uppercase;padding-left:4px}
+.arow{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:8px}
+.arow label small{display:none}
+.arow input{background:rgba(0,0,0,.25)}
+.arow .num{display:none}
+@media(max-width:760px){.ahead{display:none}.arow{grid-template-columns:1fr 1fr}.arow label small{display:block;font-size:.7rem;font-weight:800;color:var(--muted);text-transform:uppercase}.arow .em{grid-column:1/-1}.arow .rm{grid-column:1/-1}}
+.acc{display:grid;gap:10px;background:var(--card);border:1px solid var(--line);border-left:6px solid var(--sc);border-radius:15px;padding:12px;margin-bottom:10px}
+.acc-h{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.pill{font-size:.72rem;font-weight:800;padding:.2rem .6rem;border-radius:99px;background:color-mix(in srgb,var(--sc) 20%,transparent);color:var(--sc);border:1px solid color-mix(in srgb,var(--sc) 50%,transparent)}
+.acc-f{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:8px}
+.fld{background:rgba(0,0,0,.28);border:1px solid var(--line);border-radius:11px;padding:7px 10px;display:grid;gap:2px;position:relative;min-width:0}
+.fld small{font-size:.66rem;font-weight:800;letter-spacing:.05em;color:var(--muted);text-transform:uppercase}
+.fld code{background:none;padding:0;font-size:.92rem;word-break:break-all;color:#fff}
+.fld code.pw{color:var(--g)}
+.fld code.pn{color:var(--y);font-weight:800;letter-spacing:.12em}
+.fld .cp{position:absolute;top:6px;right:6px;font-size:.78rem;opacity:.6;padding:2px 5px;border-radius:7px}
+.fld .cp:hover{opacity:1;background:rgba(255,255,255,.1)}
+.fld.empty code{color:var(--muted);font-style:italic}
+.acc-a{display:flex;gap:6px;flex-wrap:wrap;align-items:center}
+.gh{margin:18px 0 8px;font-size:.95rem;color:var(--y)}
+.chips{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:12px}
+.chips button{padding:.35rem .8rem;border-radius:99px;border:1px solid var(--line);font-size:.82rem;font-weight:700;color:var(--muted)}
+.chips button.on{background:var(--grad);color:#07101f;border:0}
+/* temas */
+.tgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:12px}
+.tcard2{border:2px solid var(--line);border-radius:18px;overflow:hidden;background:var(--card);display:grid}
+.tcard2.on{border-color:var(--g);box-shadow:0 0 0 3px rgba(141,255,46,.2)}
+.tprev{height:118px;position:relative;padding:10px;display:grid;align-content:space-between;overflow:hidden}
+.tprev .lt{display:flex;gap:6px}.tprev .lt i{width:9px;height:12px;border-radius:50%;box-shadow:0 0 8px currentColor}
+.tprev .bt{justify-self:start;font-size:.74rem;font-weight:900;padding:.3rem .7rem;border-radius:99px}
+.tprev .em{position:absolute;right:10px;bottom:4px;font-size:3rem;filter:drop-shadow(0 4px 8px rgba(0,0,0,.4))}
+.tprev .fl{position:absolute;inset:0;font-size:1rem;opacity:.7;letter-spacing:.9em;line-height:2.3;overflow:hidden;pointer-events:none}
+.tinfo{padding:10px 12px;display:grid;gap:6px}
+.tinfo b{font-size:.98rem}
+.tinfo .tb{display:flex;gap:6px;flex-wrap:wrap}
+.ok-badge{color:var(--g);font-size:.78rem;font-weight:800}
+.audit{border-radius:14px;padding:12px 14px;margin-top:12px;font-size:.9rem;display:grid;gap:4px}
+.audit.ok{background:rgba(141,255,46,.1);border:1px solid rgba(141,255,46,.4)}
+.audit.bad{background:rgba(255,107,125,.1);border:1px solid rgba(255,107,125,.45)}
+.socprev{font-size:.78rem;color:var(--muted);margin-top:6px;word-break:break-all}
+.socprev.ok{color:var(--g)}.socprev.bad{color:#ff6b7d}
+
 </style>
 </head>
 <body>
@@ -169,12 +228,13 @@ setInterval(()=>{ if(!$("#app").hidden) estado(); },15000);
 window.addEventListener("beforeunload",e=>{ if(dirty){e.preventDefault();e.returnValue="";} });
 
 /* ---------- pestañas ---------- */
-const TABS=[["productos","📦 Productos"],["inventario","🔐 Inventario"],["pedidos","🧾 Pedidos"],["pagos","💳 Pagos Bold"],["tienda","⚙️ Tienda"],["ofertas","💸 Ofertas y pagos"],["faq","❓ Preguntas"],["terminos","📜 Términos"],["testi","⭐ Testimonios"],["respaldo","💾 Respaldo"]];
+const TABS=[["productos","📦 Productos"],["inventario","🔐 Inventario"],["pedidos","🧾 Pedidos"],["pagos","💳 Pagos Bold"],["temas","🎨 Temas"],["tienda","⚙️ Tienda"],["ofertas","💸 Ofertas y pagos"],["faq","❓ Preguntas"],["terminos","📜 Términos"],["testi","⭐ Testimonios"],["respaldo","💾 Respaldo"]];
 function render(){
   $("#tabs").innerHTML=TABS.map(([k,l])=>`<button class="${k===tab?"on":""}" data-t="${k}">${l}</button>`).join("");
-  $("#view").innerHTML=({productos:vProductos,inventario:vInventario,pedidos:vPedidos,pagos:vPagos,tienda:vTienda,ofertas:vOfertas,faq:vFaq,terminos:vTerminos,testi:vTesti,respaldo:vRespaldo})[tab]();
+  $("#view").innerHTML=({productos:vProductos,inventario:vInventario,pedidos:vPedidos,pagos:vPagos,temas:vTemas,tienda:vTienda,ofertas:vOfertas,faq:vFaq,terminos:vTerminos,testi:vTesti,respaldo:vRespaldo})[tab]();
   if(tab==="respaldo") loadHist();
-  if(tab==="inventario") loadInv();
+  if(tab==="tienda") socPrev();
+  if(tab==="inventario"){ renderAdd(); loadInv(); }
   if(tab==="pedidos") loadOrd();
   if(tab==="pagos") loadPagos();
 }
@@ -189,7 +249,7 @@ $("#view").addEventListener("input",e=>{
   let v=el.type==="checkbox"?el.checked:el.value;
   if(el.dataset.t==="lines") v=String(v).split("\n").map(x=>x.trim()).filter(Boolean);
   if(el.dataset.t==="num") v=v===""?"":+v;
-  setPath(el.dataset.k,v); mark();
+  setPath(el.dataset.k,v); mark(); if(tab==="tienda") socPrev();
 });
 const val=(path)=>path.split(".").reduce((o,k)=>o?.[k],DATA);
 const inp=(label,path,extra="")=>`<label>${label}<input data-k="${path}" value="${esc(val(path))}" ${extra}></label>`;
@@ -319,13 +379,28 @@ function saveP(pub){
 function vTienda(){
   return `<div class="card"><h2>Datos de la tienda</h2><div class="grid2">
     ${inp("Nombre de la tienda","config.tienda")}
-    ${inp("WhatsApp que recibe los pedidos (con indicativo, sin +)","config.whatsapp",'inputmode="numeric" placeholder="573215296552"')}
+    ${inp("WhatsApp de soporte y contacto (con indicativo, sin +)","config.whatsapp",'inputmode="numeric" placeholder="573215296552"')}
     ${inp("Ciudad / región","config.ciudad")}
     ${inp("Horario de atención","config.horario")}</div>
     <div style="margin-top:12px">${inp("Mensaje de la barra superior","config.anuncio")}</div>
     <label class="ck" style="margin-top:12px"><input type="checkbox" data-k="config.distribuidores" ${DATA.config.distribuidores?"checked":""}> Mostrar sección “Quiero ser distribuidor”</label></div>
-  <div class="card"><h2>Redes sociales</h2><p class="help" style="margin-bottom:10px">URL completa (https://…). Si la dejas vacía no se muestra.</p><div class="grid3">
-    ${inp("Instagram","config.redes.instagram",'placeholder="https://instagram.com/…"')}${inp("TikTok","config.redes.tiktok")}${inp("Facebook","config.redes.facebook")}</div></div>`;
+  <div class="card"><h2>Redes sociales</h2><p class="help" style="margin-bottom:10px">Escribe <b>@tuusuario</b>, el usuario a secas o el enlace completo. Solo aparecen en la tienda las redes que llenes, con su icono, en el menú superior, el menú lateral y el pie de página.</p><div class="grid3">
+    ${inp("Instagram","config.redes.instagram",'placeholder="@mjstreaming"')}${inp("TikTok","config.redes.tiktok",'placeholder="@mjstreaming"')}${inp("Facebook","config.redes.facebook",'placeholder="mjstreaming"')}</div>
+    <div id="socPrev"></div></div>`;
+}
+const SOCB={instagram:"https://www.instagram.com/",tiktok:"https://www.tiktok.com/@",facebook:"https://www.facebook.com/"};
+function socUrl(k,v){
+  v=String(v||"").trim(); if(!v) return "";
+  if(!/^https?:\/\//i.test(v)){
+    if(/^(www\.)?[a-z0-9-]+\.[a-z]{2,}(\/|$)/i.test(v)) v="https://"+v;
+    else{ const h=v.replace(/^[@\/\s]+/,"").split("?")[0].replace(/\/+$/,""); if(!/^[A-Za-z0-9._-]{1,60}$/.test(h)) return null; v=SOCB[k]+h; }
+  }
+  return v;
+}
+function socPrev(){
+  const el=$("#socPrev"); if(!el) return;
+  el.innerHTML=["instagram","tiktok","facebook"].map(k=>{const raw=(DATA.config.redes||{})[k]; if(!String(raw||"").trim()) return ""; const u=socUrl(k,raw);
+    return u?`<div class="socprev ok">✔ ${k}: ${esc(u)}</div>`:`<div class="socprev bad">✖ ${k}: no es un usuario ni un enlace válido</div>`;}).join("");
 }
 
 /* ---------- Ofertas y pagos ---------- */
@@ -391,73 +466,188 @@ async function restore(n){
 }
 
 
-/* ===================== INVENTARIO · PEDIDOS · PAGOS ===================== */
-let INV=[], ORD=[], invPid="", invSt="";
-const STL={disponible:["Disponible","ok"],reservada:["Reservada","warn"],vendida:["Vendida",""],bloqueada:["Bloqueada","bad"]};
+const THEMES={
+ neon:{g:"Clásico",n:"Neón MJ",e:"🍿",d:"El diseño original de tu tienda.",
+  c:{bg:"#050914",bg2:"#0a1124",card:"#0d1530",card2:"#111b3d",y:"#ffe93a",g:"#8dff2e",b:"#2f7bff",pink:"#ff3d8b",on:"#07101f"},fx:null,deco:null},
+ "navidad-clasica":{g:"Navidad",n:"Navidad clásica",e:"🎄",d:"Verde bosque, rojo y dorado con nieve cayendo y luces.",
+  c:{bg:"#06130c",bg2:"#0b2015",card:"#0f2b1c",card2:"#14371f",y:"#ffd36b",g:"#5dff9a",b:"#2fbf71",pink:"#ff4d5e",on:"#2a0707",grad:"linear-gradient(95deg,#ffd36b,#ff5d6c)"},
+  fx:{kind:"fall",glyphs:["❄","❅","❆","•","•","🎄"],n:44,size:[10,26],speed:[.5,1.3],alpha:.85},
+  deco:{type:"lights",colors:["#ff4d5e","#ffd36b","#5dff9a","#4aa3ff"]},ann:"🎄 ¡Feliz Navidad! Regala entretenimiento · Combos con descuento y entrega automática por correo 🎁"},
+ "navidad-nordica":{g:"Navidad",n:"Navidad nórdica",e:"❄️",d:"Azul hielo y plata con copos suaves, elegante y fría.",
+  c:{bg:"#050c1c",bg2:"#0a1631",card:"#0e1e40",card2:"#132a55",y:"#cfeeff",g:"#7dffe0",b:"#4aa3ff",pink:"#ff9ec7",on:"#06203a",grad:"linear-gradient(95deg,#e4f6ff,#6fd0ff)"},
+  fx:{kind:"fall",glyphs:["❄","❅","❆","•"],n:52,size:[9,30],speed:[.35,.9],alpha:.8},
+  deco:{type:"emoji",glyphs:"❄️ ⛄ ❄️ 🎁 ❄️ 🦌 "},ann:"❄️ Navidad con tus series favoritas · Pago seguro y entrega automática por correo ⛄"},
+ "navidad-dorada":{g:"Navidad",n:"Navidad dorada",e:"✨",d:"Negro y oro de lujo con destellos y luces cálidas.",
+  c:{bg:"#0a0805",bg2:"#15100a",card:"#1b150d",card2:"#241b10",y:"#ffd76a",g:"#9dff7a",b:"#e8a317",pink:"#ff6b6b",on:"#2a1a00",grad:"linear-gradient(95deg,#fff0b0,#e8a317)"},
+  fx:{kind:"rise",glyphs:["✨","•","•","⭐","🎁"],n:36,size:[8,24],speed:[.3,.8],alpha:.85,tint:"#ffd76a"},
+  deco:{type:"lights",colors:["#ffd76a","#ffe9a8","#e8a317"]},ann:"✨ Una Navidad dorada · Estrena plataformas y ahorra con combos 🎁"},
+ "noche-brujas":{g:"Brujitas y Halloween",n:"Noche de brujas",e:"🎃",d:"Naranja calabaza y morado con murciélagos volando.",
+  c:{bg:"#0b0710",bg2:"#150c20",card:"#1b1029",card2:"#241538",y:"#ff9a1f",g:"#9dff3b",b:"#7a3cff",pink:"#ff4d9a",on:"#1a0a00",grad:"linear-gradient(95deg,#ffb02e,#ff6a00)"},
+  fx:{kind:"float",glyphs:["🦇","🦇","🎃","🕸️","👻"],n:20,size:[18,34],speed:[.4,1.1],alpha:.9},
+  deco:{type:"emoji",glyphs:"🎃 🦇 🕸️ 👻 🎃 🦇 🕷️ "},ann:"🎃 ¡Noche de brujas! Trucos baratos y tratos con descuento en tus plataformas 🦇"},
+ "brujitas-magicas":{g:"Brujitas y Halloween",n:"Brujitas mágicas",e:"🧙‍♀️",d:"Lila, rosa y verde pócima con estrellas y burbujas mágicas.",
+  c:{bg:"#0a0615",bg2:"#140a2a",card:"#1b0f3a",card2:"#25154d",y:"#e0b0ff",g:"#7dffb2",b:"#8a5cff",pink:"#ff7ad9",on:"#14051f",grad:"linear-gradient(95deg,#ff7ad9,#9b6bff)"},
+  fx:{kind:"rise",glyphs:["✨","🔮","🧪","⭐","🪄","•"],n:30,size:[12,28],speed:[.35,.9],alpha:.9},
+  deco:{type:"emoji",glyphs:"🧙‍♀️ 🔮 ✨ 🧪 🪄 🌙 "},ann:"🧙‍♀️ Hechizos de ahorro: ¡combos mágicos en tus plataformas favoritas! 🔮"},
+ amor:{g:"Amor y Amistad",n:"Amor",e:"💖",d:"Rosa y rojo pasión con corazones flotando.",
+  c:{bg:"#12050c",bg2:"#1e0913",card:"#2a0d1b",card2:"#38122a",y:"#ffb3c7",g:"#a0ffcc",b:"#ff4d7d",pink:"#ff2e63",on:"#2a0010",grad:"linear-gradient(95deg,#ff8fb1,#ff2e63)"},
+  fx:{kind:"rise",glyphs:["❤","💖","💕","💗","💘"],n:26,size:[14,32],speed:[.35,.9],alpha:.85},
+  deco:{type:"emoji",glyphs:"💖 💕 💘 💗 💝 "},ann:"💖 Amor y Amistad · Regala una plataforma y haz feliz a esa persona especial 💕"},
+ amistad:{g:"Amor y Amistad",n:"Amistad",e:"🎈",d:"Turquesa y amarillo festivo con confeti y globos.",
+  c:{bg:"#04121a",bg2:"#082230",card:"#0c2d3f",card2:"#103a52",y:"#ffe14d",g:"#4dffd2",b:"#2fb6ff",pink:"#ff7a59",on:"#04212a",grad:"linear-gradient(95deg,#ffe14d,#4dffd2)"},
+  fx:{kind:"confetti",glyphs:["🎈","🎉"],n:46,size:[7,13],speed:[.6,1.6],alpha:.9,colors:["#ffe14d","#4dffd2","#2fb6ff","#ff7a59","#ff6bb5"]},
+  deco:{type:"lights",colors:["#ffe14d","#4dffd2","#2fb6ff","#ff7a59","#ff6bb5"]},ann:"🎈 ¡Feliz día de Amor y Amistad! Comparte combos con tus amigos 🎉"},
+ "ano-nuevo":{g:"Fiestas especiales",n:"Año Nuevo",e:"🥂",d:"Champán y plata con confeti dorado de celebración.",
+  c:{bg:"#070a14",bg2:"#0d1326",card:"#121a35",card2:"#19234a",y:"#ffe7a3",g:"#c9d6ff",b:"#6c8cff",pink:"#ff9ec7",on:"#2a1d00",grad:"linear-gradient(95deg,#fff1c2,#d4a73a)"},
+  fx:{kind:"confetti",glyphs:["🥂","✨"],n:48,size:[6,12],speed:[.5,1.4],alpha:.9,colors:["#ffe7a3","#d4a73a","#c9d6ff","#ffffff"]},
+  deco:{type:"emoji",glyphs:"🥂 ✨ 🎆 🎉 🥂 ✨ "},ann:"🥂 ¡Feliz Año Nuevo! Empieza el año con tus plataformas favoritas 🎆"},
+ "black-friday":{g:"Fiestas especiales",n:"Black Friday",e:"🏷️",d:"Negro total y amarillo de oferta con cinta de precaución.",
+  c:{bg:"#050505",bg2:"#0e0e0e",card:"#151515",card2:"#1d1d1d",y:"#ffe600",g:"#b6ff00",b:"#ff2b2b",pink:"#ff2b2b",on:"#111111",grad:"linear-gradient(95deg,#ffe600,#ffb800)"},
+  fx:{kind:"fall",glyphs:["🏷️","💥","🔥"],n:14,size:[16,30],speed:[.6,1.4],alpha:.8},
+  deco:{type:"stripes",colors:["#ffe600","#111111"]},ann:"🏷️ BLACK FRIDAY · Los descuentos más grandes del año en streaming 🔥"},
+ "dia-madre":{g:"Fiestas especiales",n:"Día de la Madre",e:"🌸",d:"Rosa y lila suave con pétalos cayendo.",
+  c:{bg:"#130812",bg2:"#1f0e1d",card:"#2a1328",card2:"#371a35",y:"#ffd1e8",g:"#b6ffd8",b:"#c18bff",pink:"#ff7ac8",on:"#2a0a22",grad:"linear-gradient(95deg,#ffb3de,#c18bff)"},
+  fx:{kind:"fall",glyphs:["🌸","🌷","💐","🌺","•"],n:30,size:[14,28],speed:[.4,1],alpha:.85},
+  deco:{type:"emoji",glyphs:"🌸 💐 🌷 🌺 🌸 "},ann:"🌸 Feliz Día de la Madre · Regálale su plataforma favorita 💐"},
+ "dia-padre":{g:"Fiestas especiales",n:"Día del Padre",e:"👔",d:"Azul acero y dorado, sobrio y elegante.",
+  c:{bg:"#050d14",bg2:"#0a1824",card:"#0e2233",card2:"#132d44",y:"#ffd166",g:"#6bffb0",b:"#3d8bff",pink:"#ff7a59",on:"#04122a",grad:"linear-gradient(95deg,#8fd0ff,#3d8bff)"},
+  fx:{kind:"rise",glyphs:["⭐","✨","•"],n:22,size:[10,22],speed:[.3,.7],alpha:.8},
+  deco:{type:"emoji",glyphs:"👔 ⭐ 🏆 ⭐ 👔 "},ann:"👔 Feliz Día del Padre · Sorprende al héroe de la casa con su plataforma 🏆"}
+};
+
+/* ===================== INVENTARIO ===================== */
+let INV=[], ORD=[], invPid="", invSt="", invQ="", ordF="todos";
+let ROWS=[{email:"",password:"",perfil:"",pin:""}], addPid="", aPlan="", PASTE=false, REVEAL=new Set();
+const STC={disponible:{t:"Libre",c:"#8dff2e"},reservada:{t:"Reservada",c:"#ffc14d"},vendida:{t:"Vendida",c:"#6aa7ff"},bloqueada:{t:"Bloqueada",c:"#ff6b7d"}};
 const OSL={pendiente:["Esperando pago","warn"],pagado:["Pagado · procesando","warn"],entregado:["Entregado","ok"],manual:["Entrega manual pendiente","warn"],sin_stock:["Pagado SIN STOCK","bad"],error_correo:["Error al enviar correo","bad"],monto_distinto:["Monto distinto","bad"],error_bold:["Error con Bold","bad"],cancelado:["Cancelado",""],expirado:["Expirado",""]};
+const PROB=["sin_stock","error_correo","monto_distinto","error_bold"];
 const dt=t=>t?new Date(t*1000).toLocaleString("es-CO",{day:"2-digit",month:"2-digit",hour:"2-digit",minute:"2-digit"}):"—";
-const pname=id=>(DATA.products.find(p=>p.id===id)||{name:id}).name;
+const prod=id=>DATA.products.find(p=>p.id===id)||{name:id,c1:"#2f7bff",c2:"#0b1020",plans:[]};
+const pname=id=>prod(id).name;
 
 function vInventario(){
-  const opts=DATA.products.map(p=>`<option value="${esc(p.id)}">${esc(p.name)}</option>`).join("");
-  return `<div class="card"><h2>➕ Agregar cuentas</h2>
-    <p class="help" style="margin-bottom:10px">Una cuenta por línea: <code>correo|contraseña|nota opcional</code> (o <code>correo:contraseña</code>). La nota es para cosas como <i>"Perfil 2 · PIN 1234"</i> y se envía al cliente. Si una cuenta tiene varios perfiles, pega la misma cuenta una vez por cada perfil con su nota.</p>
-    <div class="grid2"><label>Producto<select id="iPid">${opts}</select></label>
-    <label>Plan (opcional)<input id="iPlan" placeholder="Ej. 1 mes — vacío = sirve para cualquier plan"></label></div>
-    <label style="margin-top:10px">Cuentas<textarea id="iLines" rows="5" placeholder="cuenta1@gmail.com|Clave123|Perfil 1 · PIN 1111&#10;cuenta2@gmail.com:Clave456"></textarea></label>
-    <div style="margin-top:10px"><button class="btn p" onclick="addInv()">Guardar en inventario</button></div></div>
-  <div class="card"><h2>📦 Existencias</h2><div id="invSum"></div>
-    <div class="bar" style="margin-top:10px"><select id="fPid" onchange="invPid=this.value;renderInv()"><option value="">Todos los productos</option>${opts}</select>
-    <select id="fSt" onchange="invSt=this.value;renderInv()"><option value="">Todos los estados</option>${Object.entries(STL).map(([k,v])=>`<option value="${k}">${v[0]}</option>`).join("")}</select></div>
-    <div id="invList">Cargando…</div></div>`;
+  if(!addPid||!DATA.products.some(p=>p.id===addPid)) addPid=(DATA.products[0]||{}).id||"";
+  return `<div id="invStats" class="stats"></div>
+  <div class="card"><h2>➕ Agregar cuentas</h2><div id="addForm"></div></div>
+  <div class="card"><h2>📦 Todas las cuentas</h2>
+    <div class="bar"><input id="invQ" placeholder="🔎 Buscar por correo, perfil, pedido…" value="${esc(invQ)}" oninput="invQ=this.value;renderInv()"></div>
+    <div class="chips" id="invChips"></div><div id="invList">Cargando…</div></div>`;
 }
-async function loadInv(){ try{ const r=await api("/api/admin/inventario"); INV=r.items; renderInv(); const e=$("#fPid"); if(e){e.value=invPid;$("#fSt").value=invSt;} }catch(e){ toast(e.message,true); } }
+function renderAdd(){
+  const el=$("#addForm"); if(!el) return; const p=prod(addPid);
+  el.innerHTML=`<div class="grid2"><label>1 · Producto<select onchange="addPid=this.value;aPlan='';renderAdd()">${DATA.products.map(x=>`<option value="${esc(x.id)}" ${x.id===addPid?"selected":""}>${esc(x.name)}</option>`).join("")}</select></label>
+    <label>2 · ¿Para qué plan? <select onchange="aPlan=this.value"><option value="">Cualquier plan</option>${(p.plans||[]).map(pl=>`<option ${pl.l===aPlan?"selected":""}>${esc(pl.l)}</option>`).join("")}</select></label></div>
+    <p class="help" style="margin-top:12px"><b>3 · Datos de cada cuenta.</b> Cada fila es <u>un perfil que se vende</u>. Si una cuenta tiene 4 perfiles, escribe 4 filas con el mismo correo y distinto perfil/PIN. Perfil y PIN son opcionales (para cuentas completas déjalos vacíos).</p>
+    <div class="arows"><div class="ahead"><span>🔑 Cuenta (correo)</span><span>🔒 Contraseña</span><span>👤 Perfil</span><span>#️⃣ PIN</span><span></span></div>
+    ${ROWS.map((r,i)=>`<div class="arow"><label class="em"><small>Cuenta</small><input data-r="${i}" data-f="email" placeholder="cuenta@gmail.com" value="${esc(r.email)}" autocomplete="off"></label>
+      <label><small>Contraseña</small><input data-r="${i}" data-f="password" placeholder="contraseña" value="${esc(r.password)}" autocomplete="off"></label>
+      <label><small>Perfil</small><input data-r="${i}" data-f="perfil" placeholder="Perfil 1" value="${esc(r.perfil)}" autocomplete="off"></label>
+      <label><small>PIN</small><input data-r="${i}" data-f="pin" placeholder="1234" value="${esc(r.pin)}" inputmode="numeric" autocomplete="off"></label>
+      <button class="btn sm d rm" onclick="delRow(${i})" title="Quitar fila" ${ROWS.length<2?"disabled":""}>✕</button></div>`).join("")}</div>
+    <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center">
+      <button class="btn" onclick="addRow()">➕ Otra fila</button><button class="btn" onclick="PASTE=!PASTE;renderAdd()">📋 Pegar varias desde Excel</button>
+      <span style="flex:1"></span><button class="btn p" onclick="saveRows()">💾 Guardar ${ROWS.filter(r=>r.email||r.password).length||""} cuenta(s)</button></div>
+    ${PASTE?`<div style="margin-top:12px;display:grid;gap:8px"><p class="help">Copia las columnas <b>Cuenta · Contraseña · Perfil · PIN</b> de tu Excel/Sheets y pégalas aquí (también sirve <code>cuenta|clave|perfil|pin</code>).</p>
+      <textarea id="pasteBox" rows="5" placeholder="cuenta1@gmail.com&#9;Clave123&#9;Perfil 1&#9;1111"></textarea><div><button class="btn" onclick="pasteRows()">Convertir en filas</button></div></div>`:""}`;
+}
+$("#view").addEventListener("input",e=>{ const i=e.target.closest("[data-r]"); if(i){ ROWS[+i.dataset.r][i.dataset.f]=i.value; } });
+$("#view").addEventListener("keydown",e=>{
+  const i=e.target.closest("[data-r]"); if(!i||e.key!=="Enter") return; e.preventDefault();
+  const F=["email","password","perfil","pin"], r=+i.dataset.r, k=F.indexOf(i.dataset.f);
+  if(k<3) return $(`[data-r="${r}"][data-f="${F[k+1]}"]`).focus();
+  if(r===ROWS.length-1) addRow(); else $(`[data-r="${r+1}"][data-f="email"]`).focus();
+});
+function addRow(){ ROWS.push({email:"",password:"",perfil:"",pin:""}); renderAdd(); const l=$$all(`[data-f="email"]`); l[l.length-1].focus(); }
+function $$all(s){return [...document.querySelectorAll(s)];}
+function delRow(i){ ROWS.splice(i,1); renderAdd(); }
+function pasteRows(){
+  const lines=$("#pasteBox").value.split(/\r?\n/).map(x=>x.trim()).filter(Boolean); const out=[];
+  for(const l of lines){ const c=(l.includes("\t")?l.split("\t"):l.includes("|")?l.split("|"):l.split(/:(.+)/)).map(x=>(x||"").trim()); if(c[0]&&c[1]) out.push({email:c[0],password:c[1],perfil:c[2]||"",pin:c[3]||""}); }
+  if(!out.length) return toast("No encontré filas válidas (cuenta y contraseña)",true);
+  ROWS=ROWS.filter(r=>r.email||r.password).concat(out); PASTE=false; renderAdd(); toast(`✔ ${out.length} fila(s) listas, revisa y guarda`);
+}
+async function saveRows(){
+  const rows=ROWS.filter(r=>r.email||r.password||r.perfil||r.pin);
+  const bad=rows.findIndex(r=>!r.email.trim()||!r.password.trim()); if(!rows.length) return toast("Escribe al menos una cuenta",true);
+  if(bad>=0) return toast(`Fila ${bad+1}: falta la cuenta o la contraseña`,true);
+  try{ const r=await api("/api/admin/inventario",{json:{pid:addPid,plan:aPlan,rows}}); ROWS=[{email:"",password:"",perfil:"",pin:""}]; renderAdd();
+    toast(`✔ ${r.added} agregada(s)${r.skipped?` · ${r.skipped} repetida(s) omitida(s)`:""}`); loadInv(); }catch(e){ toast(e.message,true); }
+}
+async function loadInv(){ try{ INV=(await api("/api/admin/inventario")).items; renderInv(); }catch(e){ toast(e.message,true); } }
 function renderInv(){
   const sum={}; INV.forEach(a=>{const s=sum[a.pid]=sum[a.pid]||{disponible:0,reservada:0,vendida:0,bloqueada:0}; s[a.status]++;});
-  const el=$("#invSum"); if(!el) return;
-  el.innerHTML=Object.keys(sum).length?`<div style="display:flex;gap:8px;flex-wrap:wrap">${Object.entries(sum).map(([id,s])=>`<span class="chip ${s.disponible?(s.disponible<=2?"warn":"ok"):"bad"}">${esc(pname(id))}: <b>${s.disponible}</b> libres · ${s.vendida} vendidas${s.reservada?` · ${s.reservada} reservadas`:""}</span>`).join("")}</div><p class="help" style="margin-top:8px">Los productos con inventario muestran en la tienda el stock real y se despachan solos. Los que no tienen inventario se entregan manualmente.</p>`:`<p class="help">Aún no hay cuentas. Agrega las primeras arriba.</p>`;
-  const rows=INV.filter(a=>(!invPid||a.pid===invPid)&&(!invSt||a.status===invSt));
-  $("#invList").innerHTML=rows.length?rows.map(a=>`<div class="prow" style="grid-template-columns:1fr"><div class="pinfo"><b>${esc(pname(a.pid))} ${a.plan?`<small>· ${esc(a.plan)}</small>`:""} <span class="chip ${STL[a.status][1]}" style="margin-left:6px">${STL[a.status][0]}</span></b>
-    <small style="font-family:monospace;word-break:break-all">${esc(a.email)} · ${esc(a.password)}${a.extra?" · "+esc(a.extra):""}</small>${a.order?`<small style="display:block">Pedido ${esc(a.order)}</small>`:""}</div>
-    <div class="pact"><button class="btn sm" onclick="editInv('${a.id}')">✏️ Editar</button>
-    ${a.status==="vendida"||a.status==="bloqueada"?`<button class="btn sm" onclick="setInv('${a.id}','disponible')">↩ Marcar disponible</button>`:`<button class="btn sm" onclick="setInv('${a.id}','bloqueada')">⛔ Bloquear</button>`}
-    <button class="btn sm d" onclick="delInv('${a.id}')">🗑</button></div></div>`).join(""):`<p class="help">Sin resultados.</p>`;
+  const tot={disponible:0,reservada:0,vendida:0,bloqueada:0}; INV.forEach(a=>tot[a.status]++);
+  const seg=(s,n)=>["disponible","reservada","vendida","bloqueada"].map(k=>n?`<i style="width:${s[k]/n*100}%;background:${STC[k].c}"></i>`:"").join("");
+  const st=$("#invStats"); if(!st) return;
+  st.innerHTML=`<button class="stat ${!invPid?"on":""}" style="background:linear-gradient(135deg,#1b2757,#0b1020)" onclick="invPid='';renderInv()"><b>📦 Todas</b><div class="n">${tot.disponible}<small>libres</small></div><div class="sub">${tot.vendida} vendidas · ${INV.length} en total</div><div class="mbar">${seg(tot,INV.length)}</div></button>`+
+   Object.entries(sum).map(([id,s])=>{const p=prod(id),n=s.disponible+s.reservada+s.vendida+s.bloqueada;
+    return `<button class="stat ${invPid===id?"on":""}" style="background:linear-gradient(135deg,${p.c1},${p.c2})" onclick="invPid='${esc(id)}';renderInv()">${s.disponible===0?`<span class="tag">AGOTADO</span>`:s.disponible<=2?`<span class="tag w">POCO STOCK</span>`:""}<b>${esc(p.name)}</b><div class="n">${s.disponible}<small>libres</small></div><div class="sub">${s.vendida} vendidas${s.reservada?` · ${s.reservada} reservadas`:""}</div><div class="mbar">${seg(s,n)}</div></button>`;}).join("");
+  const q=invQ.toLowerCase();
+  const rows=INV.filter(a=>(!invPid||a.pid===invPid)&&(!invSt||a.status===invSt)&&(!q||(a.email+" "+a.perfil+" "+a.order+" "+a.plan).toLowerCase().includes(q)));
+  $("#invChips").innerHTML=[["","Todas",INV.length],...Object.entries(STC).map(([k,v])=>[k,v.t+"s",tot[k]])].map(([k,l,n])=>`<button class="${invSt===k?"on":""}" onclick="invSt='${k}';renderInv()">${l} · ${n}</button>`).join("");
+  rows.sort((a,b)=>pname(a.pid).localeCompare(pname(b.pid))||a.email.localeCompare(b.email)||a.perfil.localeCompare(b.perfil));
+  const f=(ic,l,v,cls,id,fld)=>`<div class="fld ${v?"":"empty"}"><small>${ic} ${l}</small><code class="${cls||""}">${v?esc(v):"— sin dato —"}</code>${v?`<button class="cp" data-cp="${id}:${fld}" title="Copiar">📋</button>`:""}</div>`;
+  $("#invList").innerHTML=rows.length?rows.map(a=>{const sc=STC[a.status].c,shown=REVEAL.has(a.id);
+   return `<div class="acc" style="--sc:${sc}"><div class="acc-h"><b>${esc(pname(a.pid))}</b>${a.plan?`<small style="color:var(--muted)">· ${esc(a.plan)}</small>`:""}<span class="pill">${STC[a.status].t}</span>${a.order?`<small style="color:var(--muted)">pedido ${esc(a.order)}</small>`:""}</div>
+    <div class="acc-f">${f("🔑","Cuenta",a.email,"",a.id,"email")}
+      <div class="fld"><small>🔒 Contraseña</small><code class="pw">${shown?esc(a.password):"••••••••"}</code><button class="cp" data-cp="${a.id}:password" title="Copiar">📋</button><button class="cp" style="right:30px" onclick="togPw('${a.id}')" title="Mostrar/ocultar">${shown?"🙈":"👁"}</button></div>
+      ${f("👤","Perfil",a.perfil,"",a.id,"perfil")}${f("#️⃣","PIN",a.pin,"pn",a.id,"pin")}</div>
+    ${a.extra?`<small style="color:var(--muted)">📝 ${esc(a.extra)}</small>`:""}
+    <div class="acc-a"><button class="btn sm" onclick="editInv('${a.id}')">✏️ Editar</button>
+     ${a.status==="vendida"||a.status==="bloqueada"?`<button class="btn sm" onclick="setInv('${a.id}','disponible')">↩ Poner libre</button>`:`<button class="btn sm" onclick="setInv('${a.id}','bloqueada')">⛔ Bloquear</button>`}
+     <button class="btn sm d" onclick="delInv('${a.id}')">🗑 Eliminar</button></div></div>`;}).join(""):`<p class="help">${INV.length?"Ninguna cuenta coincide con el filtro.":"Aún no hay cuentas. Agrega las primeras arriba. 👆"}</p>`;
 }
-async function addInv(){
-  try{ const r=await api("/api/admin/inventario",{json:{pid:$("#iPid").value,plan:$("#iPlan").value,lines:$("#iLines").value}}); $("#iLines").value=""; toast(`✔ ${r.added} cuenta(s) agregadas`); loadInv(); }catch(e){ toast(e.message,true); }
-}
+function togPw(id){ REVEAL.has(id)?REVEAL.delete(id):REVEAL.add(id); renderInv(); }
+$("#view").addEventListener("click",async e=>{ const b=e.target.closest("[data-cp]"); if(!b) return; const [id,f]=b.dataset.cp.split(":"); const a=INV.find(x=>x.id===id); if(!a) return;
+  try{ await navigator.clipboard.writeText(a[f]); toast("📋 Copiado"); }catch(err){ toast("No se pudo copiar",true); } });
 async function setInv(id,status){ try{ await api("/api/admin/inventario/"+id,{method:"PUT",json:{status}}); loadInv(); }catch(e){ toast(e.message,true); } }
 async function delInv(id){ if(!confirm("¿Eliminar esta cuenta del inventario?")) return; try{ await api("/api/admin/inventario/"+id,{method:"DELETE"}); loadInv(); }catch(e){ toast(e.message,true); } }
 function editInv(id){
-  const a=INV.find(x=>x.id===id); if(!a) return;
-  $("#edBody").innerHTML=`<div style="padding:22px;display:grid;gap:12px;min-width:min(420px,86vw)"><h2>Editar cuenta</h2>
-    <label>Correo / usuario<input id="eE" value="${esc(a.email)}"></label><label>Contraseña<input id="eP" value="${esc(a.password)}"></label>
-    <label>Nota (se envía al cliente)<input id="eX" value="${esc(a.extra)}"></label><label>Plan<input id="eL" value="${esc(a.plan)}"></label>
-    <div style="display:flex;gap:8px;justify-content:flex-end"><button class="btn" onclick="$('#ed').close()">Cancelar</button><button class="btn p" onclick="saveInv('${id}')">Guardar</button></div></div>`;
+  const a=INV.find(x=>x.id===id); if(!a) return; const p=prod(a.pid);
+  $("#edBody").innerHTML=`<h2>✏️ Editar cuenta · ${esc(p.name)}</h2><div class="grid2">
+    <label>🔑 Cuenta (correo)<input id="eE" value="${esc(a.email)}"></label><label>🔒 Contraseña<input id="eP" value="${esc(a.password)}"></label>
+    <label>👤 Perfil<input id="eF" value="${esc(a.perfil)}"></label><label>#️⃣ PIN<input id="eN" value="${esc(a.pin)}"></label></div>
+    <label>Plan<select id="eL"><option value="">Cualquier plan</option>${(p.plans||[]).map(pl=>`<option ${pl.l===a.plan?"selected":""}>${esc(pl.l)}</option>`).join("")}</select></label>
+    <label>📝 Nota extra para el cliente (opcional)<input id="eX" value="${esc(a.extra)}"></label>
+    <div style="display:flex;gap:8px;justify-content:flex-end"><button class="btn" onclick="$('#ed').close()">Cancelar</button><button class="btn p" onclick="saveInv('${id}')">Guardar</button></div>`;
   $("#ed").showModal();
 }
-async function saveInv(id){ try{ await api("/api/admin/inventario/"+id,{method:"PUT",json:{email:$("#eE").value,password:$("#eP").value,extra:$("#eX").value,plan:$("#eL").value}}); $("#ed").close(); loadInv(); toast("✔ Guardado"); }catch(e){ toast(e.message,true); } }
+async function saveInv(id){ try{ await api("/api/admin/inventario/"+id,{method:"PUT",json:{email:$("#eE").value,password:$("#eP").value,perfil:$("#eF").value,pin:$("#eN").value,extra:$("#eX").value,plan:$("#eL").value}}); $("#ed").close(); loadInv(); toast("✔ Guardado"); }catch(e){ toast(e.message,true); } }
 
-function vPedidos(){ return `<div class="card"><h2>🧾 Pedidos</h2><p class="help" style="margin-bottom:10px">Se actualiza al abrir la pestaña. Si un pedido quedó "Pagado SIN STOCK" o con "Error al enviar correo", corrige (agrega inventario / revisa el correo) y pulsa <b>Reenviar</b>; el sistema también reintenta solo cada 2 minutos.</p><div class="bar"><button class="btn sm" onclick="loadOrd()">🔄 Actualizar</button></div><div id="ordList">Cargando…</div></div>`; }
+/* ===================== PEDIDOS ===================== */
+function vPedidos(){ return `<div class="card"><h2>🧾 Pedidos</h2><div id="ordTop"></div>
+  <div class="bar" style="margin-top:12px"><button class="btn sm" onclick="loadOrd()">🔄 Actualizar</button><button class="btn sm" onclick="audit()">🛡 Auditar y reparar</button></div><div id="auditBox"></div>
+  <div class="chips" id="ordChips"></div><div id="ordList">Cargando…</div></div>`; }
 async function loadOrd(){
-  try{ ORD=(await api("/api/admin/pedidos")).items; }catch(e){ return toast(e.message,true); }
-  const el=$("#ordList"); if(!el) return;
-  el.innerHTML=ORD.length?ORD.map(o=>{const st=OSL[o.status]||[o.status,""]; return `<div class="prow" style="grid-template-columns:1fr"><div class="pinfo"><b>${esc(o.ref)} <span class="chip ${st[1]}" style="margin-left:6px">${st[0]}</span></b>
-    <small>${dt(o.created)} · ${esc(o.email)}${o.nombre?" · "+esc(o.nombre):""} · <b>${fmt(o.total)}</b>${o.cupon?" · cupón "+esc(o.cupon):""}</small>
-    <small style="display:block">${o.items.map(i=>`${i.qty}× ${esc(i.name)} (${esc(i.plan)})${i.manual?" 🖐manual":""}`).join(" · ")}</small>
-    ${o.error?`<small style="display:block;color:#ff6b7d">${esc(o.error)}</small>`:""}${o.via?`<small style="display:block">Pago vía ${esc(o.via)} ${o.payment_id?"· "+esc(o.payment_id):""}</small>`:""}${o.notas?`<small style="display:block">📝 ${esc(o.notas)}</small>`:""}</div>
-    <div class="pact">${o.paid?`<button class="btn sm" onclick="ordAct('${o.ref}','reenviar')">📧 Reenviar</button><button class="btn sm" onclick="if(confirm('¿Reenviar TODAS las cuentas del pedido, incluso las ya enviadas?'))ordAct('${o.ref}','reenviar',{todo:true})">📧 Reenviar todo</button>${o.status==="manual"?`<button class="btn sm" onclick="ordAct('${o.ref}','completar')">✔ Marcar completado</button>`:""}`
-    :(["pendiente","error_bold","monto_distinto"].includes(o.status)?`<button class="btn sm" onclick="if(confirm('¿Confirmar el pago de este pedido a mano y entregar las cuentas?'))ordAct('${o.ref}','entregar')">✔ Confirmar pago manual</button><button class="btn sm d" onclick="ordAct('${o.ref}','cancelar')">✖ Cancelar</button>`:"")}</div></div>`;}).join(""):`<p class="help">Aún no hay pedidos.</p>`;
+  try{ [ORD,INV]=await Promise.all([api("/api/admin/pedidos").then(r=>r.items),api("/api/admin/inventario").then(r=>r.items)]); }catch(e){ return toast(e.message,true); }
+  renderOrd();
+}
+function renderOrd(){
+  const el=$("#ordList"); if(!el) return; const byA=Object.fromEntries(INV.map(a=>[a.id,a]));
+  const isP=o=>PROB.includes(o.status), isPend=o=>o.status==="pendiente", isOk=o=>o.status==="entregado";
+  const cnt={todos:ORD.length,problemas:ORD.filter(isP).length,pendientes:ORD.filter(isPend).length,entregados:ORD.filter(isOk).length};
+  const dia=Date.now()/1000-86400, vend=ORD.filter(o=>o.paid&&o.paid>dia).reduce((s,o)=>s+o.total,0);
+  $("#ordTop").innerHTML=`<div style="display:flex;gap:8px;flex-wrap:wrap"><span class="chip ok">💰 Ventas 24 h: <b>${fmt(vend)}</b></span><span class="chip ${cnt.problemas?"bad":"ok"}">${cnt.problemas?"⚠ "+cnt.problemas+" con problema":"✔ Sin problemas"}</span><span class="chip">${cnt.pendientes} esperando pago</span></div>`;
+  $("#ordChips").innerHTML=[["todos","Todos"],["problemas","⚠ Problemas"],["pendientes","Esperando pago"],["entregados","Entregados"]].map(([k,l])=>`<button class="${ordF===k?"on":""}" onclick="ordF='${k}';renderOrd()">${l} · ${cnt[k]}</button>`).join("");
+  const rows=ORD.filter(o=>ordF==="todos"||(ordF==="problemas"&&isP(o))||(ordF==="pendientes"&&isPend(o))||(ordF==="entregados"&&isOk(o)));
+  el.innerHTML=rows.length?rows.map(o=>{const st=OSL[o.status]||[o.status,""];
+   const cu=o.items.flatMap(i=>(i.cuentas||[]).map(c=>byA[c]).filter(Boolean).map(a=>`<div class="fld" style="margin-top:6px"><small>${esc(pname(a.pid))}</small><code>${esc(a.email)} · ${esc(a.password)}${a.perfil?" · "+esc(a.perfil):""}${a.pin?" · PIN "+esc(a.pin):""}</code></div>`)).join("");
+   return `<div class="acc" style="--sc:${st[1]==="ok"?"#8dff2e":st[1]==="bad"?"#ff6b7d":st[1]==="warn"?"#ffc14d":"#6f7ba6"}"><div class="acc-h"><b>${esc(o.ref)}</b><span class="pill">${st[0]}</span><small style="color:var(--muted)">${dt(o.created)}</small></div>
+    <div><b>${fmt(o.total)}</b> · ${esc(o.email)}${o.nombre?" · "+esc(o.nombre):""}${o.cupon?" · cupón "+esc(o.cupon):""}</div>
+    <small style="color:var(--muted)">${o.items.map(i=>`${i.qty}× ${esc(i.name)} (${esc(i.plan)})${i.manual?" 🖐 manual":""}`).join(" · ")}</small>
+    ${cu}${o.error?`<small style="color:#ff6b7d">${esc(o.error)}</small>`:""}${o.via?`<small style="color:var(--muted)">Pago vía ${esc(o.via)} ${o.payment_id?"· "+esc(o.payment_id):""}</small>`:""}${o.notas?`<small>📝 ${esc(o.notas)}</small>`:""}
+    <div class="acc-a">${o.paid?`<button class="btn sm" onclick="ordAct('${o.ref}','reenviar')">📧 Reenviar</button><button class="btn sm" onclick="if(confirm('¿Reenviar TODAS las cuentas del pedido, incluso las ya enviadas?'))ordAct('${o.ref}','reenviar',{todo:true})">📧 Reenviar todo</button>${o.status==="manual"?`<button class="btn sm" onclick="ordAct('${o.ref}','completar')">✔ Marcar completado</button>`:""}`
+    :(["pendiente","error_bold","monto_distinto"].includes(o.status)?`<button class="btn sm" onclick="if(confirm('¿Confirmar el pago de este pedido a mano y entregar las cuentas?'))ordAct('${o.ref}','entregar')">✔ Confirmar pago manual</button><button class="btn sm d" onclick="ordAct('${o.ref}','cancelar')">✖ Cancelar</button>`:"")}</div></div>`;}).join(""):`<p class="help">No hay pedidos en esta vista.</p>`;
 }
 async function ordAct(ref,act,json={}){ try{ const r=await api(`/api/admin/pedidos/${ref}/${act}`,{json}); toast(r.ok===false?("⚠ "+(r.error||r.status||r.result||"No se pudo")):"✔ Listo",r.ok===false); }catch(e){ toast(e.message,true); } loadOrd(); }
+async function audit(){
+  try{ const r=await api("/api/admin/auditoria",{json:{}}); const b=$("#auditBox"); if(!b) return;
+    b.innerHTML=`<div class="audit ${r.ok?"ok":"bad"}"><b>${r.ok?"✔ Todo en orden":"⚠ Hay cosas por revisar"}</b> <span class="help">(${r.revisados} pedidos revisados)</span>${r.fixes.map(x=>`<div>🔧 ${esc(x)}</div>`).join("")}${r.issues.map(x=>`<div>• ${esc(x)}</div>`).join("")}</div>`; loadOrd(); }catch(e){ toast(e.message,true); }
+}
 
+/* ===================== PAGOS BOLD ===================== */
 function vPagos(){ return `<div class="card"><h2>💳 Estado de la integración con Bold</h2><div id="pgInfo">Cargando…</div></div>
   <div class="card"><h2>📧 Probar envío de correo</h2><div class="grid2"><label>Enviar prueba a<input id="mTo" placeholder="tucorreo@gmail.com" type="email"></label></div><div style="margin-top:10px"><button class="btn" onclick="testMail()">Enviar correo de prueba</button></div></div>
-  <div class="card"><h2>🧭 Pasos para activarlo</h2><ol class="help" style="padding-left:18px;display:grid;gap:6px">
-   <li>En el <b>Panel de comercios de Bold → Integraciones</b> copia tu <b>llave de identidad</b> y tu <b>llave secreta</b> y ponlas en Render como <code>BOLD_API_KEY</code> y <code>BOLD_SECRET_KEY</code>.</li>
-   <li>En Bold → Integraciones → <b>Webhooks → Configurar webhook</b> pega la URL del webhook (arriba) y activa el evento <b>Venta aprobada</b>.</li>
-   <li>Define <code>PUBLIC_URL</code> (tu dominio con https), <code>INVENTORY_KEY</code> (frase larga y secreta) y el correo: <code>RESEND_API_KEY</code> + <code>MAIL_FROM</code>.</li>
-   <li>Agrega cuentas en <b>Inventario</b>, haz una compra pequeña de prueba y revisa <b>Pedidos</b>.</li></ol></div>
   <div class="card"><h2>📡 Últimos eventos</h2><div id="pgEv" class="help">—</div></div>`; }
 async function loadPagos(){
   try{ const e=await api("/api/admin/estado"); const el=$("#pgInfo"); if(!el) return; const c=(ok,t)=>`<span class="chip ${ok?"ok":"bad"}" style="margin:0 6px 6px 0">${ok?"✔":"✖"} ${t}</span>`;
@@ -468,6 +658,25 @@ async function loadPagos(){
     $("#pgEv").innerHTML=e.eventos.length?e.eventos.map(v=>`<div>${dt(v.t)} · <b>${esc(v.kind)}</b> · ${esc(v.msg)}</div>`).join(""):"Sin eventos todavía."; }catch(e){}
 }
 async function testMail(){ try{ await api("/api/admin/correo-prueba",{json:{to:$("#mTo").value}}); toast("✔ Correo enviado, revisa tu bandeja"); }catch(e){ toast(e.message,true); } }
+
+/* ===================== TEMAS ===================== */
+function vTemas(){
+  const c=DATA.config, cur=THEMES[c.tema]?c.tema:"neon", groups=[...new Set(Object.values(THEMES).map(t=>t.g))];
+  const card=([id,T])=>{const k=T.c, lights=(T.deco&&T.deco.colors?T.deco.colors:[k.y,k.g,k.b]).slice(0,6);
+    return `<div class="tcard2 ${id===cur?"on":""}"><div class="tprev" style="background:linear-gradient(135deg,${k.bg},${k.bg2})"><div class="fl" style="color:${k.y}">${T.deco&&T.deco.glyphs?esc(T.deco.glyphs.repeat(4)):""}</div>
+      <div class="lt">${lights.map(x=>`<i style="background:${x};color:${x}"></i>`).join("")}</div>
+      <span class="bt" style="background:${T.c.grad||`linear-gradient(95deg,${k.y},${k.g})`};color:${k.on}">Ver plataformas →</span><span class="em">${T.e}</span></div>
+      <div class="tinfo"><b>${T.e} ${esc(T.n)} ${id===cur?`<span class="ok-badge">✔ Activa</span>`:""}</b><small class="help">${esc(T.d)}</small>
+      <div class="tb"><a class="btn sm" href="/?tema=${id}" target="_blank" rel="noopener">👁 Vista previa</a>${id===cur?"":`<button class="btn sm p" onclick="setTema('${id}')">Usar esta</button>`}</div></div></div>`;};
+  return `<div class="card"><h2>🎨 Plantilla que ve tu cliente</h2><p class="help">Elige la temática de tu tienda según la fecha. <b>Vista previa</b> la abre en otra pestaña tal como la verían tus clientes (sin cambiar nada). Cuando elijas una, pulsa <b>Publicar cambios</b>.</p>
+    ${groups.map(g=>`<h3 class="gh">${esc(g)}</h3><div class="tgrid">${Object.entries(THEMES).filter(([,T])=>T.g===g).map(card).join("")}</div>`).join("")}</div>
+  <div class="card"><h2>⚙️ Ajustes de la temática</h2>
+    <label class="ck"><input type="checkbox" data-k="config.efectos" ${c.efectos!==false?"checked":""}> Efectos animados (nieve, corazones, murciélagos, confeti…)</label>
+    <div style="margin-top:12px"><label>Mensaje de la barra superior para esta temática (vacío = el mensaje que trae la temática)<input data-k="config.tema_anuncio" value="${esc(c.tema_anuncio||"")}" placeholder="🎄 ¡Feliz Navidad! 20% en combos con el código NAVIDAD"></label></div>
+    <div class="grid2" style="margin-top:12px"><label>Activar desde (opcional)<input type="date" data-k="config.tema_desde" value="${esc(c.tema_desde||"")}"></label><label>Hasta (opcional)<input type="date" data-k="config.tema_hasta" value="${esc(c.tema_hasta||"")}"></label></div>
+    <p class="help" style="margin-top:8px">Con fechas, la temática se activa sola y después la tienda vuelve al diseño Neón MJ sin que hagas nada. Ej.: Navidad del 1 al 26 de diciembre.</p></div>`;
+}
+function setTema(id){ DATA.config.tema=id; mark(); render(); toast("Temática elegida. Pulsa «Publicar cambios» para aplicarla"); }
 
 /* ---------- inicio ---------- */
 (async()=>{ try{ await start(); }catch(e){ showLogin(); if(!/vencida|autorizado/i.test(e.message)) $('#lerr').textContent=e.message; } })();

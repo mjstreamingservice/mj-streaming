@@ -85,3 +85,13 @@ Panel de comercios → Integraciones → **Webhooks → Configurar webhook** →
 - Las pruebas de Bold (sandbox) **no envían webhook**: para probar el flujo completo usa *Confirmar pago manual* en Pedidos o haz una compra real pequeña.
 - Render gratis duerme el servicio: el primer aviso puede tardar; Bold reintenta (15 min, 1 h, 4 h, 8 h, 24 h) y el sistema es idempotente.
 - Disco temporal: sin un disco persistente, inventario y pedidos solo sobreviven si defines `INVENTORY_KEY` y el respaldo en GitHub (`GITHUB_TOKEN`/`GITHUB_REPO`); se guardan cifrados. Lo más seguro es un *Persistent Disk* de Render con `DATA_DIR` apuntando a él.
+
+---
+
+# 🎨 Temas, inventario por campos y arte
+
+- **/admin → Temas:** Navidad (clásica, nórdica, dorada), Brujitas y Halloween (2), Amor y Amistad (2), Año Nuevo, Black Friday, Día de la Madre y del Padre. Cada una trae colores, efectos animados, luces/adornos y mensaje propio. Se pueden programar por fechas.
+- **/admin → Inventario:** cada cuenta tiene Cuenta, Contraseña, Perfil y PIN en casillas separadas (o pegando columnas desde Excel). Las repetidas se omiten solas.
+- **/admin → Pedidos → Auditar y reparar:** revisa pedidos e inventario y arregla lo que un reinicio haya dejado a medias.
+- **gunicorn.conf.py:** fija 1 proceso con 8 hilos (el inventario se reserva en memoria). Si en Render tienes `-w 2` o más en el Start Command, quítalo.
+- El arte de cada plataforma se genera dentro de `index.html`; si subes una imagen propia en el panel, esa tiene prioridad.
