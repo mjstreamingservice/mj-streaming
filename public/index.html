@@ -95,7 +95,7 @@ nav{position:sticky;top:0;z-index:50;backdrop-filter:blur(16px);background:rgba(
 @keyframes spin{to{transform:rotate(360deg)}}
 .hero-logo .logo-img{position:relative;width:min(340px,58vw);aspect-ratio:1;box-shadow:0 0 0 3px rgba(255,255,255,.2),0 0 60px rgba(var(--y-rgb),.3);animation:float 6s ease-in-out infinite}
 @keyframes float{50%{transform:translateY(-10px)}}
-.pop{position:absolute;font-size:1.6rem;opacity:.85;animation:drift 7s ease-in-out infinite;filter:drop-shadow(0 0 8px rgba(var(--y-rgb),.7))}
+.pop{position:absolute;width:1.7rem;height:1.7rem;color:var(--y);font-size:1.6rem;opacity:.85;animation:drift 7s ease-in-out infinite;filter:drop-shadow(0 0 8px rgba(var(--y-rgb),.7))}
 .pop:nth-of-type(1){top:6%;left:6%}.pop:nth-of-type(2){top:18%;right:4%;animation-delay:-2s;font-size:1.2rem}
 .pop:nth-of-type(3){bottom:8%;left:10%;animation-delay:-4s;font-size:1.3rem}.pop:nth-of-type(4){bottom:14%;right:8%;animation-delay:-1s}
 @keyframes drift{50%{transform:translateY(-16px) rotate(14deg)}}
@@ -104,6 +104,8 @@ nav{position:sticky;top:0;z-index:50;backdrop-filter:blur(16px);background:rgba(
 .marq{overflow:hidden;border-block:1px solid var(--line);background:rgba(255,255,255,.02);padding:14px 0;margin:26px 0 0;
   -webkit-mask:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent);mask:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent)}
 .marq-track{display:flex;gap:44px;width:max-content;animation:marq 38s linear infinite;font-family:var(--head);font-weight:800;font-size:1.05rem;color:#6f7ba6;white-space:nowrap}
+.i{width:1.15em;height:1.15em;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;vertical-align:-.2em;flex:none;display:inline-block}
+.btn .i,.nav-cart .i,.fab .i{margin-right:.15em}.feat .ic .i{width:26px;height:26px;color:var(--y)}.wa-fab .i{width:28px;height:28px;color:#fff}.burger .i,.x .i{width:22px;height:22px;margin:0}.pop .i{width:100%;height:100%}.ico .i{width:34px;height:34px;color:var(--y)}.big .i{width:44px;height:44px;opacity:.7}
 .marq-track span{display:flex;align-items:center;gap:44px}.marq-track span::after{content:"✦";color:var(--y);font-size:.8rem}
 @keyframes marq{to{transform:translateX(-50%)}}
 
@@ -395,34 +397,56 @@ dialog::backdrop{background:rgba(0,0,0,.7);backdrop-filter:blur(4px)}
 
 /* ===== Temas, efectos y redes ===== */
 #fx{position:fixed;inset:0;width:100%;height:100%;pointer-events:none;z-index:45}
-.deco{position:relative;overflow:hidden;height:30px;display:none;pointer-events:none}
+.deco{position:relative;height:0;display:none;pointer-events:none;z-index:46}
 .deco.on{display:block}
-.deco.lights::before{content:"";position:absolute;left:-2%;right:-2%;top:-9px;height:20px;border-bottom:2px solid rgba(255,255,255,.22);border-radius:0 0 50% 50%/0 0 100% 100%}
-.deco.lights{display:none;justify-content:space-around;padding-top:6px}
-.deco.lights.on{display:flex}
-.deco.lights i{width:9px;height:15px;border-radius:50% 50% 50% 50%/62% 62% 38% 38%;background:var(--c);box-shadow:0 0 12px 2px var(--c);animation:tw 1.8s ease-in-out infinite;animation-delay:var(--d);margin-top:4px;flex:none}
-@keyframes tw{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.35;transform:scale(.82)}}
-.deco.emoji{height:34px;display:none;align-items:center;justify-content:center;font-size:19px;white-space:nowrap;letter-spacing:.5em;background:linear-gradient(180deg,rgba(var(--y-rgb),.10),transparent)}
-.deco.emoji.on{display:flex}
+.deco.swag,.deco.web{overflow:visible}
+.deco svg{display:block}
+.deco .bulb{animation:tw 2.2s ease-in-out infinite;filter:drop-shadow(0 0 7px var(--c)) drop-shadow(0 0 14px var(--c))}
+@keyframes tw{0%,100%{opacity:1}50%{opacity:.45}}
+#glow{position:fixed;inset:0;z-index:-1;pointer-events:none}
 .deco.stripes{height:11px;background:repeating-linear-gradient(-45deg,var(--a) 0 16px,var(--b) 16px 32px)}
+
+.redes-grid{margin-top:8px;display:grid;gap:18px;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));max-width:980px;margin:0 auto}
+.rcard{position:relative;display:flex;align-items:center;gap:18px;padding:22px;border-radius:24px;background:linear-gradient(160deg,var(--card2),var(--card));border:1px solid rgba(var(--y-rgb),.22);overflow:hidden;transition:.25s;isolation:isolate}
+.rcard::before{content:"";position:absolute;inset:-1px;border-radius:inherit;padding:1.5px;background:conic-gradient(from 140deg,#feda75,#fa7e1e,#d62976,#962fbf,#4f5bd5,#feda75);-webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask-composite:exclude;opacity:.0;transition:.3s;z-index:-1}
+.rcard.instagram{grid-column:1/-1;padding:28px}
+.rcard.instagram::before{opacity:.9}
+.rcard.instagram::after{content:"";position:absolute;right:-60px;top:-60px;width:240px;height:240px;border-radius:50%;background:radial-gradient(circle,rgba(214,41,118,.28),transparent 65%);z-index:-1}
+.rcard:hover{transform:translateY(-4px);box-shadow:0 18px 50px rgba(0,0,0,.4),0 0 0 1px rgba(var(--y-rgb),.4)}
+.rcard:hover::before{opacity:.9}
+.rlogo{flex:none;width:76px;height:76px;border-radius:22px;display:grid;place-items:center;background:var(--grad);color:var(--on);box-shadow:0 10px 30px rgba(0,0,0,.35),inset 0 1px 0 rgba(255,255,255,.4);overflow:hidden}
+.rcard.instagram .rlogo{width:96px;height:96px;border-radius:28px;background:radial-gradient(circle at 30% 107%,#fdf497 0,#fdf497 5%,#fd5949 45%,#d6249f 60%,#285AEB 90%);color:#fff}
+.rlogo .i{width:56%;height:56%;stroke-width:1.7}
+.rlogo img{width:100%;height:100%;object-fit:cover;display:block}
+.rinfo{min-width:0;flex:1}.rinfo small{display:block;color:var(--muted);font-size:.78rem;letter-spacing:.08em;text-transform:uppercase;font-weight:700}
+.rinfo b{display:block;font-size:1.25rem;line-height:1.25;margin:2px 0 4px;overflow-wrap:anywhere}.rcard.instagram .rinfo b{font-size:1.6rem}
+.rinfo span{color:var(--muted);font-size:.9rem}
+.rcard:not(.instagram){flex-wrap:wrap}.rcard:not(.instagram) .rinfo{flex:1 1 140px}.rcard:not(.instagram) .rgo{width:100%;justify-content:center}
+.sb.ico .i{width:20px;height:20px;color:var(--on)}.sb.ico[aria-label=Instagram]{background:radial-gradient(circle at 30% 107%,#fdf497 0,#fd5949 45%,#d6249f 60%,#285AEB 90%)}.sb.ico[aria-label=Instagram] .i{color:#fff}
+.rgo{flex:none;display:inline-flex;align-items:center;gap:6px;padding:.65rem 1.1rem;border-radius:99px;background:var(--grad);color:var(--on);font-weight:800;font-size:.9rem}
+.rcard.instagram .rgo{background:linear-gradient(95deg,#fa7e1e,#d62976,#962fbf);color:#fff}
+@media(max-width:600px){.rcard{flex-wrap:wrap;padding:18px}.rcard.instagram .rlogo{width:76px;height:76px}.rgo{width:100%;justify-content:center}}
+.sb img{width:28px;height:28px;border-radius:50%;object-fit:cover;flex:none}.sb.ico img{width:100%;height:100%;border-radius:inherit}
 .nav-soc{display:flex;gap:8px;margin-left:auto}
 .nav-soc+.nav-cart{margin-left:0}
 .sb{display:inline-flex;align-items:center;gap:8px;padding:.5rem .95rem .5rem .55rem;border-radius:99px;background:var(--card);border:1px solid rgba(var(--y-rgb),.45);font-weight:700;font-size:.86rem;transition:.2s;color:var(--txt)}
 .sb svg{width:28px;height:28px;padding:6px;border-radius:50%;background:var(--grad);color:var(--on);flex:none}
 .sb:hover{transform:translateY(-2px);box-shadow:0 0 22px rgba(var(--y-rgb),.35);border-color:var(--y)}
 .sb.ico{padding:0;gap:0;width:38px;height:38px;justify-content:center;background:var(--grad);border:0}
-.sb.ico svg{background:none;width:22px;height:22px;padding:0}
-@media(prefers-reduced-motion:reduce){.deco.lights i{animation:none}}
+
+@media(prefers-reduced-motion:reduce){.deco .bulb{animation:none}}
 </style>
 </head>
 <body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false"><symbol id="i-cart" viewBox="0 0 24 24"><path d="M3 4h2l2.4 11.2a2 2 0 0 0 2 1.6h7.6a2 2 0 0 0 2-1.5L21 8H6"/><circle cx="10" cy="20.5" r="1.3"/><circle cx="18" cy="20.5" r="1.3"/></symbol><symbol id="i-chat" viewBox="0 0 24 24"><path d="M21 12a8 8 0 0 1-11.6 7.1L4 20.5l1.2-4.4A8 8 0 1 1 21 12z"/><path d="M9 10.5c.3 1.6 2.4 3.7 4.5 4l1.3-1.2-1.6-1-.8.6c-.8-.3-1.6-1.1-1.9-1.9l.6-.8-1-1.6z"/></symbol><symbol id="i-bolt" viewBox="0 0 24 24"><path d="M13 2L4 14h7l-1 8 9-12h-7l1-8z"/></symbol><symbol id="i-shield" viewBox="0 0 24 24"><path d="M12 3l8 3v6c0 4.5-3.4 8-8 9-4.6-1-8-4.5-8-9V6l8-3z"/><path d="M8.5 12l2.5 2.5 4.5-5"/></symbol><symbol id="i-receipt" viewBox="0 0 24 24"><path d="M6 3h12v18l-3-2-3 2-3-2-3 2V3z"/><path d="M9 8h6M9 12h6"/></symbol><symbol id="i-pin" viewBox="0 0 24 24"><path d="M12 21s7-5.6 7-11a7 7 0 1 0-14 0c0 5.4 7 11 7 11z"/><circle cx="12" cy="10" r="2.5"/></symbol><symbol id="i-spark" viewBox="0 0 24 24"><path d="M12 3l1.8 5.2L19 10l-5.2 1.8L12 17l-1.8-5.2L5 10l5.2-1.8L12 3z"/><path d="M19 16l.8 2.2L22 19l-2.2.8L19 22l-.8-2.2L16 19l2.2-.8z"/></symbol><symbol id="i-film" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M7 4v16M17 4v16M3 9h4M3 15h4M17 9h4M17 15h4"/></symbol><symbol id="i-gift" viewBox="0 0 24 24"><rect x="3" y="8" width="18" height="4" rx="1"/><path d="M12 8v13M5 12v9h14v-9"/><path d="M12 8S10 3 7.5 4.5 8 8 12 8zm0 0s2-5 4.5-3.5S16 8 12 8z"/></symbol><symbol id="i-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></symbol><symbol id="i-phone" viewBox="0 0 24 24"><rect x="7" y="2" width="10" height="20" rx="2"/><path d="M11 18h2"/></symbol><symbol id="i-repeat" viewBox="0 0 24 24"><path d="M17 2l4 4-4 4M3 11V9a3 3 0 0 1 3-3h15M7 22l-4-4 4-4M21 13v2a3 3 0 0 1-3 3H3"/></symbol><symbol id="i-tag" viewBox="0 0 24 24"><path d="M20.6 13.4l-7.2 7.2a2 2 0 0 1-2.8 0L3 13V3h10l7.6 7.6a2 2 0 0 1 0 2.8z"/><circle cx="7.5" cy="7.5" r="1.3"/></symbol><symbol id="i-clip" viewBox="0 0 24 24"><rect x="6" y="4" width="12" height="17" rx="2"/><rect x="9" y="2" width="6" height="4" rx="1"/><path d="M9 12h6M9 16h4"/></symbol><symbol id="i-users" viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.9M16 3.1a4 4 0 0 1 0 7.8"/></symbol><symbol id="i-home" viewBox="0 0 24 24"><path d="M3 11l9-8 9 8M5 10v10h5v-6h4v6h5V10"/></symbol><symbol id="i-compass" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M15.5 8.5l-2 5-5 2 2-5 5-2z"/></symbol><symbol id="i-card" viewBox="0 0 24 24"><rect x="2" y="5" width="20" height="14" rx="2"/><path d="M2 10h20M6 15h4"/></symbol><symbol id="i-help" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M9.5 9.5a2.5 2.5 0 1 1 3.5 2.3c-.7.4-1 1-1 1.7M12 17h.01"/></symbol><symbol id="i-doc" viewBox="0 0 24 24"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8l-5-5z"/><path d="M14 3v5h5M9 13h6M9 17h6"/></symbol><symbol id="i-ticket" viewBox="0 0 24 24"><path d="M3 9V6a1 1 0 0 1 1-1h16a1 1 0 0 1 1 1v3a3 3 0 0 0 0 6v3a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1v-3a3 3 0 0 0 0-6z"/><path d="M14 5v2M14 11v2M14 17v2"/></symbol><symbol id="i-lock" viewBox="0 0 24 24"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></symbol><symbol id="i-check" viewBox="0 0 24 24"><path d="M4 12.5l5 5L20 6.5"/></symbol><symbol id="i-bell" viewBox="0 0 24 24"><path d="M6 9a6 6 0 0 1 12 0c0 6 2 7 2 8H4c0-1 2-2 2-8z"/><path d="M10 21h4"/></symbol><symbol id="i-eye" viewBox="0 0 24 24"><path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></symbol><symbol id="i-mail" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></symbol><symbol id="i-rocket" viewBox="0 0 24 24"><path d="M5 15c-1 1-2 4-2 6 2 0 5-1 6-2M14 4c3-1 6-1 7-1 0 1 0 4-1 7l-7 7-6-6 7-7z"/><circle cx="15.5" cy="8.5" r="1.5"/></symbol><symbol id="i-alert" viewBox="0 0 24 24"><path d="M12 3l10 18H2L12 3z"/><path d="M12 10v5M12 18h.01"/></symbol><symbol id="i-play" viewBox="0 0 24 24"><path d="M7 4l13 8-13 8V4z"/></symbol><symbol id="i-menu" viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h16"/></symbol><symbol id="i-x" viewBox="0 0 24 24"><path d="M5 5l14 14M19 5L5 19"/></symbol><symbol id="i-arrow" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></symbol><symbol id="i-star" viewBox="0 0 24 24"><path d="M12 3l2.7 5.6 6.1.9-4.4 4.3 1 6.1L12 17l-5.4 2.9 1-6.1L3.2 9.5l6.1-.9L12 3z"/></symbol><symbol id="i-insta" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.3" cy="6.7" r="1" fill="currentColor"/></symbol><symbol id="i-face" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="4"/><path d="M15 8h-1.6A1.9 1.9 0 0 0 11.5 10v11M9 13h5.5"/></symbol><symbol id="i-tiktok" viewBox="0 0 24 24"><path d="M14 3v11.5a3.5 3.5 0 1 1-3.5-3.5"/><path d="M14 3c.4 2.6 2 4.2 5 4.5"/></symbol><symbol id="i-yt" viewBox="0 0 24 24"><rect x="2.5" y="5.5" width="19" height="13" rx="4"/><path d="M10 9.2v5.6l5-2.8-5-2.8z"/></symbol><symbol id="i-globe" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c3 3.2 3 14.8 0 18M12 3c-3 3.2-3 14.8 0 18"/></symbol><symbol id="i-upload" viewBox="0 0 24 24"><path d="M12 16V4M7 9l5-5 5 5M4 20h16"/></symbol></svg>
 
-<div class="ann" id="ann">🍿 <b>Mientras más plataformas agregas, más ahorras</b> · Pago seguro y entrega automática por correo · Atención en Antioquia</div>
+<div class="ann" id="ann"><b>Mientras más plataformas agregas, más ahorras</b> · Pago seguro y entrega automática por correo · Atención en Antioquia</div>
 
+<div id="glow" aria-hidden="true"></div>
 <div class="deco" id="deco" aria-hidden="true"></div>
 <nav>
   <div class="wrap nav-in">
-    <button class="burger" onclick="openMenu()" aria-label="Abrir menú" aria-controls="menu">☰</button>
+    <button class="burger" onclick="openMenu()" aria-label="Abrir menú" aria-controls="menu"><svg class='i' aria-hidden='true'><use href='#i-menu'/></svg></button>
     <a href="#top" class="brand" aria-label="MJ Streaming, inicio">
       <span class="logo-img" role="img" aria-label="Logo MJ Streaming Service Plataformas"></span>
       <span><span class="bname">MJ Streaming</span><small>streaming service</small></span>
@@ -436,7 +460,7 @@ dialog::backdrop{background:rgba(0,0,0,.7);backdrop-filter:blur(4px)}
       <a href="#contacto">Contacto</a>
     </div>
     <div class="nav-soc" id="navSoc"></div>
-    <button class="nav-cart" onclick="openCart()" aria-label="Abrir carrito">🛒 Carrito <span class="n" id="navN">0</span></button>
+    <button class="nav-cart" onclick="openCart()" aria-label="Abrir carrito"><svg class='i' aria-hidden='true'><use href='#i-cart'/></svg> Carrito <span class="n" id="navN">0</span></button>
   </div>
 </nav>
 
@@ -449,15 +473,15 @@ dialog::backdrop{background:rgba(0,0,0,.7);backdrop-filter:blur(4px)}
       <p class="lead">Netflix, Max, Disney+, Prime Video, Spotify, Crunchyroll y mucho más. Elige tu plan, arma tu combo, ahorra y paga en línea con entrega automática por correo.</p>
       <div class="cta-row">
         <a href="#catalogo" class="btn btn-neon">Ver plataformas →</a>
-        <a href="#" class="btn btn-wa" data-wa="Hola, quiero información sobre las plataformas disponibles 🍿">💬 Escríbenos</a>
+        <a href="#" class="btn btn-wa" data-wa="Hola, quiero información sobre las plataformas disponibles"><svg class='i' aria-hidden='true'><use href='#i-chat'/></svg> Escríbenos</a>
       </div>
       <div class="trust">
-        <span>⚡ Entrega rápida</span><span>🛡️ Garantía de servicio</span><span>🧾 Compra sin registro</span><span>📍 Antioquia, Colombia</span>
+        <span><svg class='i' aria-hidden='true'><use href='#i-bolt'/></svg> Entrega rápida</span><span><svg class='i' aria-hidden='true'><use href='#i-shield'/></svg> Garantía de servicio</span><span><svg class='i' aria-hidden='true'><use href='#i-receipt'/></svg> Compra sin registro</span><span><svg class='i' aria-hidden='true'><use href='#i-pin'/></svg> Antioquia, Colombia</span>
       </div>
     </div>
     <div class="hero-logo" aria-hidden="true">
       <div class="ring"></div>
-      <span class="pop">🍿</span><span class="pop">✨</span><span class="pop">🎬</span><span class="pop">🍿</span>
+      <span class="pop"><svg class='i' aria-hidden='true'><use href='#i-play'/></svg></span><span class="pop"><svg class='i' aria-hidden='true'><use href='#i-spark'/></svg></span><span class="pop"><svg class='i' aria-hidden='true'><use href='#i-film'/></svg></span><span class="pop"><svg class='i' aria-hidden='true'><use href='#i-play'/></svg></span>
       <div class="logo-img"></div>
     </div>
   </div>
@@ -470,7 +494,7 @@ dialog::backdrop{background:rgba(0,0,0,.7);backdrop-filter:blur(4px)}
     <div class="wrap">
       <div class="save">
         <div>
-          <h3>🎁 Arma tu combo y <span class="grad">ahorra automáticamente</span></h3>
+          <h3><svg class='i' aria-hidden='true'><use href='#i-gift'/></svg> Arma tu combo y <span class="grad">ahorra automáticamente</span></h3>
           <p>No necesitas códigos: el descuento se aplica solo según cuántos servicios agregues al carrito.</p>
         </div>
         <div class="tiers" id="tiers"></div>
@@ -487,7 +511,7 @@ dialog::backdrop{background:rgba(0,0,0,.7);backdrop-filter:blur(4px)}
       </div>
       <div class="tools">
         <div class="tools-top">
-          <input class="search" id="q" type="search" placeholder="🔎 ¿Qué quieres ver hoy?" aria-label="Buscar plataforma">
+          <input class="search" id="q" type="search" placeholder="¿Qué quieres ver hoy?" aria-label="Buscar plataforma">
           <select class="sel" id="sort" aria-label="Ordenar">
             <option value="rec">Recomendados</option>
             <option value="asc">Menor precio</option>
@@ -507,10 +531,10 @@ dialog::backdrop{background:rgba(0,0,0,.7);backdrop-filter:blur(4px)}
     <div class="wrap">
       <div class="sec-head"><span class="script">fácil y rápido</span><h2>Compra en <span class="grad">4 pasos</span></h2></div>
       <div class="feats four steps">
-        <div class="feat"><div class="ic">🎬</div><h3>Elige</h3><p>Escoge plataforma y duración. Puedes mezclar varias.</p></div>
-        <div class="feat"><div class="ic">🛒</div><h3>Arma tu carrito</h3><p>Ves tu total y el descuento aplicado al instante.</p></div>
-        <div class="feat"><div class="ic">📲</div><h3>Paga en línea</h3><p>Escribes tu correo y pagas con PSE, Nequi o tarjeta.</p></div>
-        <div class="feat"><div class="ic">🍿</div><h3>Paga y disfruta</h3><p>Al confirmarse el pago, tus accesos llegan solos a tu correo.</p></div>
+        <div class="feat"><div class="ic"><svg class='i' aria-hidden='true'><use href='#i-film'/></svg></div><h3>Elige</h3><p>Escoge plataforma y duración. Puedes mezclar varias.</p></div>
+        <div class="feat"><div class="ic"><svg class='i' aria-hidden='true'><use href='#i-cart'/></svg></div><h3>Arma tu carrito</h3><p>Ves tu total y el descuento aplicado al instante.</p></div>
+        <div class="feat"><div class="ic"><svg class='i' aria-hidden='true'><use href='#i-phone'/></svg></div><h3>Paga en línea</h3><p>Escribes tu correo y pagas con PSE, Nequi o tarjeta.</p></div>
+        <div class="feat"><div class="ic"><svg class='i' aria-hidden='true'><use href='#i-play'/></svg></div><h3>Paga y disfruta</h3><p>Al confirmarse el pago, tus accesos llegan solos a tu correo.</p></div>
       </div>
     </div>
   </section>
@@ -519,12 +543,12 @@ dialog::backdrop{background:rgba(0,0,0,.7);backdrop-filter:blur(4px)}
     <div class="wrap">
       <div class="sec-head"><span class="script">lo que nos hace diferentes</span><h2>¿Por qué <span class="grad">MJ Streaming</span>?</h2></div>
       <div class="feats">
-        <div class="feat"><div class="ic">⚡</div><h3>Entrega rápida</h3><p>Recibes tus datos de acceso por correo apenas se confirma tu pago.</p></div>
-        <div class="feat"><div class="ic">🛡️</div><h3>Garantía de servicio</h3><p>Si algo falla durante tu suscripción, te ayudamos a resolverlo o reponerlo.</p></div>
-        <div class="feat"><div class="ic">💬</div><h3>Soporte humano</h3><p>Hablas directo con nosotros, sin bots ni tickets eternos.</p></div>
-        <div class="feat"><div class="ic">🧾</div><h3>Compra sin registro</h3><p>No necesitas crear cuenta ni recordar contraseñas para pedir.</p></div>
-        <div class="feat"><div class="ic">🔁</div><h3>Renovación fácil</h3><p>Escríbenos antes de que venza y mantenemos tu mismo perfil.</p></div>
-        <div class="feat"><div class="ic">💸</div><h3>Combos que ahorran</h3><p>Más servicios en tu carrito, mayor descuento automático.</p></div>
+        <div class="feat"><div class="ic"><svg class='i' aria-hidden='true'><use href='#i-bolt'/></svg></div><h3>Entrega rápida</h3><p>Recibes tus datos de acceso por correo apenas se confirma tu pago.</p></div>
+        <div class="feat"><div class="ic"><svg class='i' aria-hidden='true'><use href='#i-shield'/></svg></div><h3>Garantía de servicio</h3><p>Si algo falla durante tu suscripción, te ayudamos a resolverlo o reponerlo.</p></div>
+        <div class="feat"><div class="ic"><svg class='i' aria-hidden='true'><use href='#i-chat'/></svg></div><h3>Soporte humano</h3><p>Hablas directo con nosotros, sin bots ni tickets eternos.</p></div>
+        <div class="feat"><div class="ic"><svg class='i' aria-hidden='true'><use href='#i-receipt'/></svg></div><h3>Compra sin registro</h3><p>No necesitas crear cuenta ni recordar contraseñas para pedir.</p></div>
+        <div class="feat"><div class="ic"><svg class='i' aria-hidden='true'><use href='#i-repeat'/></svg></div><h3>Renovación fácil</h3><p>Escríbenos antes de que venza y mantenemos tu mismo perfil.</p></div>
+        <div class="feat"><div class="ic"><svg class='i' aria-hidden='true'><use href='#i-tag'/></svg></div><h3>Combos que ahorran</h3><p>Más servicios en tu carrito, mayor descuento automático.</p></div>
       </div>
     </div>
   </section>
@@ -549,7 +573,7 @@ dialog::backdrop{background:rgba(0,0,0,.7);backdrop-filter:blur(4px)}
       <div class="dist">
         <h3>¿Quieres <span class="grad">revender</span> con nosotros?</h3>
         <p>Pide información sobre precios para distribuidores y mayoristas. Te asesoramos para empezar tu propio negocio de streaming.</p>
-        <a href="#" class="btn btn-neon" data-wa="Hola, me interesa información sobre precios para distribuidores / mayoristas 🙌">Quiero ser distribuidor</a>
+        <a href="#" class="btn btn-neon" data-wa="Hola, me interesa información sobre precios para distribuidores / mayoristas">Quiero ser distribuidor</a>
       </div>
     </div>
   </section>
@@ -558,9 +582,9 @@ dialog::backdrop{background:rgba(0,0,0,.7);backdrop-filter:blur(4px)}
     <div class="wrap">
       <div class="sec-head"><span class="script">compra tranquilo</span><h2>Garantía y <span class="grad">condiciones</span></h2><p>Queremos que sepas exactamente qué recibes antes de pagar.</p></div>
       <div class="feats">
-        <div class="feat"><div class="ic">🛡️</div><h3>Garantía durante tu plan</h3><p>Cubrimos fallas de acceso no causadas por el cliente durante el periodo contratado.</p></div>
-        <div class="feat"><div class="ic">📋</div><h3>Reglas claras</h3><p>Usa solo tu perfil asignado y no cambies correo, contraseña ni PIN.</p></div>
-        <div class="feat"><div class="ic">🤝</div><h3>Te acompañamos</h3><p>Antes y después de pagar resolvemos tus dudas por WhatsApp.</p></div>
+        <div class="feat"><div class="ic"><svg class='i' aria-hidden='true'><use href='#i-shield'/></svg></div><h3>Garantía durante tu plan</h3><p>Cubrimos fallas de acceso no causadas por el cliente durante el periodo contratado.</p></div>
+        <div class="feat"><div class="ic"><svg class='i' aria-hidden='true'><use href='#i-clip'/></svg></div><h3>Reglas claras</h3><p>Usa solo tu perfil asignado y no cambies correo, contraseña ni PIN.</p></div>
+        <div class="feat"><div class="ic"><svg class='i' aria-hidden='true'><use href='#i-users'/></svg></div><h3>Te acompañamos</h3><p>Antes y después de pagar resolvemos tus dudas por WhatsApp.</p></div>
       </div>
       <p style="text-align:center;margin-top:18px"><button class="btn btn-ghost" onclick="openTerms()">Leer términos completos</button></p>
     </div>
@@ -579,13 +603,19 @@ dialog::backdrop{background:rgba(0,0,0,.7);backdrop-filter:blur(4px)}
         <div>
           <h3>¿Tienes dudas? <span class="grad">Hablemos</span></h3>
           <p id="horario" style="margin-bottom:16px"></p>
-          <a href="#" class="btn btn-wa" data-wa="Hola, tengo una consulta 🍿">💬 Escribir por WhatsApp</a>
+          <a href="#" class="btn btn-wa" data-wa="Hola, tengo una consulta"><svg class='i' aria-hidden='true'><use href='#i-chat'/></svg> Escribir por WhatsApp</a>
         </div>
       </div>
     </div>
   </section>
 </main>
 
+<section id="redes" class="reveal" hidden>
+  <div class="wrap">
+    <div class="sec-head"><span class="script">comunidad</span><h2>Síguenos y <span class="grad">no te pierdas nada</span></h2></div>
+    <div class="redes-grid" id="redesGrid"></div>
+  </div>
+</section>
 <footer class="foot">
   <div class="wrap">
     <div class="foot-grid">
@@ -598,7 +628,7 @@ dialog::backdrop{background:rgba(0,0,0,.7);backdrop-filter:blur(4px)}
         <li><a href="#catalogo">Plataformas</a></li><li><a href="#ahorro">Combos y descuentos</a></li><li><a href="#como">Cómo comprar</a></li><li><a href="#faq">Preguntas frecuentes</a></li></ul></div>
       <div><h4>Ayuda</h4><ul>
         <li><button class="linkbtn" onclick="openTerms()">Garantía y términos</button></li>
-        <li><a href="#" data-wa="Hola, necesito soporte con mi servicio 🙏">Soporte por WhatsApp</a></li>
+        <li><a href="#" data-wa="Hola, necesito soporte con mi servicio">Soporte por WhatsApp</a></li>
         <li id="ciudad"></li></ul></div>
     </div>
     <div class="legal">
@@ -613,34 +643,34 @@ dialog::backdrop{background:rgba(0,0,0,.7);backdrop-filter:blur(4px)}
 <aside class="menu" id="menu" aria-hidden="true" aria-label="Menú principal">
   <div class="m-head">
     <div class="brand"><span class="logo-img" role="img" aria-label="Logo"></span><span><span class="bname">MJ Streaming</span><small>streaming service</small></span></div>
-    <button class="x" onclick="closeMenu()" aria-label="Cerrar menú">✕</button>
+    <button class="x" onclick="closeMenu()" aria-label="Cerrar menú"><svg class='i' aria-hidden='true'><use href='#i-x'/></svg></button>
   </div>
   <nav class="m-links" id="mlinks">
-    <a href="#top">🏠 Inicio</a>
-    <details open><summary>🎬 Plataformas</summary><div class="m-sub" id="menuCats"></div></details>
-    <a href="#ahorro">🎁 Combos y descuentos</a>
-    <a href="#como">🧭 Cómo comprar</a>
-    <a href="#pagos">💳 Medios de pago</a>
-    <a href="#garantia">🛡️ Garantía</a>
-    <a href="#faq">❓ Preguntas frecuentes</a>
-    <a href="#" onclick="openTerms();return false">📜 Términos y condiciones</a>
-    <a href="#" onclick="openCart();return false">🛒 Mi carrito <span class="n" id="menuN">0</span></a>
-    <a href="#" id="menuDist" data-wa="Hola, me interesa información sobre precios para distribuidores / mayoristas 🙌">🤝 Quiero ser distribuidor</a>
+    <a href="#top"><svg class='i' aria-hidden='true'><use href='#i-home'/></svg> Inicio</a>
+    <details open><summary><svg class='i' aria-hidden='true'><use href='#i-film'/></svg> Plataformas</summary><div class="m-sub" id="menuCats"></div></details>
+    <a href="#ahorro"><svg class='i' aria-hidden='true'><use href='#i-gift'/></svg> Combos y descuentos</a>
+    <a href="#como"><svg class='i' aria-hidden='true'><use href='#i-compass'/></svg> Cómo comprar</a>
+    <a href="#pagos"><svg class='i' aria-hidden='true'><use href='#i-card'/></svg> Medios de pago</a>
+    <a href="#garantia"><svg class='i' aria-hidden='true'><use href='#i-shield'/></svg> Garantía</a>
+    <a href="#faq"><svg class='i' aria-hidden='true'><use href='#i-help'/></svg> Preguntas frecuentes</a>
+    <a href="#" onclick="openTerms();return false"><svg class='i' aria-hidden='true'><use href='#i-doc'/></svg> Términos y condiciones</a>
+    <a href="#" onclick="openCart();return false"><svg class='i' aria-hidden='true'><use href='#i-cart'/></svg> Mi carrito <span class="n" id="menuN">0</span></a>
+    <a href="#" id="menuDist" data-wa="Hola, me interesa información sobre precios para distribuidores / mayoristas"><svg class='i' aria-hidden='true'><use href='#i-users'/></svg> Quiero ser distribuidor</a>
   </nav>
   <div class="m-foot">
-    <a href="#" class="btn btn-wa" data-wa="Hola, quiero información 🍿">💬 Escríbenos por WhatsApp</a>
+    <a href="#" class="btn btn-wa" data-wa="Hola, quiero información"><svg class='i' aria-hidden='true'><use href='#i-chat'/></svg> Escríbenos por WhatsApp</a>
     <span id="menuHor"></span><span id="menuCity"></span>
     <div class="soc" id="menuSoc"></div>
   </div>
 </aside>
 
 <!-- Flotantes -->
-<a href="#" class="wa-fab" data-wa="Hola, quiero información 🍿" aria-label="WhatsApp">💬</a>
-<button class="fab" id="fab" onclick="openCart()" aria-label="Abrir carrito">🛒 <span class="n" id="fabN">0</span> <span class="tot" id="fabT"></span></button>
+<a href="#" class="wa-fab" data-wa="Hola, quiero información" aria-label="WhatsApp"><svg class='i' aria-hidden='true'><use href='#i-chat'/></svg></a>
+<button class="fab" id="fab" onclick="openCart()" aria-label="Abrir carrito"><svg class='i' aria-hidden='true'><use href='#i-cart'/></svg> <span class="n" id="fabN">0</span> <span class="tot" id="fabT"></span></button>
 <div class="overlay" id="ov" onclick="closeCart()"></div>
 
 <aside class="drawer" id="drawer" aria-label="Carrito de compras" aria-hidden="true">
-  <div class="d-head"><h3>🛒 Tu carrito</h3><button class="x" onclick="closeCart()" aria-label="Cerrar carrito">✕</button></div>
+  <div class="d-head"><h3><svg class='i' aria-hidden='true'><use href='#i-cart'/></svg> Tu carrito</h3><button class="x" onclick="closeCart()" aria-label="Cerrar carrito"><svg class='i' aria-hidden='true'><use href='#i-x'/></svg></button></div>
   <div class="prog" id="prog"></div>
   <div class="d-list" id="list"></div>
   <div class="d-foot" id="foot">
@@ -648,7 +678,7 @@ dialog::backdrop{background:rgba(0,0,0,.7);backdrop-filter:blur(4px)}
       <input class="fld" id="cliente" type="text" placeholder="Tu nombre" autocomplete="name">
       <select class="fld" id="pago" aria-label="Medio de pago preferido"></select>
     </div>
-    <details class="more" id="more"><summary>🎟️ Código promocional y notas</summary>
+    <details class="more" id="more"><summary><svg class='i' aria-hidden='true'><use href='#i-ticket'/></svg> Código promocional y notas</summary>
       <div style="display:grid;gap:8px;margin-top:10px">
         <div class="coupon"><input class="fld" id="cupon" type="text" placeholder="Código promocional" autocapitalize="characters"><button onclick="applyCoupon()">Aplicar</button></div>
         <div class="cmsg" id="cmsg"></div>
@@ -657,9 +687,9 @@ dialog::backdrop{background:rgba(0,0,0,.7);backdrop-filter:blur(4px)}
     </details>
     <div class="sum" id="sum"></div>
     <div class="total"><span>Total</span><b class="grad" id="total">$0</b></div>
-    <button class="btn btn-bold big" id="waBtn" onclick="checkout()">🔒 Pagar ahora · recibe tu cuenta por correo</button>
-    <button class="wa-alt" id="waAlt" onclick="checkoutWA()">💬 Prefiero pedir por WhatsApp</button>
-    <div class="mini"><button onclick="copyOrder()">📋 Copiar pedido</button><button id="clearBtn" onclick="clearCart()">Vaciar carrito</button></div>
+    <button class="btn btn-bold big" id="waBtn" onclick="checkout()"><svg class='i' aria-hidden='true'><use href='#i-lock'/></svg> Pagar ahora · recibe tu cuenta por correo</button>
+    <button class="wa-alt" id="waAlt" onclick="checkoutWA()"><svg class='i' aria-hidden='true'><use href='#i-chat'/></svg> Prefiero pedir por WhatsApp</button>
+    <div class="mini"><button onclick="copyOrder()"><svg class='i' aria-hidden='true'><use href='#i-clip'/></svg> Copiar pedido</button><button id="clearBtn" onclick="clearCart()">Vaciar carrito</button></div>
   </div>
 </aside>
 
@@ -675,7 +705,7 @@ dialog::backdrop{background:rgba(0,0,0,.7);backdrop-filter:blur(4px)}
 let CONFIG = {
   tienda: "MJ Streaming",
   whatsapp: "573215296552",            // país + número, sin "+" ni espacios (57 = Colombia)
-  anuncio: "🍿 Mientras más plataformas agregas, más ahorras · Pago seguro y entrega automática por correo · Atención en Antioquia",
+  anuncio: "Mientras más plataformas agregas, más ahorras · Pago seguro y entrega automática por correo · Atención en Antioquia",
   moneda: "COP", locale: "es-CO",
   ciudad: "Antioquia, Colombia",
   horario: "Atendemos todos los días · 8:00 a. m. – 10:00 p. m.",
@@ -822,57 +852,88 @@ const fmt = n => new Intl.NumberFormat(CONFIG.locale,{style:"currency",currency:
 const esc = s => String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
 const byId = id => PRODUCTS.find(p=>p.id===id);
 const ini = p => p.name.replace(/[^A-Za-zÁ-ú]/g,"").charAt(0).toUpperCase();
-const waLink = txt => `https://wa.me/${CONFIG.whatsapp}?text=${encodeURIComponent(txt)}`;
+const IC=(k)=>`<svg class='i' aria-hidden='true'><use href='#i-${k}'/></svg>`;
+const cleanWA = s => String(s==null?"":s).normalize("NFC")
+  .replace(/[\u{1F000}-\u{1FFFF}\u{2190}-\u{21FF}\u{2300}-\u{23FF}\u{2600}-\u{27BF}\u{2B00}-\u{2BFF}\u{FE00}-\u{FE0F}\u{200B}-\u{200D}\u{2060}\u{FEFF}\u{E0000}-\u{E007F}]/gu,"")
+  .replace(/[•·‣▪]/g,"-").replace(/[‒-―−]/g,"-")
+  .replace(/[“”]/g,'"').replace(/[‘’]/g,"'").replace(/…/g,"...").replace(/ /g," ")
+  .replace(/[ \t]{2,}/g," ").replace(/ *\n */g,"\n").trim();
+const waNum = () => { let n=String(CONFIG.whatsapp||"").replace(/\D/g,""); if(n.length===10) n="57"+n; return n; };
+const waLink = txt => `https://wa.me/${waNum()}?text=${encodeURIComponent(cleanWA(txt))}`;
 const lsGet = (k,d) => { try{ const v=localStorage.getItem(k); return v===null?d:JSON.parse(v);}catch(e){return d;} };
 const lsSet = (k,v) => { try{ localStorage.setItem(k,JSON.stringify(v)); }catch(e){} };
 
+/* Temas: colores + efectos dibujados (sprites vectoriales, sin emojis) + decoración SVG */
 const THEMES={
- neon:{g:"Clásico",n:"Neón MJ",e:"🍿",d:"El diseño original de tu tienda.",
-  c:{bg:"#050914",bg2:"#0a1124",card:"#0d1530",card2:"#111b3d",y:"#ffe93a",g:"#8dff2e",b:"#2f7bff",pink:"#ff3d8b",on:"#07101f"},fx:null,deco:null},
- "navidad-clasica":{g:"Navidad",n:"Navidad clásica",e:"🎄",d:"Verde bosque, rojo y dorado con nieve cayendo y luces.",
+ neon:{g:"Clásico",n:"Neón MJ",d:"El diseño original de tu tienda.",
+  c:{bg:"#050914",bg2:"#0a1124",card:"#0d1530",card2:"#111b3d",y:"#ffe93a",g:"#8dff2e",b:"#2f7bff",pink:"#ff3d8b",on:"#07101f"},fx:null,deco:null,
+  glow:"radial-gradient(900px 500px at 12% -5%,rgba(47,123,255,.18),transparent 60%),radial-gradient(800px 480px at 95% 8%,rgba(141,255,46,.10),transparent 60%)"},
+ "navidad-clasica":{g:"Navidad",n:"Navidad clásica",d:"Verde bosque, rojo y dorado con nieve real, guirnalda de pino y luces.",
   c:{bg:"#06130c",bg2:"#0b2015",card:"#0f2b1c",card2:"#14371f",y:"#ffd36b",g:"#5dff9a",b:"#2fbf71",pink:"#ff4d5e",on:"#2a0707",grad:"linear-gradient(95deg,#ffd36b,#ff5d6c)"},
-  fx:{kind:"fall",glyphs:["❄","❅","❆","•","•","🎄"],n:44,size:[10,26],speed:[.5,1.3],alpha:.85},
-  deco:{type:"lights",colors:["#ff4d5e","#ffd36b","#5dff9a","#4aa3ff"]},ann:"🎄 ¡Feliz Navidad! Regala entretenimiento · Combos con descuento y entrega automática por correo 🎁"},
- "navidad-nordica":{g:"Navidad",n:"Navidad nórdica",e:"❄️",d:"Azul hielo y plata con copos suaves, elegante y fría.",
+  fx:{kind:"fall",sprites:["snow","snow","snow","flake","flake","orb:#ff4d5e","orb:#ffd36b"],n:60,size:[8,26],speed:[.5,1.3],alpha:.92},
+  deco:{type:"garland",colors:["#ff4d5e","#ffd36b","#5dff9a","#4aa3ff"]},
+  glow:"radial-gradient(900px 520px at 15% -8%,rgba(255,77,94,.16),transparent 60%),radial-gradient(900px 520px at 90% 0%,rgba(255,211,107,.14),transparent 60%),radial-gradient(700px 400px at 50% 110%,rgba(47,191,113,.16),transparent 65%)",
+  ann:"Feliz Navidad. Regala entretenimiento: combos con descuento y entrega automática por correo."},
+ "navidad-nordica":{g:"Navidad",n:"Navidad nórdica",d:"Azul hielo y plata con copos de cristal y luces frías.",
   c:{bg:"#050c1c",bg2:"#0a1631",card:"#0e1e40",card2:"#132a55",y:"#cfeeff",g:"#7dffe0",b:"#4aa3ff",pink:"#ff9ec7",on:"#06203a",grad:"linear-gradient(95deg,#e4f6ff,#6fd0ff)"},
-  fx:{kind:"fall",glyphs:["❄","❅","❆","•"],n:52,size:[9,30],speed:[.35,.9],alpha:.8},
-  deco:{type:"emoji",glyphs:"❄️ ⛄ ❄️ 🎁 ❄️ 🦌 "},ann:"❄️ Navidad con tus series favoritas · Pago seguro y entrega automática por correo ⛄"},
- "navidad-dorada":{g:"Navidad",n:"Navidad dorada",e:"✨",d:"Negro y oro de lujo con destellos y luces cálidas.",
+  fx:{kind:"fall",sprites:["flake","flake","flake","snow","snow","star"],n:56,size:[10,30],speed:[.35,.9],alpha:.9,tint:"#dff3ff"},
+  deco:{type:"lights",colors:["#dff3ff","#8fd0ff","#ffffff","#b6e6ff"]},
+  glow:"radial-gradient(1000px 560px at 50% -12%,rgba(143,208,255,.22),transparent 62%),radial-gradient(700px 420px at 100% 100%,rgba(74,163,255,.14),transparent 60%)",
+  ann:"Una Navidad de hielo: tus series favoritas con pago seguro y entrega automática."},
+ "navidad-dorada":{g:"Navidad",n:"Navidad dorada",d:"Negro y oro de lujo con bokeh cálido y destellos.",
   c:{bg:"#0a0805",bg2:"#15100a",card:"#1b150d",card2:"#241b10",y:"#ffd76a",g:"#9dff7a",b:"#e8a317",pink:"#ff6b6b",on:"#2a1a00",grad:"linear-gradient(95deg,#fff0b0,#e8a317)"},
-  fx:{kind:"rise",glyphs:["✨","•","•","⭐","🎁"],n:36,size:[8,24],speed:[.3,.8],alpha:.85,tint:"#ffd76a"},
-  deco:{type:"lights",colors:["#ffd76a","#ffe9a8","#e8a317"]},ann:"✨ Una Navidad dorada · Estrena plataformas y ahorra con combos 🎁"},
- "noche-brujas":{g:"Brujitas y Halloween",n:"Noche de brujas",e:"🎃",d:"Naranja calabaza y morado con murciélagos volando.",
+  fx:{kind:"rise",sprites:["bokeh","bokeh","bokeh","star","star","orb:#e8a317"],n:34,size:[10,40],speed:[.25,.7],alpha:.8,tint:"#ffd76a"},
+  deco:{type:"lights",colors:["#ffd76a","#ffe9a8","#e8a317"]},
+  glow:"radial-gradient(900px 520px at 20% -10%,rgba(232,163,23,.20),transparent 60%),radial-gradient(800px 500px at 95% 100%,rgba(255,215,106,.12),transparent 60%)",
+  ann:"Una Navidad dorada: estrena plataformas y ahorra con combos."},
+ "noche-brujas":{g:"Brujitas y Halloween",n:"Noche de brujas",d:"Naranja y morado con murciélagos, brasas y telarañas en las esquinas.",
   c:{bg:"#0b0710",bg2:"#150c20",card:"#1b1029",card2:"#241538",y:"#ff9a1f",g:"#9dff3b",b:"#7a3cff",pink:"#ff4d9a",on:"#1a0a00",grad:"linear-gradient(95deg,#ffb02e,#ff6a00)"},
-  fx:{kind:"float",glyphs:["🦇","🦇","🎃","🕸️","👻"],n:20,size:[18,34],speed:[.4,1.1],alpha:.9},
-  deco:{type:"emoji",glyphs:"🎃 🦇 🕸️ 👻 🎃 🦇 🕷️ "},ann:"🎃 ¡Noche de brujas! Trucos baratos y tratos con descuento en tus plataformas 🦇"},
- "brujitas-magicas":{g:"Brujitas y Halloween",n:"Brujitas mágicas",e:"🧙‍♀️",d:"Lila, rosa y verde pócima con estrellas y burbujas mágicas.",
+  fx:{kind:"float",sprites:["bat","bat","bat","ember","ember"],n:20,size:[38,74],speed:[.4,1.1],alpha:.95},
+  deco:{type:"cobweb",colors:["#ff9a1f"]},
+  glow:"radial-gradient(900px 520px at 85% -8%,rgba(255,106,0,.22),transparent 60%),radial-gradient(900px 520px at 5% 100%,rgba(122,60,255,.22),transparent 60%)",
+  ann:"Noche de brujas: trucos baratos y tratos con descuento en tus plataformas."},
+ "brujitas-magicas":{g:"Brujitas y Halloween",n:"Brujitas mágicas",d:"Lila, rosa y verde pócima con burbujas y polvo de estrellas.",
   c:{bg:"#0a0615",bg2:"#140a2a",card:"#1b0f3a",card2:"#25154d",y:"#e0b0ff",g:"#7dffb2",b:"#8a5cff",pink:"#ff7ad9",on:"#14051f",grad:"linear-gradient(95deg,#ff7ad9,#9b6bff)"},
-  fx:{kind:"rise",glyphs:["✨","🔮","🧪","⭐","🪄","•"],n:30,size:[12,28],speed:[.35,.9],alpha:.9},
-  deco:{type:"emoji",glyphs:"🧙‍♀️ 🔮 ✨ 🧪 🪄 🌙 "},ann:"🧙‍♀️ Hechizos de ahorro: ¡combos mágicos en tus plataformas favoritas! 🔮"},
- amor:{g:"Amor y Amistad",n:"Amor",e:"💖",d:"Rosa y rojo pasión con corazones flotando.",
+  fx:{kind:"rise",sprites:["bubble","bubble","star","star","bokeh"],n:32,size:[12,38],speed:[.35,.9],alpha:.9,tint:"#e0b0ff"},
+  deco:{type:"bunting",colors:["#8a5cff","#ff7ad9","#7dffb2","#e0b0ff"]},
+  glow:"radial-gradient(900px 520px at 10% -8%,rgba(255,122,217,.20),transparent 60%),radial-gradient(900px 520px at 95% 90%,rgba(125,255,178,.12),transparent 60%)",
+  ann:"Hechizos de ahorro: combos mágicos en tus plataformas favoritas."},
+ amor:{g:"Amor y Amistad",n:"Amor",d:"Rosa y rojo pasión con corazones brillantes flotando.",
   c:{bg:"#12050c",bg2:"#1e0913",card:"#2a0d1b",card2:"#38122a",y:"#ffb3c7",g:"#a0ffcc",b:"#ff4d7d",pink:"#ff2e63",on:"#2a0010",grad:"linear-gradient(95deg,#ff8fb1,#ff2e63)"},
-  fx:{kind:"rise",glyphs:["❤","💖","💕","💗","💘"],n:26,size:[14,32],speed:[.35,.9],alpha:.85},
-  deco:{type:"emoji",glyphs:"💖 💕 💘 💗 💝 "},ann:"💖 Amor y Amistad · Regala una plataforma y haz feliz a esa persona especial 💕"},
- amistad:{g:"Amor y Amistad",n:"Amistad",e:"🎈",d:"Turquesa y amarillo festivo con confeti y globos.",
+  fx:{kind:"rise",sprites:["heart:#ff2e63","heart:#ff6b8f","heart:#ffb3c7","heart:#ff2e63","bokeh"],n:26,size:[16,40],speed:[.35,.9],alpha:.9},
+  deco:{type:"lights",colors:["#ff2e63","#ff8fb1","#ffb3c7"]},
+  glow:"radial-gradient(900px 520px at 15% -8%,rgba(255,46,99,.22),transparent 60%),radial-gradient(800px 500px at 95% 100%,rgba(255,143,177,.16),transparent 60%)",
+  ann:"Amor y Amistad: regala una plataforma y haz feliz a esa persona especial."},
+ amistad:{g:"Amor y Amistad",n:"Amistad",d:"Turquesa y amarillo festivo con confeti y globos brillantes.",
   c:{bg:"#04121a",bg2:"#082230",card:"#0c2d3f",card2:"#103a52",y:"#ffe14d",g:"#4dffd2",b:"#2fb6ff",pink:"#ff7a59",on:"#04212a",grad:"linear-gradient(95deg,#ffe14d,#4dffd2)"},
-  fx:{kind:"confetti",glyphs:["🎈","🎉"],n:46,size:[7,13],speed:[.6,1.6],alpha:.9,colors:["#ffe14d","#4dffd2","#2fb6ff","#ff7a59","#ff6bb5"]},
-  deco:{type:"lights",colors:["#ffe14d","#4dffd2","#2fb6ff","#ff7a59","#ff6bb5"]},ann:"🎈 ¡Feliz día de Amor y Amistad! Comparte combos con tus amigos 🎉"},
- "ano-nuevo":{g:"Fiestas especiales",n:"Año Nuevo",e:"🥂",d:"Champán y plata con confeti dorado de celebración.",
+  fx:{kind:"confetti",sprites:["balloon:#ff7a59","balloon:#ffe14d","balloon:#4dffd2"],n:46,size:[7,13],speed:[.6,1.6],alpha:.95,colors:["#ffe14d","#4dffd2","#2fb6ff","#ff7a59","#ff6bb5"],extra:8},
+  deco:{type:"bunting",colors:["#ffe14d","#4dffd2","#2fb6ff","#ff7a59","#ff6bb5"]},
+  glow:"radial-gradient(900px 520px at 85% -8%,rgba(255,225,77,.16),transparent 60%),radial-gradient(900px 520px at 5% 100%,rgba(77,255,210,.14),transparent 60%)",
+  ann:"Feliz día de Amor y Amistad: comparte combos con tus amigos."},
+ "ano-nuevo":{g:"Fiestas especiales",n:"Año Nuevo",d:"Champán y plata con confeti dorado y destellos de celebración.",
   c:{bg:"#070a14",bg2:"#0d1326",card:"#121a35",card2:"#19234a",y:"#ffe7a3",g:"#c9d6ff",b:"#6c8cff",pink:"#ff9ec7",on:"#2a1d00",grad:"linear-gradient(95deg,#fff1c2,#d4a73a)"},
-  fx:{kind:"confetti",glyphs:["🥂","✨"],n:48,size:[6,12],speed:[.5,1.4],alpha:.9,colors:["#ffe7a3","#d4a73a","#c9d6ff","#ffffff"]},
-  deco:{type:"emoji",glyphs:"🥂 ✨ 🎆 🎉 🥂 ✨ "},ann:"🥂 ¡Feliz Año Nuevo! Empieza el año con tus plataformas favoritas 🎆"},
- "black-friday":{g:"Fiestas especiales",n:"Black Friday",e:"🏷️",d:"Negro total y amarillo de oferta con cinta de precaución.",
+  fx:{kind:"confetti",sprites:["star","bokeh"],n:50,size:[6,12],speed:[.5,1.4],alpha:.95,colors:["#ffe7a3","#d4a73a","#c9d6ff","#ffffff"],extra:10,tint:"#ffe7a3"},
+  deco:{type:"lights",colors:["#ffe7a3","#d4a73a","#ffffff"]},
+  glow:"radial-gradient(1000px 560px at 50% -12%,rgba(212,167,58,.22),transparent 62%),radial-gradient(700px 420px at 0% 100%,rgba(108,140,255,.16),transparent 60%)",
+  ann:"Feliz Año Nuevo: empieza el año con tus plataformas favoritas."},
+ "black-friday":{g:"Fiestas especiales",n:"Black Friday",d:"Negro total y amarillo de oferta con cinta de precaución y brasas.",
   c:{bg:"#050505",bg2:"#0e0e0e",card:"#151515",card2:"#1d1d1d",y:"#ffe600",g:"#b6ff00",b:"#ff2b2b",pink:"#ff2b2b",on:"#111111",grad:"linear-gradient(95deg,#ffe600,#ffb800)"},
-  fx:{kind:"fall",glyphs:["🏷️","💥","🔥"],n:14,size:[16,30],speed:[.6,1.4],alpha:.8},
-  deco:{type:"stripes",colors:["#ffe600","#111111"]},ann:"🏷️ BLACK FRIDAY · Los descuentos más grandes del año en streaming 🔥"},
- "dia-madre":{g:"Fiestas especiales",n:"Día de la Madre",e:"🌸",d:"Rosa y lila suave con pétalos cayendo.",
+  fx:{kind:"rise",sprites:["ember","ember","ember","star"],n:30,size:[8,22],speed:[.5,1.3],alpha:.9,tint:"#ffe600"},
+  deco:{type:"stripes",colors:["#ffe600","#111111"]},
+  glow:"radial-gradient(900px 520px at 50% -10%,rgba(255,230,0,.14),transparent 60%),radial-gradient(800px 480px at 100% 100%,rgba(255,43,43,.16),transparent 60%)",
+  ann:"BLACK FRIDAY: los descuentos más grandes del año en streaming."},
+ "dia-madre":{g:"Fiestas especiales",n:"Día de la Madre",d:"Rosa y lila suave con pétalos reales cayendo.",
   c:{bg:"#130812",bg2:"#1f0e1d",card:"#2a1328",card2:"#371a35",y:"#ffd1e8",g:"#b6ffd8",b:"#c18bff",pink:"#ff7ac8",on:"#2a0a22",grad:"linear-gradient(95deg,#ffb3de,#c18bff)"},
-  fx:{kind:"fall",glyphs:["🌸","🌷","💐","🌺","•"],n:30,size:[14,28],speed:[.4,1],alpha:.85},
-  deco:{type:"emoji",glyphs:"🌸 💐 🌷 🌺 🌸 "},ann:"🌸 Feliz Día de la Madre · Regálale su plataforma favorita 💐"},
- "dia-padre":{g:"Fiestas especiales",n:"Día del Padre",e:"👔",d:"Azul acero y dorado, sobrio y elegante.",
+  fx:{kind:"fall",sprites:["petal:#ff9ccf","petal:#ffc4e3","petal:#e3a8ff","petal:#ff7ac8","bokeh"],n:34,size:[14,30],speed:[.4,1],alpha:.9},
+  deco:{type:"bunting",colors:["#ff9ccf","#ffc4e3","#e3a8ff"]},
+  glow:"radial-gradient(900px 520px at 15% -8%,rgba(255,122,200,.20),transparent 60%),radial-gradient(800px 500px at 95% 100%,rgba(193,139,255,.16),transparent 60%)",
+  ann:"Feliz Día de la Madre: regálale su plataforma favorita."},
+ "dia-padre":{g:"Fiestas especiales",n:"Día del Padre",d:"Azul acero y dorado, sobrio y elegante.",
   c:{bg:"#050d14",bg2:"#0a1824",card:"#0e2233",card2:"#132d44",y:"#ffd166",g:"#6bffb0",b:"#3d8bff",pink:"#ff7a59",on:"#04122a",grad:"linear-gradient(95deg,#8fd0ff,#3d8bff)"},
-  fx:{kind:"rise",glyphs:["⭐","✨","•"],n:22,size:[10,22],speed:[.3,.7],alpha:.8},
-  deco:{type:"emoji",glyphs:"👔 ⭐ 🏆 ⭐ 👔 "},ann:"👔 Feliz Día del Padre · Sorprende al héroe de la casa con su plataforma 🏆"}
+  fx:{kind:"rise",sprites:["star","bokeh","bokeh"],n:22,size:[10,34],speed:[.3,.7],alpha:.8,tint:"#ffd166"},
+  deco:{type:"lights",colors:["#ffd166","#8fd0ff","#3d8bff"]},
+  glow:"radial-gradient(900px 520px at 85% -8%,rgba(61,139,255,.20),transparent 60%),radial-gradient(800px 500px at 0% 100%,rgba(255,209,102,.12),transparent 60%)",
+  ann:"Feliz Día del Padre: sorprende al héroe de la casa con su plataforma."}
 };
 
 /* ---------- Arte original por plataforma (generado en el navegador con los colores de cada producto) ---------- */
@@ -938,15 +999,20 @@ function artFor(p){
   const c1=p.c1||"#2f7bff", c2=p.c2||"#0b1020", dk=_mix(_lum(c1)<_lum(c2)?c1:c2,"#000000",.32), G=_lum(c1)>170||_lum(c2)>170?"#fff3a0":"#ffd84a";
   const nm=String(p.name||"").toUpperCase().replace(/[<>&"']/g,"").slice(0,26), fs=nm.length<=10?58:nm.length<=16?44:nm.length<=22?34:28;
   let s=0; for(const ch of String(p.id||p.name)) s=(s*31+ch.charCodeAt(0))>>>0; const rnd=()=>(s=(s*1664525+1013904223)>>>0)/4294967296;
-  const dots=Array.from({length:16},()=>`<circle cx="${(rnd()*800).toFixed(0)}" cy="${(rnd()*330).toFixed(0)}" r="${(2+rnd()*5).toFixed(1)}" fill="#fff" opacity="${(.12+rnd()*.25).toFixed(2)}"/>`).join("");
+  const dots=`<g filter="url(#bk)">`+Array.from({length:12},()=>`<circle cx="${(rnd()*800).toFixed(0)}" cy="${(rnd()*400).toFixed(0)}" r="${(14+rnd()*34).toFixed(0)}" fill="#fff" opacity="${(.05+rnd()*.12).toFixed(2)}"/>`).join("")+`</g>`+Array.from({length:14},()=>`<circle cx="${(rnd()*800).toFixed(0)}" cy="${(rnd()*330).toFixed(0)}" r="${(1+rnd()*2.4).toFixed(1)}" fill="#fff" opacity="${(.25+rnd()*.4).toFixed(2)}"/>`).join("");
   const svg=`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 500"><defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="${c1}"/><stop offset="1" stop-color="${c2}"/></linearGradient>
   <radialGradient id="r" cx=".5" cy=".42" r=".5"><stop offset="0" stop-color="#fff" stop-opacity=".4"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></radialGradient>
   <linearGradient id="s" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#000" stop-opacity="0"/><stop offset="1" stop-color="#000" stop-opacity=".6"/></linearGradient>
-  <filter id="f" x="-20%" y="-20%" width="140%" height="150%"><feDropShadow dx="0" dy="12" stdDeviation="11" flood-color="#000" flood-opacity=".38"/></filter></defs>
+  <filter id="f" x="-25%" y="-25%" width="150%" height="160%"><feGaussianBlur in="SourceAlpha" stdDeviation="3.5" result="b"/><feSpecularLighting in="b" surfaceScale="7" specularConstant="1" specularExponent="26" lighting-color="#ffffff" result="sp"><fePointLight x="-40" y="-90" z="230"/></feSpecularLighting><feComposite in="sp" in2="SourceAlpha" operator="in" result="spc"/><feComposite in="SourceGraphic" in2="spc" operator="arithmetic" k1="0" k2="1" k3="0.85" k4="0" result="lit"/><feDropShadow in="lit" dx="0" dy="16" stdDeviation="13" flood-color="#000" flood-opacity=".5"/></filter>
+  <filter id="bk" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="9"/></filter>
+  <filter id="nz" x="0" y="0" width="100%" height="100%"><feTurbulence type="fractalNoise" baseFrequency=".85" numOctaves="2" seed="7"/><feColorMatrix values="0 0 0 0 1  0 0 0 0 1  0 0 0 0 1  0 0 0 .55 0"/></filter>
+  <linearGradient id="ry" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff" stop-opacity=".30"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></linearGradient>
+  <linearGradient id="sw" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#fff" stop-opacity="0"/><stop offset=".5" stop-color="#fff" stop-opacity=".16"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></linearGradient>
+  <radialGradient id="vg" cx=".5" cy=".45" r=".75"><stop offset=".55" stop-color="#000" stop-opacity="0"/><stop offset="1" stop-color="#000" stop-opacity=".55"/></radialGradient></defs>
   <rect width="800" height="500" fill="url(#g)"/><rect width="800" height="500" fill="#000" opacity=".18"/><circle cx="110" cy="70" r="190" fill="#fff" opacity=".07"/><circle cx="740" cy="440" r="250" fill="#000" opacity=".18"/>
   <circle cx="400" cy="215" r="196" fill="none" stroke="#fff" stroke-opacity=".14" stroke-width="2"/><circle cx="400" cy="215" r="160" fill="none" stroke="#fff" stroke-opacity=".1" stroke-width="2" stroke-dasharray="4 14"/>${dots}
-  <rect width="800" height="500" fill="url(#r)"/><g transform="translate(250 62)" filter="url(#f)">${(ART_M[artKey(p)]||ART_M.screen)(dk,G)}</g>
-  <rect y="330" width="800" height="170" fill="url(#s)"/><text x="400" y="452" text-anchor="middle" font-family="Arial Black,Montserrat,Segoe UI,Arial,sans-serif" font-weight="900" font-size="${fs}" fill="#fff" letter-spacing="1.5">${nm}</text></svg>`;
+  <polygon points="330,-10 470,-10 640,360 160,360" fill="url(#ry)"/><rect width="800" height="500" fill="url(#r)"/><ellipse cx="400" cy="372" rx="190" ry="20" fill="#000" opacity=".4" filter="url(#bk)"/><g transform="translate(250 62)" filter="url(#f)">${(ART_M[artKey(p)]||ART_M.screen)(dk,G)}</g>
+  <rect y="330" width="800" height="170" fill="url(#s)"/><rect x="-300" width="260" height="500" fill="url(#sw)" transform="skewX(-18)"><animate attributeName="x" values="-300;1100" dur="6s" repeatCount="indefinite"/></rect><rect width="800" height="500" fill="url(#vg)"/><text x="400" y="452" text-anchor="middle" font-family="Arial Black,Montserrat,Segoe UI,Arial,sans-serif" font-weight="900" font-size="${fs}" fill="#fff" letter-spacing="1.5" style="paint-order:stroke" stroke="#000" stroke-opacity=".35" stroke-width="6">${nm}</text><rect width="800" height="500" filter="url(#nz)" opacity=".10"/></svg>`;
   return _artCache[ck]="data:image/svg+xml;charset=utf-8,"+encodeURIComponent(svg);
 }
 
@@ -1004,9 +1070,9 @@ function cardHTML(p,i){
         <div class="price-row" data-price>${priceHTML(p)}</div>
         <div class="acts">
           ${p.stock===0
-            ? `<a class="add" href="#" data-wa="Hola, ¿cuándo tendrán disponible ${esc(p.name)}? 🙏">🔔 Avísame</a>`
+            ? `<a class="add" href="#" data-wa="Hola, ¿cuándo tendrán disponible ${esc(p.name)}?"><svg class='i' aria-hidden='true'><use href='#i-bell'/></svg> Avísame</a>`
             : `<button class="add" data-add="${p.id}">＋ Agregar</button>`}
-          <button class="det" data-det="${p.id}" aria-label="Ver detalles de ${esc(p.name)}">👁</button>
+          <button class="det" data-det="${p.id}" aria-label="Ver detalles de ${esc(p.name)}"><svg class='i' aria-hidden='true'><use href='#i-eye'/></svg></button>
         </div>
       </div>
     </div>
@@ -1026,7 +1092,7 @@ function renderGrid(){
   else list.sort((a,b)=>(b.hot?1:0)-(a.hot?1:0));          // recomendados primero
   $("#count").textContent = `${list.length} ${list.length===1?"opción":"opciones"}`;
   $("#grid").innerHTML = list.length ? list.map(cardHTML).join("")
-    : `<p class="empty">No encontramos “${esc(term)}”. Escríbenos por WhatsApp y lo conseguimos. 😉</p>`;
+    : `<p class="empty">No encontramos “${esc(term)}”. Escríbenos por WhatsApp y lo conseguimos.</p>`;
 }
 function refreshCardPrice(id){
   const p=byId(id), c=document.querySelector(`.card[data-id="${id}"]`); if(!c) return;
@@ -1069,7 +1135,7 @@ dlg.addEventListener("click",e=>{ if(e.target===dlg) closeDlg(); });
 function openProduct(id){
   const p=byId(id); if(!p) return;
   const st=stockInfo(p);
-  showDlg(`<button class="x" onclick="closeDlg()" aria-label="Cerrar">✕</button>
+  showDlg(`<button class="x" onclick="closeDlg()" aria-label="Cerrar"><svg class='i' aria-hidden='true'><use href='#i-x'/></svg></button>
   <div class="pm" style="--c1:${p.c1};--c2:${p.c2}">
     <div class="art" data-ini="${ini(p)}">${p.badge?`<span class="badge ${p.hot?"hot":""}">${esc(p.badge)}</span>`:""}${artHTML(p)}</div>
     <div class="pm-body">
@@ -1078,12 +1144,12 @@ function openProduct(id){
       <p style="color:var(--muted)">${esc(p.desc)}</p>
       <ul>${(p.incluye||[]).map(x=>`<li>${esc(x)}</li>`).join("")}</ul>
       <div class="pm-plans" id="pmPlans"></div>
-      ${p.nota?`<div class="note">ℹ️ ${esc(p.nota)}</div>`:""}
+      ${p.nota?`<div class="note">ℹ ${esc(p.nota)}</div>`:""}
       <div class="acts" style="margin-top:4px">
         ${p.stock===0
-          ? `<a class="btn btn-wa" style="flex:1" href="#" data-wa="Hola, ¿cuándo tendrán disponible ${esc(p.name)}? 🙏">🔔 Avísame cuando haya</a>`
+          ? `<a class="btn btn-wa" style="flex:1" href="#" data-wa="Hola, ¿cuándo tendrán disponible ${esc(p.name)}?"><svg class='i' aria-hidden='true'><use href='#i-bell'/></svg> Avísame cuando haya</a>`
           : `<button class="btn btn-neon" style="flex:1" onclick="add('${p.id}');closeDlg()">＋ Agregar al carrito</button>`}
-        <a class="btn btn-ghost" href="#" data-wa="Hola, tengo una duda sobre ${esc(p.name)} 🙋">💬 Preguntar</a>
+        <a class="btn btn-ghost" href="#" data-wa="Hola, tengo una duda sobre ${esc(p.name)}"><svg class='i' aria-hidden='true'><use href='#i-chat'/></svg> Preguntar</a>
       </div>
     </div>
   </div>`);
@@ -1107,7 +1173,7 @@ function termsHTML(){
 }
 function openTerms(){
   closeMenu();
-  showDlg(`<button class="x" onclick="closeDlg()" aria-label="Cerrar">✕</button>
+  showDlg(`<button class="x" onclick="closeDlg()" aria-label="Cerrar"><svg class='i' aria-hidden='true'><use href='#i-x'/></svg></button>
   <div class="terms"><h3>Garantía y términos del servicio</h3>${termsHTML()}
   <button class="btn btn-neon" onclick="closeDlg()">Entendido</button></div>`);
 }
@@ -1121,7 +1187,7 @@ function add(id){
   const k=keyOf(id,Math.min(sel[id]||0,p.plans.length-1));
   if(p.inv && p.plans[+k.split("|")[1]].n===0){ toast("Ese plan está agotado por ahora"); return; }
   cart[k]=(cart[k]||0)+1; saveCart(); renderCart();
-  toast(`✔ ${p.name} · ${p.plans[+k.split("|")[1]].l} agregado`);
+  toast(`${p.name} · ${p.plans[+k.split("|")[1]].l} agregado`);
   const f=$("#fab"); f.classList.remove("bump"); void f.offsetWidth; f.classList.add("bump");
 }
 function change(k,d){ cart[k]=(cart[k]||0)+d; if(cart[k]<=0) delete cart[k]; saveCart(); renderCart(); }
@@ -1152,8 +1218,8 @@ function renderCart(){
   if(c.n && c.tiers.length){
     const pct=Math.min(100,Math.round(c.n/c.max*100));
     prog = c.next
-      ? `<p>🎁 Agrega <b>${c.next.min-c.n} servicio${c.next.min-c.n>1?"s":""} más</b> y ahorra <b>${c.next.pct}%</b></p>`
-      : `<p>🎉 ¡Máximo descuento desbloqueado: <b>${c.tier.pct}%</b>!</p>`;
+      ? `<p><svg class='i' aria-hidden='true'><use href='#i-gift'/></svg> Agrega <b>${c.next.min-c.n} servicio${c.next.min-c.n>1?"s":""} más</b> y ahorra <b>${c.next.pct}%</b></p>`
+      : `<p><svg class='i' aria-hidden='true'><use href='#i-spark'/></svg> ¡Máximo descuento desbloqueado: <b>${c.tier.pct}%</b>!</p>`;
     prog += `<div class="bar"><i style="width:${pct}%"></i></div>`;
   }
   $("#prog").innerHTML=prog;
@@ -1165,16 +1231,16 @@ function renderCart(){
         <div class="qty"><button onclick="change('${k}',-1)" aria-label="Quitar uno">−</button><span>${q}</span><button onclick="change('${k}',1)" aria-label="Agregar uno">+</button></div></div>
       <div><div class="sub">${fmt(pl.p*q)}</div><button class="rm" onclick="removeItem('${k}')">Eliminar</button></div>
     </div>`).join("")
-    : `<div class="d-empty"><div class="big">🛒</div><p>Tu carrito está vacío.<br>Agrega tus plataformas favoritas.</p><p style="margin-top:14px"><button class="btn btn-neon" onclick="closeCart();location.hash='#catalogo'">Ver plataformas</button></p></div>`;
+    : `<div class="d-empty"><div class="big"><svg class='i' aria-hidden='true'><use href='#i-cart'/></svg></div><p>Tu carrito está vacío.<br>Agrega tus plataformas favoritas.</p><p style="margin-top:14px"><button class="btn btn-neon" onclick="closeCart();location.hash='#catalogo'">Ver plataformas</button></p></div>`;
   /* resumen */
   $("#sum").innerHTML = c.n ? `<div><span>Subtotal</span><span>${fmt(c.sub)}</span></div>`
-    + (c.dTier?`<div class="disc"><span>Descuento por combo (${c.tier.pct}%)</span><span>−${fmt(c.dTier)}</span></div>`:"")
-    + (c.dCup?`<div class="disc"><span>Código ${esc(coupon.code)} (${coupon.pct}%)</span><span>−${fmt(c.dCup)}</span></div>`:"") : "";
+    + (c.dTier?`<div class="disc"><span>Descuento por combo (${c.tier.pct}%)</span><span>-${fmt(c.dTier)}</span></div>`:"")
+    + (c.dCup?`<div class="disc"><span>Código ${esc(coupon.code)} (${coupon.pct}%)</span><span>-${fmt(c.dCup)}</span></div>`:"") : "";
 }
 function applyCoupon(){
   const code=$("#cupon").value.trim().toUpperCase(), m=$("#cmsg");
   if(!code){ coupon=null; saveCart(); m.className="cmsg"; m.textContent=""; renderCart(); return; }
-  if(CONFIG.cupones[code]){ coupon={code,pct:CONFIG.cupones[code]}; m.className="cmsg ok"; m.textContent=`✔ Código aplicado: ${coupon.pct}% de descuento`; }
+  if(CONFIG.cupones[code]){ coupon={code,pct:CONFIG.cupones[code]}; m.className="cmsg ok"; m.textContent=`Código aplicado: ${coupon.pct}% de descuento`; }
   else { coupon=null; m.className="cmsg bad"; m.textContent="Ese código no es válido"; }
   saveCart(); renderCart();
 }
@@ -1192,19 +1258,19 @@ function buildMessage(){
   const c=calc(), nombre=$("#cliente").value.trim(), pago=$("#pago").value, notas=$("#notas").value.trim();
   lsSet("mj_name",nombre);
   const L=[];
-  L.push(`¡Hola ${CONFIG.tienda}! 👋 Quiero hacer este pedido:`);
-  if(nombre) L.push(`👤 Cliente: ${nombre}`);
+  L.push(`Hola ${CONFIG.tienda}, quiero hacer este pedido:`);
+  if(nombre) L.push(`Cliente: ${nombre}`);
   L.push("");
-  c.es.forEach(({p,pl,q})=>L.push(`• ${q} x ${p.name} (${p.tipo} · ${pl.l}) — ${fmt(pl.p*q)}`));
+  c.es.forEach(({p,pl,q})=>L.push(`- ${q} x ${p.name} (${p.tipo}, ${pl.l}): ${fmt(pl.p*q)}`));
   L.push("");
   L.push(`Subtotal: ${fmt(c.sub)}`);
-  if(c.dTier) L.push(`Descuento combo (${c.tier.pct}%): −${fmt(c.dTier)}`);
-  if(c.dCup) L.push(`Código ${coupon.code} (${coupon.pct}%): −${fmt(c.dCup)}`);
+  if(c.dTier) L.push(`Descuento combo (${c.tier.pct}%): -${fmt(c.dTier)}`);
+  if(c.dCup) L.push(`Código ${coupon.code} (${coupon.pct}%): -${fmt(c.dCup)}`);
   L.push(`*TOTAL: ${fmt(c.total)}*`);
   L.push("");
-  if(pago) L.push(`💳 Pago preferido: ${pago}`);
-  if(notas) L.push(`📝 Notas: ${notas}`);
-  L.push("¿Me confirmas disponibilidad y datos de pago? ¡Gracias!");
+  if(pago) L.push(`Pago preferido: ${pago}`);
+  if(notas) L.push(`Notas: ${notas}`);
+  L.push("¿Me confirmas disponibilidad y datos de pago? Gracias.");
   return L.join("\n");
 }
 /* ===================================================================
@@ -1219,8 +1285,8 @@ function checkout(){
   const c=calc(); if(!c.n) return;
   if(!location.protocol.startsWith("http")){ checkoutWA(); return; }   // abierto como archivo: sin servidor, usa WhatsApp
   showPay(`
-    <button class="x" onclick="closeDlg()" aria-label="Cerrar">✕</button>
-    <div class="ico">📬</div>
+    <button class="x" onclick="closeDlg()" aria-label="Cerrar"><svg class='i' aria-hidden='true'><use href='#i-x'/></svg></button>
+    <div class="ico"><svg class='i' aria-hidden='true'><use href='#i-mail'/></svg></div>
     <h3>¿A qué correo te enviamos tu compra?</h3>
     <p class="sub">Apenas se confirme el pago, te llegan tus accesos automáticamente.</p>
     <form id="payForm" novalidate>
@@ -1231,7 +1297,7 @@ function checkout(){
       <div class="err" id="payErr" role="alert"></div>
       <button class="go" id="payGo" type="submit">Continuar al pago seguro →</button>
     </form>
-    <p class="safe">🔒 Pagas en Bold (PSE, Nequi, tarjetas, Bancolombia). No guardamos datos de tu tarjeta.</p>`);
+    <p class="safe"><svg class='i' aria-hidden='true'><use href='#i-lock'/></svg> Pagas en Bold (PSE, Nequi, tarjetas, Bancolombia). No guardamos datos de tu tarjeta.</p>`);
   setTimeout(()=>$("#payEmail")&&$("#payEmail").focus(),60);
   $("#payForm").addEventListener("submit",submitPay);
 }
@@ -1252,7 +1318,7 @@ async function submitPay(e){
     const j=await r.json().catch(()=>({}));
     if(!r.ok||!j.url) throw new Error(j.error||"No pudimos crear el pago. Inténtalo otra vez.");
     lsSet("mj_pending",j.ref);
-    $("#dlgBody").innerHTML=`<div class="ico">🚀</div><h3>Redirigiendo a Bold…</h3><p class="sub">Si no avanza automáticamente, <a style="color:var(--y)" href="${esc(j.url)}">toca aquí</a>.</p><i class="spin big"></i>`;
+    $("#dlgBody").innerHTML=`<div class="ico"><svg class='i' aria-hidden='true'><use href='#i-rocket'/></svg></div><h3>Redirigiendo a Bold…</h3><p class="sub">Si no avanza automáticamente, <a style="color:var(--y)" href="${esc(j.url)}">toca aquí</a>.</p><i class="spin big"></i>`;
     location.href=j.url;
   }catch(ex){
     btn.disabled=false; btn.innerHTML="Continuar al pago seguro →";
@@ -1263,7 +1329,7 @@ async function submitPay(e){
 /* Retorno desde Bold: /?pedido=REF  → consulta el estado hasta que el pago se confirme */
 async function watchOrder(ref){
   history.replaceState(null,"",location.pathname);
-  const X='<button class="x" onclick="closeDlg()" aria-label="Cerrar">✕</button>';
+  const X=`<button class="x" onclick="closeDlg()" aria-label="Cerrar">${IC("x")}</button>`;
   const wa=m=>`<a style="color:var(--wa)" href="${waLink(m)}" target="_blank" rel="noopener">Escríbenos por WhatsApp</a>`;
   showPay(`${X}<i class="spin big"></i><h3>Confirmando tu pago…</h3><p class="sub">Esto toma unos segundos. No cierres esta página.</p>`);
   const t0=Date.now(); let paidAt=0;
@@ -1272,15 +1338,15 @@ async function watchOrder(ref){
     let j=null;
     try{ const r=await fetch("/api/pedido/"+encodeURIComponent(ref),{cache:"no-store"}); if(r.ok) j=await r.json(); }catch(e){}
     const st=j&&j.estado;
-    if(st==="entregado"){ cart={}; coupon=null; saveCart(); renderCart(); done("🎉","¡Pago confirmado!",`Te enviamos tus accesos a <b>${esc(j.email)}</b>.<br>Si no los ves en 2 minutos, revisa spam o promociones.`); return; }
+    if(st==="entregado"){ cart={}; coupon=null; saveCart(); renderCart(); done(IC("spark"),"¡Pago confirmado!",`Te enviamos tus accesos a <b>${esc(j.email)}</b>.<br>Si no los ves en 2 minutos, revisa spam o promociones.`); return; }
     if(st==="pagado"){
       if(!paidAt){ paidAt=Date.now(); cart={}; coupon=null; saveCart(); renderCart(); }
-      $("#dlgBody").innerHTML=`${X}<i class="spin big"></i><h3>¡Pago recibido! ✔</h3><p class="sub">Estamos preparando tus accesos, llegan a <b>${esc(j.email)}</b> en segundos.</p>`;
-      if(Date.now()-paidAt>90000){ done("✅","Tu pago está confirmado",`Estamos terminando de preparar tu entrega y te llegará a <b>${esc(j.email)}</b>. Si en unos minutos no la ves, ${wa("Hola, pagué el pedido "+ref+" y aún no me llega mi cuenta.")}.`); return; }
+      $("#dlgBody").innerHTML=`${X}<i class="spin big"></i><h3>¡Pago recibido!</h3><p class="sub">Estamos preparando tus accesos, llegan a <b>${esc(j.email)}</b> en segundos.</p>`;
+      if(Date.now()-paidAt>90000){ done(IC("check"),"Tu pago está confirmado",`Estamos terminando de preparar tu entrega y te llegará a <b>${esc(j.email)}</b>. Si en unos minutos no la ves, ${wa("Hola, pagué el pedido "+ref+" y aún no me llega mi cuenta.")}.`); return; }
     }
-    else if(st==="revision"){ done("🔎","Estamos revisando tu pago",`Detectamos algo en el monto y lo estamos verificando. ${wa("Hola, mi pedido es "+ref+" y mi pago está en revisión.")} y lo resolvemos ya.`); return; }
-    else if(st==="rechazado"){ done("⚠️","El pago fue rechazado","Tu banco o medio de pago no lo aprobó. Tu carrito sigue guardado.",j.url?`<a class="go" style="text-decoration:none" href="${esc(j.url)}">Intentar de nuevo</a>`:""); return; }
-    else if(st==="fallido"){ done("⚠️","El pago no se completó","Tu carrito sigue guardado. Puedes intentarlo de nuevo cuando quieras."); return; }
+    else if(st==="revision"){ done(IC("search"),"Estamos revisando tu pago",`Detectamos algo en el monto y lo estamos verificando. ${wa("Hola, mi pedido es "+ref+" y mi pago está en revisión.")} y lo resolvemos ya.`); return; }
+    else if(st==="rechazado"){ done(IC("alert"),"El pago fue rechazado","Tu banco o medio de pago no lo aprobó. Tu carrito sigue guardado.",j.url?`<a class="go" style="text-decoration:none" href="${esc(j.url)}">Intentar de nuevo</a>`:""); return; }
+    else if(st==="fallido"){ done(IC("alert"),"El pago no se completó","Tu carrito sigue guardado. Puedes intentarlo de nuevo cuando quieras."); return; }
     else if(Date.now()-t0>150000){ done("⏳","Estamos esperando la confirmación",`Si ya pagaste, tus accesos llegan al correo en unos minutos (Bold puede tardar hasta 10). ${wa("Hola, pagué el pedido "+ref+" y aún no me llega mi cuenta.")}.`); return; }
     await new Promise(r=>setTimeout(r,3500));
   }
@@ -1299,10 +1365,9 @@ function applyData(d){
   cats=["Todos",...new Set(PRODUCTS.map(p=>p.cat))]; if(!cats.includes(cat)) cat="Todos";
   sanitizeCart(); saveCart();
 }
-const SOC_ICON={
- instagram:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 8.5A2.5 2.5 0 0 1 6.5 6h1.2l1.3-2h6l1.3 2h1.2A2.5 2.5 0 0 1 20 8.5v8A2.5 2.5 0 0 1 17.5 19h-11A2.5 2.5 0 0 1 4 16.5z"/><circle cx="12" cy="12.5" r="3.6"/></svg>',
- tiktok:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18V6l10-2v12"/><circle cx="6.5" cy="18" r="2.5"/><circle cx="16.5" cy="16" r="2.5"/></svg>',
- facebook:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="3.2"/><path d="M3 20c0-3.3 2.7-6 6-6s6 2.7 6 6"/><circle cx="17" cy="9" r="2.4"/><path d="M16.5 14.2c2.6.2 4.5 2.4 4.5 5.8"/></svg>'};
+const SOC_ICON={instagram:"insta",tiktok:"tiktok",facebook:"face"}, SOC_NAME={instagram:"Instagram",tiktok:"TikTok",facebook:"Facebook"};
+const socImg=k=>(CONFIG.redesImg||{})[k]||"";
+const socIcon=k=>socImg(k)?`<img src="${esc(socImg(k))}" alt="${SOC_NAME[k]||k}" loading="lazy">`:IC(SOC_ICON[k]||"globe");
 function socUrl(k,v){
   v=String(v||"").trim(); if(!v) return "";
   if(!/^https?:\/\//i.test(v)){
@@ -1312,19 +1377,28 @@ function socUrl(k,v){
   }
   return v;
 }
+function socHandle(k,u){ try{ const x=new URL(u); const h=x.pathname.replace(/\/+$/,"").split("/").filter(Boolean).pop()||x.hostname; return (/^[A-Za-z0-9._-]+$/.test(h)&&!/\./.test(x.hostname.replace(/^www\./,"").split(".")[0]+"x")?"@":"")+h.replace(/^@/,"@"); }catch(e){ return u; } }
+function socialList(){ return Object.entries(CONFIG.redes||{}).map(([k,u])=>[k,socUrl(k,u)]).filter(([,u])=>u); }
 function socialHTML(mode){
-  const R={instagram:"Instagram",tiktok:"TikTok",facebook:"Facebook"};
-  return Object.entries(CONFIG.redes||{}).map(([k,u])=>[k,socUrl(k,u)]).filter(([,u])=>u).map(([k,u])=>
-    mode==="ico" ? `<a class="sb ico" href="${esc(u)}" target="_blank" rel="noopener" aria-label="${R[k]||k}" title="${R[k]||k}">${SOC_ICON[k]||""}</a>`
-                 : `<a class="sb" href="${esc(u)}" target="_blank" rel="noopener">${SOC_ICON[k]||""}<span>Síguenos en ${R[k]||k}</span></a>`).join("");
+  return socialList().map(([k,u])=>
+    mode==="ico" ? `<a class="sb ico" href="${esc(u)}" target="_blank" rel="noopener" aria-label="${SOC_NAME[k]||k}" title="${SOC_NAME[k]||k}">${socIcon(k)}</a>`
+                 : `<a class="sb" href="${esc(u)}" target="_blank" rel="noopener">${socImg(k)?socIcon(k):IC(SOC_ICON[k]||"globe")}<span>${SOC_NAME[k]||k}</span></a>`).join("");
+}
+function socialSection(){
+  const L=socialList(), s=$("#redes"); if(!s) return; s.hidden=!L.length; if(!L.length) return;
+  L.sort((a,b)=>(a[0]==="instagram"?-1:0)-(b[0]==="instagram"?-1:0));
+  $("#redesGrid").innerHTML=L.map(([k,u])=>`<a class="rcard ${k}" href="${esc(u)}" target="_blank" rel="noopener">
+    <div class="rlogo">${socIcon(k)}</div>
+    <div class="rinfo"><small>${SOC_NAME[k]||k}</small><b>${esc(socHandle(k,u))}</b><span>${k==="instagram"?"Promos, combos y novedades de tus plataformas favoritas.":"Mantente al día con nuestras novedades."}</span></div>
+    <span class="rgo">Seguir ${IC("arrow")}</span></a>`).join("");
 }
 function renderStatic(){
   document.title=`${CONFIG.tienda} | Plataformas de streaming en ${(CONFIG.ciudad||"").split(",")[0]}`;
   document.querySelectorAll(".bname").forEach(e=>e.textContent=CONFIG.tienda);
   $("#year").textContent=new Date().getFullYear();
   $("#horario").textContent=CONFIG.horario||"";
-  $("#ciudad").textContent="📍 "+(CONFIG.ciudad||"");
-  $("#menuHor").textContent=CONFIG.horario||""; $("#menuCity").textContent="📍 "+(CONFIG.ciudad||"");
+  $("#ciudad").textContent=(CONFIG.ciudad||"");
+  $("#menuHor").textContent=CONFIG.horario||""; $("#menuCity").textContent=(CONFIG.ciudad||"");
   if(CONFIG.anuncio) $("#ann").textContent=CONFIG.anuncio;
   const names=PRODUCTS.filter(p=>p.cat!=="Combos").map(p=>p.name);
   $("#marq").innerHTML=[...names,...names].map(n=>`<span>${esc(n)}</span>`).join("");
@@ -1333,14 +1407,14 @@ function renderStatic(){
   $("#ahorro").classList.toggle("hidden",!dsc.length);
   const pagos=CONFIG.pagos||[], prev=$("#pago").value;
   $("#pay").innerHTML=pagos.map(x=>`<span>${esc(x)}</span>`).join("");
-  $("#pago").innerHTML=`<option value="">💳 Medio de pago</option>`+pagos.map(x=>`<option>${esc(x)}</option>`).join("");
+  $("#pago").innerHTML=`<option value="">Medio de pago</option>`+pagos.map(x=>`<option>${esc(x)}</option>`).join("");
   if(pagos.includes(prev)) $("#pago").value=prev;
   $("#pagos").classList.toggle("hidden",!pagos.length);
   $("#testi").classList.toggle("hidden",!TESTIMONIOS.length);
   $("#tgrid").innerHTML=TESTIMONIOS.map(t=>`<div class="tcard"><p>“${esc(t.texto)}”</p><footer><b>${esc(t.nombre)}</b>${t.ciudad?` · ${esc(t.ciudad)}`:""}${t.plataforma?` · ${esc(t.plataforma)}`:""}</footer></div>`).join("");
   $("#dist").classList.toggle("hidden",!CONFIG.distribuidores);
   $("#menuDist").classList.toggle("hidden",!CONFIG.distribuidores);
-  const soc=socialHTML(); $("#soc").innerHTML=soc; $("#menuSoc").innerHTML=soc; $("#navSoc").innerHTML=socialHTML("ico");
+  const soc=socialHTML(); $("#soc").innerHTML=soc; $("#menuSoc").innerHTML=soc; $("#navSoc").innerHTML=socialHTML("ico"); socialSection();
   $("#faqList").innerHTML=FAQ.map(f=>`<details><summary>${esc(f.q)}</summary><p>${esc(f.a)}</p></details>`).join("");
   $("#faq").classList.toggle("hidden",!FAQ.length);
 }
@@ -1370,14 +1444,46 @@ function applyTheme(){
     let m=document.querySelector('meta[name="theme-color"]'); if(!m){m=document.createElement("meta");m.name="theme-color";document.head.appendChild(m);} m.content=c.bg;
     buildDeco(T); startFx(T);
   }
+  applyThemeBg(T);
   const msg=(id!=="neon"&&(CONFIG.tema_anuncio||T.ann))||CONFIG.anuncio; if(msg) $("#ann").textContent=msg;
 }
-function buildDeco(T){
-  const d=$("#deco"); d.className="deco"; d.innerHTML=""; d.removeAttribute("style"); const x=T.deco; if(!x) return;
-  if(x.type==="lights"){ const n=Math.ceil(innerWidth/34); d.classList.add("lights","on");
-    d.innerHTML=Array.from({length:n},(_,i)=>`<i style="--c:${x.colors[i%x.colors.length]};--d:${((i*37)%18)/10}s"></i>`).join(""); }
-  else if(x.type==="emoji"){ d.classList.add("emoji","on"); d.textContent=x.glyphs.repeat(Math.ceil(innerWidth/150)+6); }
-  else if(x.type==="stripes"){ d.classList.add("stripes","on"); d.style.setProperty("--a",x.colors[0]); d.style.setProperty("--b",x.colors[1]); }
+/* ===== Motor de efectos: sprites dibujados con gradientes (se ven como objetos reales, sin emojis) ===== */
+const _SPR={};
+function sprite(spec,s,tint){
+  const [name,col]=spec.split(":"), px=Math.max(8,Math.round(s*2)), key=spec+"|"+px+"|"+(tint||"");
+  if(_SPR[key]) return _SPR[key];
+  const cv=document.createElement("canvas"); cv.width=cv.height=px; const x=cv.getContext("2d"), c=px/2, r=px/2*.82;
+  const rad=(cx,cy,r0,r1,stops)=>{const g=x.createRadialGradient(cx,cy,r0,cx,cy,r1);stops.forEach(([o,k])=>g.addColorStop(o,k));return g;};
+  if(name==="snow"){ x.fillStyle=rad(c,c,0,r,[[0,"rgba(255,255,255,.95)"],[.35,"rgba(235,246,255,.55)"],[1,"rgba(220,240,255,0)"]]); x.beginPath();x.arc(c,c,r,0,7);x.fill(); }
+  else if(name==="flake"){ x.translate(c,c); x.strokeStyle=tint||"#ffffff"; x.lineCap="round"; x.shadowColor="rgba(160,215,255,.9)"; x.shadowBlur=px*.08;
+    for(let i=0;i<6;i++){ x.rotate(Math.PI/3); x.lineWidth=px*.035; x.beginPath(); x.moveTo(0,0); x.lineTo(0,-r); x.stroke();
+      x.lineWidth=px*.026; [[.45,.22],[.7,.16]].forEach(([d,w])=>{ x.beginPath(); x.moveTo(-r*w,-r*(d+w)); x.lineTo(0,-r*d); x.lineTo(r*w,-r*(d+w)); x.stroke(); }); } }
+  else if(name==="star"){ x.translate(c,c); const g=rad(0,0,0,r,[[0,"#fff"],[.25,tint||"#fff6c9"],[1,"rgba(255,255,255,0)"]]); x.fillStyle=g;
+    x.beginPath(); for(let i=0;i<8;i++){ const a=i*Math.PI/4, k=i%2?r*.16:r; x.lineTo(Math.cos(a)*k,Math.sin(a)*k);} x.closePath(); x.fill();
+    x.fillStyle=rad(0,0,0,r*.5,[[0,"rgba(255,255,255,.95)"],[1,"rgba(255,255,255,0)"]]); x.beginPath();x.arc(0,0,r*.5,0,7);x.fill(); }
+  else if(name==="bokeh"){ const k=tint||"#ffd76a"; x.fillStyle=rad(c,c,r*.1,r,[[0,"rgba(255,255,255,.08)"],[.78,k+"55"],[.9,k+"aa"],[1,k+"00"]]); x.beginPath();x.arc(c,c,r,0,7);x.fill(); }
+  else if(name==="ember"){ x.fillStyle=rad(c,c,0,r,[[0,"#fff7c2"],[.2,"#ffb02e"],[.5,"rgba(255,90,0,.55)"],[1,"rgba(255,60,0,0)"]]); x.beginPath();x.arc(c,c,r,0,7);x.fill(); }
+  else if(name==="bubble"){ x.strokeStyle="rgba(255,255,255,.55)"; x.lineWidth=px*.03; x.fillStyle=rad(c*.9,c*.9,r*.1,r,[[0,"rgba(255,255,255,.05)"],[.8,(tint||"#e0b0ff")+"33"],[1,(tint||"#e0b0ff")+"88"]]);
+    x.beginPath();x.arc(c,c,r*.9,0,7);x.fill();x.stroke(); x.fillStyle="rgba(255,255,255,.85)"; x.beginPath();x.ellipse(c*.7,c*.65,r*.2,r*.12,-.7,0,7);x.fill(); }
+  else if(name==="orb"||name==="balloon"){ const k=col||"#ff4d5e", cy=name==="balloon"?c*.85:c, rr=name==="balloon"?r*.72:r*.8;
+    if(name==="balloon"){ x.strokeStyle="rgba(255,255,255,.5)"; x.lineWidth=px*.02; x.beginPath(); x.moveTo(c,cy+rr*1.18); x.quadraticCurveTo(c-px*.08,cy+rr*1.5,c,px-2); x.stroke(); }
+    x.fillStyle=rad(c-rr*.35,cy-rr*.4,rr*.05,rr*1.1,[[0,"#ffffff"],[.18,k],[1,"#00000099"]]); x.beginPath(); if(name==="balloon") x.ellipse(c,cy,rr*.86,rr,0,0,7); else x.arc(c,cy,rr,0,7); x.fill();
+    if(name==="orb"){ x.fillStyle="#d8b45a"; x.fillRect(c-rr*.18,cy-rr*1.18,rr*.36,rr*.22); }
+    x.fillStyle="rgba(255,255,255,.75)"; x.beginPath(); x.ellipse(c-rr*.38,cy-rr*.45,rr*.2,rr*.11,-.7,0,7); x.fill(); }
+  else if(name==="heart"){ const k=col||"#ff2e63"; x.translate(c,c*1.06); const h=r*1.05; x.beginPath(); x.moveTo(0,h*.9);
+    x.bezierCurveTo(-h*1.35,h*.15,-h*.95,-h*.95,0,-h*.38); x.bezierCurveTo(h*.95,-h*.95,h*1.35,h*.15,0,h*.9); x.closePath();
+    x.fillStyle=rad(-h*.3,-h*.3,h*.05,h*1.2,[[0,"#fff"],[.22,k],[1,"#00000088"]]); x.shadowColor=k; x.shadowBlur=px*.1; x.fill(); x.shadowBlur=0;
+    x.fillStyle="rgba(255,255,255,.7)"; x.beginPath(); x.ellipse(-h*.45,-h*.32,h*.2,h*.1,-.6,0,7); x.fill(); }
+  else if(name==="petal"){ const k=col||"#ff9ccf"; x.translate(c,c); x.beginPath(); x.moveTo(0,r); x.bezierCurveTo(-r*1.1,r*.3,-r*.7,-r*1.1,0,-r); x.bezierCurveTo(r*.7,-r*1.1,r*1.1,r*.3,0,r); x.closePath();
+    x.fillStyle=rad(-r*.2,-r*.3,r*.05,r*1.2,[[0,"#fff"],[.3,k],[1,"#7a2a6a"]]); x.fill(); x.strokeStyle="rgba(255,255,255,.35)"; x.lineWidth=px*.012; x.beginPath(); x.moveTo(0,r*.8); x.quadraticCurveTo(r*.05,0,0,-r*.8); x.stroke(); }
+  else if(name==="bat"){ x.translate(c,c); x.fillStyle="#120818"; x.strokeStyle="rgba(190,120,255,.85)"; x.lineWidth=px*.02; x.shadowColor="rgba(160,80,255,.8)"; x.shadowBlur=px*.07;
+    x.beginPath(); x.moveTo(0,-r*.22); x.lineTo(r*.12,-r*.42); x.lineTo(r*.2,-r*.2);
+    x.bezierCurveTo(r*.55,-r*.6,r*.9,-r*.5,r*1.02,-r*.1); x.bezierCurveTo(r*.85,-r*.15,r*.7,-r*.05,r*.62,.0); x.bezierCurveTo(r*.55,-r*.02,r*.45,.04,r*.38,.16);
+    x.bezierCurveTo(r*.3,.08,r*.18,.1,r*.1,.3*r); x.lineTo(0,r*.2); x.lineTo(-r*.1,.3*r);
+    x.bezierCurveTo(-r*.18,.1*r,-r*.3,.08*r,-r*.38,.16*r); x.bezierCurveTo(-r*.45,.04*r,-r*.55,-.02*r,-r*.62,0); x.bezierCurveTo(-r*.7,-.05*r,-r*.85,-.15*r,-r*1.02,-.1*r);
+    x.bezierCurveTo(-r*.9,-r*.5,-r*.55,-r*.6,-r*.2,-r*.2); x.lineTo(-r*.12,-r*.42); x.closePath(); x.fill(); x.stroke();
+    x.shadowBlur=0; x.fillStyle="#ffd84a"; x.beginPath(); x.arc(-r*.06,-r*.14,r*.03,0,7); x.arc(r*.06,-r*.14,r*.03,0,7); x.fill(); }
+  return _SPR[key]=cv;
 }
 let fxRun=0;
 function startFx(T){
@@ -1387,25 +1493,68 @@ function startFx(T){
   const dpr=Math.min(devicePixelRatio||1,2); let W=0,H=0;
   const size=()=>{W=innerWidth;H=innerHeight;cv.width=W*dpr;cv.height=H*dpr;ctx.setTransform(dpr,0,0,dpr,0,0);}; size(); addEventListener("resize",size);
   const n=Math.round(f.n*(innerWidth<700?.55:1)), R=(a,b)=>a+Math.random()*(b-a);
-  const mk=(init)=>({x:R(0,W),y:init?R(0,H):(f.kind==="rise"?H+30:-30),s:R(...f.size),v:R(...f.speed),ph:R(0,6.28),w:R(.4,1.2),g:f.glyphs[Math.floor(Math.random()*f.glyphs.length)],c:f.colors?f.colors[Math.floor(Math.random()*f.colors.length)]:null,r:R(0,6.28),vr:R(-.03,.03),dir:Math.random()<.5?-1:1});
-  const P=Array.from({length:n},()=>mk(true));
-  let last=0;
+  const mk=(init)=>{ const z=Math.random(), sp=f.sprites[Math.floor(Math.random()*f.sprites.length)], s=f.size[0]+(f.size[1]-f.size[0])*z;
+    return {x:R(0,W),y:init?R(0,H):(f.kind==="rise"?H+40:-40),s,z,v:R(...f.speed)*(.55+z*.9),ph:R(0,6.28),w:R(.3,1.1),r:R(0,6.28),vr:R(-.03,.03),dir:Math.random()<.5?-1:1,
+      spr:sp.split(":")[0]==="confetti"?null:sp,c:f.colors?f.colors[Math.floor(Math.random()*f.colors.length)]:null,conf:f.kind==="confetti"&&Math.random()<.75}; };
+  const P=Array.from({length:n},()=>mk(true)); let last=0;
   (function loop(ts){
     if(my!==fxRun) return; requestAnimationFrame(loop);
     if(document.hidden||ts-last<30) return; last=ts;
-    ctx.clearRect(0,0,W,H); ctx.globalAlpha=f.alpha||.85; ctx.textAlign="center"; ctx.textBaseline="middle";
+    ctx.clearRect(0,0,W,H);
     for(const p of P){
-      p.ph+=.02;
-      if(f.kind==="fall"){ p.y+=p.v*1.6; p.x+=Math.sin(p.ph)*p.w; if(p.y>H+30){Object.assign(p,mk(false));} }
-      else if(f.kind==="rise"){ p.y-=p.v*1.3; p.x+=Math.sin(p.ph)*p.w; if(p.y<-30){Object.assign(p,mk(false));} }
-      else if(f.kind==="confetti"){ p.y+=p.v*1.8; p.x+=Math.sin(p.ph)*1.1; p.r+=p.vr*3; if(p.y>H+20){Object.assign(p,mk(false));} }
-      else { p.x+=p.dir*p.v*1.4; p.y+=Math.sin(p.ph)*.9; if(p.x>W+40||p.x<-40){Object.assign(p,mk(true)); p.x=p.dir>0?-30:W+30;} }
-      if(f.kind==="confetti"&&p.c&&Math.random()<.97){ ctx.save(); ctx.translate(p.x,p.y); ctx.rotate(p.r); ctx.fillStyle=p.c; ctx.fillRect(-p.s/2,-p.s/4,p.s,p.s/2); ctx.restore(); }
-      else if(p.g==="•"){ ctx.fillStyle=f.tint||"#fff"; ctx.beginPath(); ctx.arc(p.x,p.y,p.s/5,0,6.283); ctx.fill(); }
-      else { ctx.font=p.s+"px serif"; if(f.tint&&/^[✨•]$/.test(p.g)) ctx.fillStyle=f.tint; else ctx.fillStyle="#fff"; ctx.fillText(p.g,p.x,p.y); }
+      p.ph+=.02; p.r+=p.vr;
+      if(f.kind==="fall"){ p.y+=p.v*1.7; p.x+=Math.sin(p.ph)*p.w; if(p.y>H+50) Object.assign(p,mk(false)); }
+      else if(f.kind==="rise"){ p.y-=p.v*1.4; p.x+=Math.sin(p.ph)*p.w; if(p.y<-50) Object.assign(p,mk(false)); }
+      else if(f.kind==="confetti"){ p.y+=p.v*1.9; p.x+=Math.sin(p.ph)*1.1; p.r+=p.vr*4; if(p.y>H+30) Object.assign(p,mk(false)); }
+      else { p.x+=p.dir*p.v*1.6; p.y+=Math.sin(p.ph)*1.1; if(p.x>W+60||p.x<-60){ Object.assign(p,mk(true)); p.x=p.dir>0?-50:W+50; } }
+      ctx.globalAlpha=(f.alpha||.9)*(.45+p.z*.55);
+      if(p.conf&&p.c){ ctx.save(); ctx.translate(p.x,p.y); ctx.rotate(p.r); ctx.scale(1,Math.abs(Math.cos(p.ph*2))*.9+.1); ctx.fillStyle=p.c; ctx.fillRect(-p.s/2,-p.s/4,p.s,p.s/2); ctx.restore(); continue; }
+      const img=sprite(p.spr,p.s,p.c||f.tint), sz=img.width/2*(dpr>1?1:1);
+      ctx.save(); ctx.translate(p.x,p.y); if(/^(flake|petal|heart|star)/.test(p.spr)) ctx.rotate(p.r*(p.spr.startsWith("heart")?.12:1)); if(p.spr==="bat") ctx.scale(Math.sin(p.ph*5)*.35+.85,1);
+      ctx.drawImage(img,-sz/2,-sz/2,sz,sz); ctx.restore();
     }
+    ctx.globalAlpha=1;
   })(0);
 }
+/* ===== Decoración superior en SVG (cables con bombillos, guirnalda de pino, banderines, telaraña, cinta) ===== */
+function buildDeco(T){
+  const d=$("#deco"); d.className="deco"; d.innerHTML=""; d.removeAttribute("style"); delete d.dataset.h; const x=T.deco; if(!x) return;
+  const W=Math.max(innerWidth,320), seg=Math.max(120,Math.min(210,W/6)), N=Math.ceil(W/seg), sag=22, cols=x.colors, pt=(i,t)=>[ (i+t)*seg, 4+4*sag*t*(1-t) ];
+  let s="";
+  if(x.type==="stripes"){ d.classList.add("stripes","on"); d.style.setProperty("--a",cols[0]); d.style.setProperty("--b",cols[1]); return; }
+  if(x.type==="lights"||x.type==="garland"){
+    d.classList.add("on","swag"); let wire="M0 4";
+    for(let i=0;i<N;i++) wire+=` Q${(i+.5)*seg} ${4+2*sag} ${(i+1)*seg} 4`;
+    s+=`<path d="${wire}" fill="none" stroke="${x.type==="garland"?"#12512f":"#26303a"}" stroke-width="${x.type==="garland"?7:2}" stroke-linecap="round"/>`;
+    if(x.type==="garland"){ let k=0; for(let i=0;i<N;i++) for(let j=0;j<=18;j++){ const t=j/18,[px,py]=pt(i,t); k++; const a=(k*47%80)-40; s+=`<path d="M${px.toFixed(1)} ${py.toFixed(1)} l${(Math.sin(a)*9).toFixed(1)} ${(8+k%5).toFixed(1)}" stroke="${k%3?"#1e7a46":"#2fa662"}" stroke-width="2.2" stroke-linecap="round"/>`; } }
+    const per=x.type==="garland"?3:4;
+    for(let i=0;i<N;i++) for(let j=1;j<=per;j++){ const t=j/(per+1),[px,py]=pt(i,t),c=cols[(i*per+j)%cols.length], dl=(((i*7+j*3)%9)/5).toFixed(2);
+      s+=`<g class="bulb" style="--c:${c};animation-delay:-${dl}s"><path d="M${(px-1.6).toFixed(1)} ${(py+1).toFixed(1)}h3.2v4h-3.2z" fill="#3a4350"/><ellipse cx="${px.toFixed(1)}" cy="${(py+11).toFixed(1)}" rx="5" ry="7.2" fill="${c}"/><ellipse cx="${(px-1.6).toFixed(1)}" cy="${(py+8.6).toFixed(1)}" rx="1.5" ry="2.5" fill="#fff" opacity=".7"/></g>`; }
+    if(x.type==="garland") for(let i=0;i<N;i++){ const [px,py]=pt(i,.5); s+=`<circle cx="${(px-14).toFixed(1)}" cy="${(py+3).toFixed(1)}" r="3.4" fill="#d6334a"/><circle cx="${(px+16).toFixed(1)}" cy="${(py+4).toFixed(1)}" r="3.4" fill="#d6334a"/>`; }
+    d.dataset.h=46;
+  } else if(x.type==="bunting"){
+    d.classList.add("on","swag"); let wire="M0 4"; for(let i=0;i<N;i++) wire+=` Q${(i+.5)*seg} ${4+2*sag} ${(i+1)*seg} 4`;
+    s+=`<path d="${wire}" fill="none" stroke="rgba(255,255,255,.55)" stroke-width="1.6"/>`;
+    const per=4; for(let i=0;i<N;i++) for(let j=1;j<=per;j++){ const [px,py]=pt(i,j/(per+1)), c=cols[(i*per+j)%cols.length];
+      s+=`<path d="M${(px-12).toFixed(1)} ${py.toFixed(1)}L${(px+12).toFixed(1)} ${py.toFixed(1)}L${px.toFixed(1)} ${(py+26).toFixed(1)}Z" fill="${c}"/><path d="M${(px-12).toFixed(1)} ${py.toFixed(1)}L${px.toFixed(1)} ${py.toFixed(1)}L${px.toFixed(1)} ${(py+26).toFixed(1)}Z" fill="#fff" opacity=".16"/>`; }
+    d.dataset.h=44;
+  } else if(x.type==="cobweb"){
+    d.classList.add("on","web"); const c="rgba(255,255,255,.5)", sw=(side)=>{ const o=side?W:0, dir=side?-1:1; let g="";
+      for(let a=0;a<=6;a++){ const ang=a*Math.PI/12; g+=`M${o} 0L${(o+dir*Math.cos(ang)*130).toFixed(1)} ${(Math.sin(ang)*130).toFixed(1)}`; }
+      for(let r=1;r<=5;r++){ let p=""; for(let a=0;a<=6;a++){ const ang=a*Math.PI/12, rr=r*26*(1-(a%2?.0:0)); const px=o+dir*Math.cos(ang)*rr, py=Math.sin(ang)*rr; p+=(a?"Q":"M")+(a?`${(o+dir*Math.cos(ang-Math.PI/24)*rr*.86).toFixed(1)} ${(Math.sin(ang-Math.PI/24)*rr*.86).toFixed(1)} `:"")+px.toFixed(1)+" "+py.toFixed(1); } g+=p; }
+      return `<path d="${g}" fill="none" stroke="${c}" stroke-width="1"/>`; };
+    s+=sw(0)+sw(1)+`<g transform="translate(${W*.12} 0)"><path d="M0 0V28" stroke="rgba(255,255,255,.4)"/><ellipse cx="0" cy="34" rx="5" ry="6" fill="#120818"/><circle cx="-2" cy="32" r="1" fill="#ff9a1f"/><circle cx="2" cy="32" r="1" fill="#ff9a1f"/></g>`;
+    d.dataset.h=34;
+  }
+  d.style.height=(+d.dataset.h||46)+"px";
+  d.innerHTML=`<svg width="${W}" height="${+d.dataset.h||46}" viewBox="0 0 ${W} ${+d.dataset.h||46}" preserveAspectRatio="xMinYMin slice" style="display:block;overflow:visible">${s}</svg>`;
+}
+function applyThemeBg(T){
+  const g=$("#glow"); if(!g) return; const bg=HEXRGB(T.c.bg), img=CONFIG.temaImg;
+  g.style.background=(img?`linear-gradient(rgba(${bg},.80),rgba(${bg},.93)),url("${img}") center/cover fixed,`:"")+(T.glow||"none");
+  g.style.backgroundAttachment="fixed";
+}
+
 function renderAll(){ renderStatic(); applyTheme(); renderChips(); renderGrid(); renderCart(); renderMenu(); }
 
 /* Actualización en vivo: la tienda consulta el catálogo cada 20 s (solo funciona con el servidor Python) */

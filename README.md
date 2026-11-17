@@ -95,3 +95,11 @@ Panel de comercios → Integraciones → **Webhooks → Configurar webhook** →
 - **/admin → Pedidos → Auditar y reparar:** revisa pedidos e inventario y arregla lo que un reinicio haya dejado a medias.
 - **gunicorn.conf.py:** fija 1 proceso con 8 hilos (el inventario se reserva en memoria). Si en Render tienes `-w 2` o más en el Start Command, quítalo.
 - El arte de cada plataforma se genera dentro de `index.html`; si subes una imagen propia en el panel, esa tiene prioridad.
+
+
+## Novedades de esta versión
+- **Temáticas en alta calidad**: nieve, copos, corazones, pétalos, murciélagos, bokeh y confeti dibujados como objetos reales (sin emojis); guirnaldas con luces, banderines y telarañas en SVG. En Admin > Temas puedes subir además un **fondo de imagen**.
+- **Iconos vectoriales** propios en toda la tienda (sin emojis).
+- **Redes sociales**: sección destacada (Instagram grande con su degradado) y logo por red subible en Admin > Tienda.
+- **Imágenes de plataformas**: Admin > Productos > "Subir imágenes de varias plataformas" las asigna por nombre de archivo. Sin imagen, la tienda genera arte propio.
+- **WhatsApp**: los mensajes se limpian de emojis y símbolos raros antes de abrir el chat, y el número se completa con el indicativo 57 si falta.

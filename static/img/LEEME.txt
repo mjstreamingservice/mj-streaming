@@ -1,12 +1,12 @@
-IMÁGENES DE LAS PLATAFORMAS
-===========================
-Copia aquí tus imágenes con el nombre del producto y la tienda las usa sola
-(formatos: webp, png, jpg, jpeg, avif, svg, gif). Ejemplo: static/img/netflix.png
+IMÁGENES DE PLATAFORMAS (opcional)
 
-  netflix   max   disney   prime   paramount   universal   vix   crunchy
-  plex   spotify   winsports   gemini   capcut   canva
-  combo1   combo2   combo3   combo4
+Si quieres usar el logo o la imagen oficial de cada plataforma, súbela tú:
+  - Desde el panel: Admin > Productos > "Subir imágenes de varias plataformas".
+    Nombra cada archivo como la plataforma (netflix.png, disney.png, max.webp...) y súbelos todos juntos.
+  - O pon aquí los archivos con el id del producto y haz deploy:
+      netflix  max  disney  prime  paramount  universal  vix  crunchy  plex
+      spotify  winsports  gemini  capcut  canva  combo1  combo2  combo3  combo4
+    Formatos: .png .jpg .webp (horizontal 800x500 o cuadrado). 
 
-Los productos nuevos que crees en el panel usan su "id" (aparece como nombre del
-archivo al subir la imagen). También puedes subir las imágenes desde /admin → Productos → Editar.
-Recomendado: 800 × 500 px (proporción 16:10), peso menor a 200 KB.
+Si un producto no tiene imagen, la tienda genera arte propio con sus colores.
+Logos de redes y fondo de temática: se suben en Admin > Tienda y Admin > Temas.

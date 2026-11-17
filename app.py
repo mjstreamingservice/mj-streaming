@@ -242,6 +242,8 @@ def clean(d):
         if isinstance(x, dict):
             desc.append({"min": to_int(x.get("min"), 2, 1, 99), "pct": to_int(x.get("pct"), 0, 0, 90)})
     wa = re.sub(r"\D", "", s(c.get("whatsapp"), 20))
+    if len(wa) == 10:
+        wa = "57" + wa
     if not 8 <= len(wa) <= 15:
         raise ValueError("El número de WhatsApp debe tener entre 8 y 15 dígitos (con indicativo, ej. 573215296552)")
     config = {
@@ -307,6 +309,9 @@ def with_images(d, public):
             p["_auto"] = auto
         prods.append(p)
     out["products"] = prods
+    cfg = out.setdefault("config", {})
+    cfg["redesImg"] = {k: find_image("red-" + k) for k in ("instagram", "tiktok", "facebook")}
+    cfg["temaImg"] = find_image("tema-fondo")
     return out
 
 
@@ -885,18 +890,18 @@ def build_mail(o, delivered, manual, cfg, prods):
     manual_html = ""
     if manual:
         names = ", ".join(f"{m['qty']} x {m['name']} ({m['plan']})" for m in manual)
-        manual_html = f"<p style='background:#1a2350;border-radius:12px;padding:12px;color:#d3dbfa;font-size:14px'>📲 Estos artículos te los entregamos por WhatsApp en breve: <b>{h(names)}</b></p>"
+        manual_html = f"<p style='background:#1a2350;border-radius:12px;padding:12px;color:#d3dbfa;font-size:14px'> Estos artículos te los entregamos por WhatsApp en breve: <b>{h(names)}</b></p>"
         txt += [f"Te entregamos por WhatsApp: {names}", ""]
     wa_link = f"https://wa.me/{wa}" if wa else "#"
     html = (
         "<div style='background:#050914;padding:24px;font-family:Segoe UI,Arial,sans-serif'>"
         "<div style='max-width:520px;margin:auto;background:#0a1124;border:1px solid #1b2757;border-radius:20px;padding:26px;color:#f5f7ff'>"
         f"<div style='font-size:22px;font-weight:900;color:#8dff2e'>{h(store)}</div>"
-        f"<h2 style='margin:14px 0 4px;font-size:20px'>¡Pago confirmado! 🎉</h2>"
+        f"<h2 style='margin:14px 0 4px;font-size:20px'>¡Pago confirmado!</h2>"
         f"<p style='color:#98a3c7;margin:0 0 6px'>Aquí están tus accesos (pedido <b>{h(o['ref'])}</b>):</p>"
         f"{''.join(cards)}{manual_html}"
         "<p style='color:#98a3c7;font-size:13px;line-height:1.6'>• No cambies la contraseña ni el correo de la cuenta.<br>• Usa solo el perfil y el PIN asignados.<br>• Si algo no funciona, escríbenos y lo solucionamos.</p>"
-        f"<p style='text-align:center;margin:20px 0 0'><a href='{h(wa_link)}' style='background:#25d366;color:#04210f;text-decoration:none;font-weight:800;padding:12px 22px;border-radius:999px;display:inline-block'>💬 Soporte por WhatsApp</a></p>"
+        f"<p style='text-align:center;margin:20px 0 0'><a href='{h(wa_link)}' style='background:#25d366;color:#04210f;text-decoration:none;font-weight:800;padding:12px 22px;border-radius:999px;display:inline-block'> Soporte por WhatsApp</a></p>"
         "</div></div>"
     )
     txt += ["No cambies la contraseña ni el correo. Soporte: " + wa_link]
