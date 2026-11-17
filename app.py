@@ -310,7 +310,8 @@ def with_images(d, public):
         prods.append(p)
     out["products"] = prods
     cfg = out.setdefault("config", {})
-    cfg["redesImg"] = {k: find_image("red-" + k) for k in ("instagram", "tiktok", "facebook")}
+    cfg["redesImg"] = {k: find_image("red-" + k) for k in ("instagram", "tiktok", "facebook", "whatsapp")}
+    cfg["pagosImg"] = {n: find_image(SLUG.sub("-", ("pago-" + n).lower()).strip("-")) for n in cfg.get("pagos", [])}
     cfg["temaImg"] = find_image("tema-fondo")
     return out
 
